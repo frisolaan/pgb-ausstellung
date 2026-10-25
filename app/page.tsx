@@ -19,25 +19,21 @@ export default async function Home() {
         <h1>Making und Bildung für Nachhaltige Entwicklung</h1>
         <div className="teaser">
           <p className="lead">
-            Wie lässt sich Bildung für Nachhaltige Entwicklung mit Making verbinden, kreativ, spielerisch und
-            mit den Händen? Im Teilprojekt 1b des nationalen Rahmenprojekts zur BNE in der Lehrpersonenbildung
-            haben Dozierende mehrerer Hochschulen Unterrichtseinheiten entwickelt und im Unterricht erprobt.
+            Liebe Projektgruppe, hier entsteht unsere gemeinsame Ausstellung für die Synthesetagung vom
+            28. Januar 2027 in Olten.
           </p>
           <p>
-            Hier zeigen sie ihre Produkte: was entstanden ist, wie es eingesetzt wurde und wo der Bezug zur
-            Nachhaltigkeit liegt. Ergänzt wird die Ausstellung durch das Kartenset «BNE meets Making», ein
-            Arbeitsinstrument, mit dem Hochschuldozierende ihre Lehre an der Schnittstelle von BNE und Maker
-            Education verorten können.
+            Im Teilprojekt 1b habt ihr Unterrichtseinheiten entwickelt und erprobt, die Making und Bildung für
+            Nachhaltige Entwicklung verbinden. Hier zeigt ihr eure Produkte: was entstanden ist, wie ihr es
+            eingesetzt habt und wo der Bezug zur Nachhaltigkeit liegt.
           </p>
           <p>
-            Die eingereichten Materialien werden nach dem Vorbild des Kartensets zu interaktiven Anwendungen
-            aufbereitet, die sich direkt im Browser erkunden lassen. So wird aus jeder Unterrichtseinheit ein
-            Produkt, das andere Dozierende und Lehrpersonen selbst ausprobieren und weiterverwenden können.
+            Unten rechts findet ihr mein Beispiel, das Kartenset «BNE meets Making». Nach diesem Vorbild können
+            auch eure Produkte aufbereitet werden, als interaktive Anwendung, die sich direkt im Browser
+            erkunden lässt. Ladet dazu über <Link href="/einreichen">Produkt einreichen</Link> eure Texte,
+            Bilder und Unterlagen hoch. Ich bereite sie anschliessend auf.
           </p>
-          <p className="meta">
-            Vorgestellt an der nationalen Synthesetagung vom 28. Januar 2027 in Olten. Wähle eine Kachel, um
-            die Produkte zu sehen.
-          </p>
+          <p className="meta">Die drei Platzhalter füllen sich mit euren Beiträgen. – Friso</p>
         </div>
       </section>
 
