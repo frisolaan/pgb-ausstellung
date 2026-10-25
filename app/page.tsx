@@ -96,6 +96,30 @@ export default async function Home() {
           </a>
         )}
       </section>
+
+      <section className="indikatoren">
+        <h2>Indikatoren: Making und BNE</h2>
+        <p>
+          Unsere gemeinsame Indikatorenliste zeigt, welche Punkte im Makingprozess Nachhaltigkeitskompetenzen
+          fördern, wenn man sie bewusst steuert: von der Analyse der Materialeignung und der Produktfunktion
+          über kollaboratives Tüfteln bis zur Beeinflussung des Nutzerverhaltens. Jedes Element lässt sich
+          anklicken.
+        </p>
+        <div className="embed">
+          <iframe
+            src="https://prezi.com/p/embed/gtHzcGHanHKC2xsdWHLf/"
+            title="Making BNE – Indikatoren (Prezi)"
+            loading="lazy"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+          />
+        </div>
+        <p className="meta">
+          <a href="https://prezi.com/view/gtHzcGHanHKC2xsdWHLf/" target="_blank" rel="noopener noreferrer">
+            In Prezi öffnen ↗
+          </a>
+        </p>
+      </section>
     </>
   );
 }
