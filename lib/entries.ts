@@ -124,5 +124,7 @@ export function groupByPresenter(entries: Entry[]): Presenter[] {
     if (!p.group && e.group) p.group = e.group;
     map.set(slug, p);
   }
-  return [...map.values()].sort((a, b) => a.name.localeCompare(b.name, "de"));
+  // Reihenfolge der ersten Einreichung, keine Rangierung
+  const first = (p: Presenter) => p.entries.reduce((m, e) => (e.createdAt < m ? e.createdAt : m), "9999");
+  return [...map.values()].sort((a, b) => first(a).localeCompare(first(b)));
 }
