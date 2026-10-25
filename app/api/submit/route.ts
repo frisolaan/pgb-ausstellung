@@ -10,15 +10,16 @@ export async function POST(request: Request) {
   }
 
   const title = str(data.title, 120);
+  const presenter = str(data.presenter, 60);
   const group = str(data.group, 120);
-  const summary = str(data.summary, 1500);
-  if (!title || !group || !summary) {
-    return NextResponse.json({ error: "Titel, Gruppe und Beschreibung sind Pflichtfelder." }, { status: 400 });
+  const summary = str(data.summary, 3000);
+  if (!title || !presenter || !summary) {
+    return NextResponse.json({ error: "Titel, Platzhaltername und Beschreibung sind Pflichtfelder." }, { status: 400 });
   }
 
   const blobHost = ".public.blob.vercel-storage.com/";
   const images = Array.isArray(data.images)
-    ? data.images.filter((u: unknown) => typeof u === "string" && u.includes(blobHost)).slice(0, 6)
+    ? data.images.filter((u: unknown) => typeof u === "string" && u.includes(blobHost)).slice(0, 10)
     : [];
 
   let link = str(data.link, 400);
@@ -27,8 +28,8 @@ export async function POST(request: Request) {
   const entry: Entry = {
     id: newId(title),
     title,
+    presenter,
     group,
-    contact: str(data.contact, 120),
     subject: str(data.subject, 120),
     summary,
     bne: str(data.bne, 800),

@@ -15,7 +15,7 @@ export default function Submit() {
     setError("");
     const form = new FormData(ev.currentTarget);
     const code = String(form.get("code") || "");
-    const files = (form.getAll("images") as File[]).filter((f) => f && f.size > 0).slice(0, 6);
+    const files = (form.getAll("images") as File[]).filter((f) => f && f.size > 0).slice(0, 10);
 
     if (files.some((f) => f.size > 10 * 1024 * 1024)) {
       setError("Ein Bild ist grösser als 10 MB. Bitte verkleinern.");
@@ -43,8 +43,8 @@ export default function Submit() {
         body: JSON.stringify({
           code,
           title: form.get("title"),
+          presenter: form.get("presenter"),
           group: form.get("group"),
-          contact: form.get("contact"),
           subject: form.get("subject"),
           summary: form.get("summary"),
           bne: form.get("bne"),
@@ -69,10 +69,10 @@ export default function Submit() {
       <section className="hero">
         <h1>Danke!</h1>
         <p className="lead">
-          Eure Einheit ist eingegangen. Sie erscheint in der Ausstellung, sobald sie freigegeben ist.
+          Euer Produkt ist eingegangen. Es erscheint in der Ausstellung, sobald sie freigegeben ist.
         </p>
         <p>
-          <button className="btn secondary" onClick={() => setPhase("form")}>Weitere Einheit einreichen</button>
+          <button className="btn secondary" onClick={() => setPhase("form")}>Weiteres Produkt einreichen</button>
         </p>
       </section>
     );
@@ -82,14 +82,15 @@ export default function Submit() {
     <>
       <section className="hero" style={{ paddingBottom: 12 }}>
         <div className="eyebrow">Für die Projektgruppen</div>
-        <h1>Einheit einreichen</h1>
+        <h1>Produkt einreichen</h1>
         <div className="notice">
           <strong>So geht&apos;s</strong>
           <ol className="steps">
             <li>Zugangscode eingeben (steht in der Mail an die Projektgruppe).</li>
-            <li>Titel, Gruppe und eine kurze Beschreibung eurer Einheit ausfüllen.</li>
-            <li>Bis zu 6 Fotos von Artefakten oder aus dem Unterricht hochladen (je max. 10 MB).</li>
-            <li>Absenden. Nach der Freigabe erscheint die Einheit in der Ausstellung.</li>
+            <li>Einen Platzhalternamen wählen (kein Klarname). Unter diesem Namen erscheint eure Kachel. Für mehrere Produkte immer denselben Namen verwenden.</li>
+            <li>Titel und Beschreibung des Produkts ausfüllen.</li>
+            <li>Bis zu 10 Bilder hochladen (je max. 10 MB).</li>
+            <li>Absenden. Nach der Freigabe erscheint das Produkt in der Ausstellung.</li>
           </ol>
         </div>
       </section>
@@ -100,21 +101,26 @@ export default function Submit() {
           <input type="password" name="code" required autoComplete="off" />
         </label>
         <label>
-          Titel der Einheit
-          <input type="text" name="title" required maxLength={120} placeholder="z. B. Smartplants" />
+          Platzhaltername
+          <small>Kein Klarname, z. B. «Team NMG» oder «Person C». Erscheint auf der Kachel.</small>
+          <input type="text" name="presenter" required maxLength={60} placeholder="z. B. Team NMG" />
         </label>
         <label>
-          Gruppe / Hochschule
-          <input type="text" name="group" required maxLength={120} placeholder="z. B. PH Graubünden" />
+          Institution <small>optional</small>
+          <input type="text" name="group" maxLength={120} placeholder="z. B. PH Graubünden" />
+        </label>
+        <label>
+          Titel des Produkts
+          <input type="text" name="title" required maxLength={120} placeholder="z. B. Smartplants" />
         </label>
         <label>
           Fach oder Bereich <small>optional</small>
           <input type="text" name="subject" maxLength={120} placeholder="z. B. NMG / Informatik" />
         </label>
         <label>
-          Kurzbeschreibung
-          <small>Worum geht es, was haben die Schülerinnen und Schüler gemacht?</small>
-          <textarea name="summary" required maxLength={1500} />
+          Beschreibung
+          <small>Worum geht es, wie wurde das Produkt im Unterricht eingesetzt?</small>
+          <textarea name="summary" required maxLength={3000} />
         </label>
         <label>
           Bezug zu BNE <small>optional</small>
@@ -125,11 +131,7 @@ export default function Submit() {
           <input type="text" name="link" maxLength={400} placeholder="https://…" />
         </label>
         <label>
-          Kontaktperson <small>optional, wird öffentlich angezeigt</small>
-          <input type="text" name="contact" maxLength={120} />
-        </label>
-        <label>
-          Fotos <small>bis zu 6 Bilder (JPG, PNG, WebP)</small>
+          Bilder <small>bis zu 10 Bilder (JPG, PNG, WebP)</small>
           <input type="file" name="images" accept="image/jpeg,image/png,image/webp,image/gif" multiple />
         </label>
         <label className="check">
@@ -144,7 +146,7 @@ export default function Submit() {
         {progress && <p className="meta">{progress}</p>}
         <div>
           <button className="btn" type="submit" disabled={phase === "sending"}>
-            {phase === "sending" ? "Wird gesendet …" : "Einheit absenden"}
+            {phase === "sending" ? "Wird gesendet …" : "Produkt absenden"}
           </button>
         </div>
       </form>

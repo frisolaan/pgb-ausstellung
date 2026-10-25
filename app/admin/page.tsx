@@ -65,7 +65,7 @@ export default function Admin() {
       <div>
         <strong>{e.title}</strong>
         <div className="meta">
-          {e.group} · {new Date(e.createdAt).toLocaleString("de-CH")} · {e.images.length} Bild(er)
+          {[e.presenter, e.group].filter(Boolean).join(" · ")} · {new Date(e.createdAt).toLocaleString("de-CH")} · {e.images.length} Bild(er)
         </div>
         <p style={{ margin: "6px 0 0" }} className="prewrap">{e.summary}</p>
         <div className="actions">

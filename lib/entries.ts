@@ -5,8 +5,11 @@ export type Status = "pending" | "approved";
 export type Entry = {
   id: string;
   title: string;
+  /** Platzhaltername der Person oder des Teams (kein Klarname) */
+  presenter: string;
+  /** Institution, optional */
   group: string;
-  contact: string;
+  contact?: string;
   subject: string;
   summary: string;
   bne: string;
@@ -89,4 +92,37 @@ export function newId(title: string) {
 export function checkCode(given: unknown, envName: "UPLOAD_CODE" | "ADMIN_CODE") {
   const expected = process.env[envName];
   return typeof given === "string" && !!expected && given.trim() === expected;
+}
+
+export function presenterSlug(name: string) {
+  return (
+    name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "ohne-name"
+  );
+}
+
+export type Presenter = {
+  slug: string;
+  name: string;
+  group: string;
+  cover?: string;
+  entries: Entry[];
+};
+
+export function groupByPresenter(entries: Entry[]): Presenter[] {
+  const map = new Map<string, Presenter>();
+  for (const e of entries) {
+    const name = e.presenter || e.group || "Ohne Namen";
+    const slug = presenterSlug(name);
+    const p = map.get(slug) ?? { slug, name, group: e.group, cover: undefined, entries: [] };
+    p.entries.push(e);
+    if (!p.cover && e.images[0]) p.cover = e.images[0];
+    if (!p.group && e.group) p.group = e.group;
+    map.set(slug, p);
+  }
+  return [...map.values()].sort((a, b) => a.name.localeCompare(b.name, "de"));
 }
