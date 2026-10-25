@@ -125,3 +125,13 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
 .card.placeholder { border-style: dashed; background: var(--surface); }
 .card.placeholder .thumb { opacity: .85; filter: saturate(.85); }
 .card.karten { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+
+ul.files { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+ul.files a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); }
+ul.files a:hover { border-color: var(--accent); }
+ul.files .ext { flex: none; font-size: .72rem; font-weight: 700; letter-spacing: .04em; background: var(--accent-soft); color: var(--accent); border-radius: 6px; padding: 4px 6px; min-width: 42px; text-align: center; }
+ul.files .fname { flex: 1; overflow-wrap: anywhere; }
+
+.teaser { max-width: 66ch; }
+.teaser p { margin: 0 0 12px; }
+.teaser p:not(.lead):not(.meta) { color: var(--ink); }

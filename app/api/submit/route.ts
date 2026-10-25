@@ -22,6 +22,17 @@ export async function POST(request: Request) {
     ? data.images.filter((u: unknown) => typeof u === "string" && u.includes(blobHost)).slice(0, 10)
     : [];
 
+  const files = Array.isArray(data.files)
+    ? data.files
+        .filter((f: { url?: unknown }) => typeof f?.url === "string" && (f.url as string).includes(blobHost))
+        .slice(0, 10)
+        .map((f: { url: string; name?: unknown; size?: unknown }) => ({
+          url: f.url,
+          name: str(f.name, 160) || "Dokument",
+          size: typeof f.size === "number" ? f.size : 0,
+        }))
+    : [];
+
   let link = str(data.link, 400);
   if (link && !/^https?:\/\//i.test(link)) link = `https://${link}`;
 
@@ -35,6 +46,7 @@ export async function POST(request: Request) {
     bne: str(data.bne, 800),
     link,
     images,
+    files,
     createdAt: new Date().toISOString(),
   };
 

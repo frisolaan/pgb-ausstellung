@@ -29,6 +29,23 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
         </div>
       )}
 
+      {e.files && e.files.length > 0 && (
+        <div className="box">
+          <h2>Dokumente</h2>
+          <ul className="files">
+            {e.files.map((f) => (
+              <li key={f.url}>
+                <a href={f.url} target="_blank" rel="noopener noreferrer" download={f.name}>
+                  <span className="ext">{(f.name.split(".").pop() || "").toUpperCase().slice(0, 4)}</span>
+                  <span className="fname">{f.name}</span>
+                  {f.size > 0 && <span className="meta">{(f.size / 1024 / 1024).toFixed(1)} MB</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {e.bne && (
         <div className="box">
           <h2>Bezug zu BNE</h2>

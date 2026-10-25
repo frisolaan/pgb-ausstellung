@@ -17,8 +17,13 @@ export default function Submit() {
     const code = String(form.get("code") || "");
     const files = (form.getAll("images") as File[]).filter((f) => f && f.size > 0).slice(0, 10);
 
+    const docs = (form.getAll("docs") as File[]).filter((f) => f && f.size > 0).slice(0, 10);
     if (files.some((f) => f.size > 10 * 1024 * 1024)) {
       setError("Ein Bild ist grösser als 10 MB. Bitte verkleinern.");
+      return;
+    }
+    if (docs.some((f) => f.size > 25 * 1024 * 1024)) {
+      setError("Ein Dokument ist grösser als 25 MB.");
       return;
     }
 
@@ -36,6 +41,19 @@ export default function Submit() {
         urls.push(blob.url);
       }
 
+      const docInfos: { url: string; name: string; size: number }[] = [];
+      for (const [i, doc] of docs.entries()) {
+        setProgress(`Dokument ${i + 1} von ${docs.length} wird hochgeladen …`);
+        const safe = doc.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
+        const blob = await upload(`uploads/docs/${safe}`, doc, {
+          access: "public",
+          handleUploadUrl: "/api/upload",
+          clientPayload: code,
+          contentType: doc.type || undefined,
+        });
+        docInfos.push({ url: blob.url, name: doc.name, size: doc.size });
+      }
+
       setProgress("Angaben werden gespeichert …");
       const res = await fetch("/api/submit", {
         method: "POST",
@@ -50,6 +68,7 @@ export default function Submit() {
           bne: form.get("bne"),
           link: form.get("link"),
           images: urls,
+          files: docInfos,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -89,7 +108,7 @@ export default function Submit() {
             <li>Zugangscode eingeben (steht in der Mail an die Projektgruppe).</li>
             <li>Einen Platzhalternamen wählen (kein Klarname). Unter diesem Namen erscheint eure Kachel. Für mehrere Produkte immer denselben Namen verwenden.</li>
             <li>Titel und Beschreibung des Produkts ausfüllen.</li>
-            <li>Bis zu 10 Bilder hochladen (je max. 10 MB).</li>
+            <li>Bis zu 10 Bilder (je max. 10 MB) und bis zu 10 Dokumente (PDF, Word, PowerPoint, Excel, ZIP; je max. 25 MB) hochladen.</li>
             <li>Absenden. Nach der Freigabe erscheint das Produkt in der Ausstellung.</li>
           </ol>
         </div>
@@ -134,10 +153,25 @@ export default function Submit() {
           Bilder <small>bis zu 10 Bilder (JPG, PNG, WebP)</small>
           <input type="file" name="images" accept="image/jpeg,image/png,image/webp,image/gif" multiple />
         </label>
+        <label>
+          Dokumente
+          <small>bis zu 10 Dateien: PDF, Word, PowerPoint, Excel, OpenOffice, ZIP. Tipp: Dateien aus Teams zuerst herunterladen, dann hier auswählen.</small>
+          <input
+            type="file"
+            name="docs"
+            multiple
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.odt,.odp,.ods,.zip"
+          />
+        </label>
+        <div className="notice">
+          <strong>Wichtig:</strong> Bilder und Dokumente sind nach der Freigabe öffentlich abrufbar. Bitte nur
+          Material hochladen, das veröffentlicht werden darf, keine internen Unterlagen und keine Daten von
+          Schülerinnen und Schülern.
+        </div>
         <label className="check">
           <input type="checkbox" required />
           <span>
-            Ich bestätige, dass die Bilder veröffentlicht werden dürfen. Auf Fotos erkennbare Personen,
+            Ich bestätige, dass Bilder und Dokumente veröffentlicht werden dürfen. Auf Fotos erkennbare Personen,
             insbesondere Schülerinnen und Schüler, haben eingewilligt.
           </span>
         </label>

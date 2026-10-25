@@ -15,6 +15,7 @@ export type Entry = {
   bne: string;
   link: string;
   images: string[];
+  files?: { url: string; name: string; size: number }[];
   createdAt: string;
 };
 
@@ -74,7 +75,8 @@ export async function approve(id: string) {
 /** Entfernt einen Eintrag samt Bildern endgültig. */
 export async function remove(id: string, status: Status) {
   const entry = await getEntry(id, status);
-  if (entry?.images.length) await del(entry.images);
+  const urls = [...(entry?.images ?? []), ...(entry?.files ?? []).map((f) => f.url)];
+  if (urls.length) await del(urls);
   await deleteEntryFile(id, status);
 }
 

@@ -15,12 +15,25 @@ export default async function Home() {
   return (
     <>
       <section className="hero">
-        <div className="eyebrow">Teilprojekt PgB 1b</div>
+        <div className="eyebrow">Teilprojekt 1b · Rahmenprojekt PgB Nachhaltigkeit</div>
         <h1>Making und Bildung für Nachhaltige Entwicklung</h1>
-        <p className="lead">
-          Die Produkte der Projektbeteiligten: was entstanden ist, wie es im Unterricht eingesetzt wurde
-          und wo der Bezug zur Nachhaltigkeit liegt. Wähle eine Kachel, um die Produkte zu sehen.
-        </p>
+        <div className="teaser">
+          <p className="lead">
+            Wie lässt sich Bildung für Nachhaltige Entwicklung mit Making verbinden, kreativ, spielerisch und
+            mit den Händen? Im Teilprojekt 1b des nationalen Rahmenprojekts zur BNE in der Lehrpersonenbildung
+            haben Dozierende mehrerer Hochschulen Unterrichtseinheiten entwickelt und im Unterricht erprobt.
+          </p>
+          <p>
+            Hier zeigen sie ihre Produkte: was entstanden ist, wie es eingesetzt wurde und wo der Bezug zur
+            Nachhaltigkeit liegt. Ergänzt wird die Ausstellung durch das Kartenset «BNE meets Making», ein
+            Arbeitsinstrument, mit dem Hochschuldozierende ihre Lehre an der Schnittstelle von BNE und Maker
+            Education verorten können.
+          </p>
+          <p className="meta">
+            Vorgestellt an der nationalen Synthesetagung vom 28. Januar 2027 in Olten. Wähle eine Kachel, um
+            die Produkte zu sehen.
+          </p>
+        </div>
       </section>
 
       <section className="grid two">
