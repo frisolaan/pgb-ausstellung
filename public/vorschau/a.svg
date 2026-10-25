@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#d8e9d9"/>
+  <path d="M-20 300 C 120 250, 220 330, 360 280 S 560 240, 660 290 L 660 380 L -20 380 Z" fill="#a8c8a8"/>
+  <circle cx="520" cy="80" r="46" fill="#faf8f4" opacity=".7"/>
+  <!-- Zahnrad -->
+  <g transform="translate(250 230)">
+    <g fill="#5f8f62">
+      <rect x="-12" y="-78" width="24" height="26" rx="5"/>
+      <rect x="-12" y="52" width="24" height="26" rx="5"/>
+      <rect x="-78" y="-12" width="26" height="24" rx="5"/>
+      <rect x="52" y="-12" width="26" height="24" rx="5"/>
+      <rect x="-12" y="-78" width="24" height="26" rx="5" transform="rotate(45)"/>
+      <rect x="-12" y="52" width="24" height="26" rx="5" transform="rotate(45)"/>
+      <rect x="-78" y="-12" width="26" height="24" rx="5" transform="rotate(45)"/>
+      <rect x="52" y="-12" width="26" height="24" rx="5" transform="rotate(45)"/>
+      <circle r="58"/>
+    </g>
+    <circle r="24" fill="#d8e9d9"/>
+  </g>
+  <!-- Keimling aus dem Zahnrad -->
+  <path d="M250 206 C 250 160, 262 128, 300 104" fill="none" stroke="#2c2c2c" stroke-width="5" stroke-linecap="round"/>
+  <path d="M296 108 C 330 70, 392 74, 410 92 C 384 128, 330 132, 296 108 Z" fill="#faf8f4" stroke="#2c2c2c" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M256 150 C 226 118, 180 120, 166 134 C 186 162, 228 168, 256 150 Z" fill="#faf8f4" stroke="#2c2c2c" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M300 106 L 372 92 M258 148 L 196 136" stroke="#5f8f62" stroke-width="3" stroke-linecap="round"/>
+</svg>

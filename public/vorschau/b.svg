@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#f6e2c4"/>
+  <path d="M-20 60 C 140 20, 260 110, 420 60 S 600 30, 660 70 L 660 -20 L -20 -20 Z" fill="#f3c98b" opacity=".7"/>
+  <!-- Kreislauf-Pfeile -->
+  <g fill="none" stroke="#b57a2c" stroke-width="16" stroke-linecap="round">
+    <path d="M232 132 A 104 104 0 0 1 400 120"/>
+    <path d="M430 200 A 104 104 0 0 1 300 286"/>
+    <path d="M236 262 A 104 104 0 0 1 214 168"/>
+  </g>
+  <g fill="#b57a2c">
+    <path d="M394 96 L 430 128 L 386 140 Z"/>
+    <path d="M318 304 L 276 290 L 306 260 Z"/>
+    <path d="M198 154 L 210 196 L 240 164 Z"/>
+  </g>
+  <!-- Werkstück: Box mit Schraubenzieher -->
+  <g transform="translate(320 200)" stroke="#2c2c2c" stroke-width="4" stroke-linejoin="round">
+    <path d="M-46 -20 L 0 -42 L 46 -20 L 46 34 L 0 56 L -46 34 Z" fill="#faf8f4"/>
+    <path d="M-46 -20 L 0 2 L 46 -20 M0 2 L 0 56" fill="none"/>
+    <path d="M14 -70 L 58 -114" stroke-width="7" stroke-linecap="round"/>
+    <rect x="52" y="-140" width="20" height="40" rx="6" transform="rotate(45 62 -120)" fill="#b57a2c"/>
+  </g>
+</svg>
