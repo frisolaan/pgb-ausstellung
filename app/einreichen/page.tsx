@@ -108,7 +108,8 @@ export default function Submit() {
             <li>Zugangscode eingeben (steht in der Mail an die Projektgruppe).</li>
             <li>Einen Platzhalternamen wählen (kein Klarname). Unter diesem Namen erscheint eure Kachel. Für mehrere Produkte immer denselben Namen verwenden.</li>
             <li>Titel und Beschreibung des Produkts ausfüllen.</li>
-            <li>Bis zu 10 Bilder (je max. 10 MB) und bis zu 10 Dokumente (PDF, Word, PowerPoint, Excel, ZIP; je max. 25 MB) hochladen.</li>
+            <li>Bis zu 10 Bilder (je max. 10 MB) für die Ausstellung hochladen.</li>
+            <li>Optional bis zu 10 Dokumente (PDF, Word, PowerPoint, Excel, ZIP; je max. 25 MB) als Material für die Aufbereitung beilegen.</li>
             <li>Absenden. Nach der Freigabe erscheint das Produkt in der Ausstellung.</li>
           </ol>
         </div>
@@ -155,7 +156,7 @@ export default function Submit() {
         </label>
         <label>
           Dokumente
-          <small>bis zu 10 Dateien: PDF, Word, PowerPoint, Excel, OpenOffice, ZIP. Tipp: Dateien aus Teams zuerst herunterladen, dann hier auswählen.</small>
+          <small>bis zu 10 Dateien: PDF, Word, PowerPoint, Excel, OpenOffice, ZIP. Die Dokumente werden nicht öffentlich angezeigt. Sie dienen der Projektleitung als Material, um euer Produkt in der Ausstellung aufzubereiten. Tipp: Dateien aus Teams zuerst herunterladen, dann hier auswählen.</small>
           <input
             type="file"
             name="docs"
@@ -164,14 +165,14 @@ export default function Submit() {
           />
         </label>
         <div className="notice">
-          <strong>Wichtig:</strong> Bilder und Dokumente sind nach der Freigabe öffentlich abrufbar. Bitte nur
-          Material hochladen, das veröffentlicht werden darf, keine internen Unterlagen und keine Daten von
-          Schülerinnen und Schülern.
+          <strong>Wichtig:</strong> Bilder und Texte erscheinen nach der Freigabe öffentlich in der Ausstellung.
+          Dokumente sind nicht öffentlich verlinkt, aber auch nicht passwortgeschützt gespeichert. Bitte keine
+          vertraulichen Unterlagen und keine Daten von Schülerinnen und Schülern hochladen.
         </div>
         <label className="check">
           <input type="checkbox" required />
           <span>
-            Ich bestätige, dass Bilder und Dokumente veröffentlicht werden dürfen. Auf Fotos erkennbare Personen,
+            Ich bestätige, dass die Bilder veröffentlicht werden dürfen. Auf Fotos erkennbare Personen,
             insbesondere Schülerinnen und Schüler, haben eingewilligt.
           </span>
         </label>

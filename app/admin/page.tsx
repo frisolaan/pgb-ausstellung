@@ -68,6 +68,19 @@ export default function Admin() {
           {[e.presenter, e.group].filter(Boolean).join(" · ")} · {new Date(e.createdAt).toLocaleString("de-CH")} · {e.images.length} Bild(er) · {e.files?.length ?? 0} Dokument(e)
         </div>
         <p style={{ margin: "6px 0 0" }} className="prewrap">{e.summary}</p>
+        {e.files && e.files.length > 0 && (
+          <ul className="files">
+            {e.files.map((f) => (
+              <li key={f.url}>
+                <a href={f.url} target="_blank" rel="noopener noreferrer" download={f.name}>
+                  <span className="ext">{(f.name.split(".").pop() || "").toUpperCase().slice(0, 4)}</span>
+                  <span className="fname">{f.name}</span>
+                  {f.size > 0 && <span className="meta">{(f.size / 1024 / 1024).toFixed(1)} MB</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="actions">
           {pending ? (
             <>
