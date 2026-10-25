@@ -29,6 +29,11 @@ export default async function Home() {
             Arbeitsinstrument, mit dem Hochschuldozierende ihre Lehre an der Schnittstelle von BNE und Maker
             Education verorten können.
           </p>
+          <p>
+            Die eingereichten Materialien werden nach dem Vorbild des Kartensets zu interaktiven Anwendungen
+            aufbereitet, die sich direkt im Browser erkunden lassen. So wird aus jeder Unterrichtseinheit ein
+            Produkt, das andere Dozierende und Lehrpersonen selbst ausprobieren und weiterverwenden können.
+          </p>
           <p className="meta">
             Vorgestellt an der nationalen Synthesetagung vom 28. Januar 2027 in Olten. Wähle eine Kachel, um
             die Produkte zu sehen.
