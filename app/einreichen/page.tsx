@@ -29,6 +29,15 @@ export default function Submit() {
 
     setPhase("sending");
     try {
+      // Zugangscode zuerst prüfen, damit bei falschem Code nichts hochgeladen wird
+      setProgress("Zugangscode wird geprüft …");
+      const check = await fetch("/api/check-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
+      if (!check.ok) throw new Error("Zugangscode ist falsch.");
+
       const urls: string[] = [];
       for (const [i, file] of files.entries()) {
         setProgress(`Bild ${i + 1} von ${files.length} wird hochgeladen …`);
@@ -76,7 +85,13 @@ export default function Submit() {
       setPhase("done");
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Unbekannter Fehler.";
-      setError(msg.includes("Zugangscode") ? "Der Zugangscode ist falsch." : msg);
+      setError(
+        msg.includes("Zugangscode")
+          ? "Der Zugangscode ist falsch. Bitte den Code aus der Mail an die Projektgruppe verwenden."
+          : msg.includes("client token")
+            ? "Der Upload wurde vom Server abgelehnt. Bitte Dateityp und Grösse prüfen und nochmals versuchen."
+            : msg,
+      );
       setPhase("form");
     } finally {
       setProgress("");
