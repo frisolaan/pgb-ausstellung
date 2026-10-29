@@ -92,7 +92,7 @@ export function newId(title: string) {
 }
 
 export function checkCode(given: unknown, envName: "UPLOAD_CODE" | "ADMIN_CODE") {
-  const expected = process.env[envName];
+  const expected = process.env[envName]?.trim();
   return typeof given === "string" && !!expected && given.trim() === expected;
 }
 
