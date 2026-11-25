@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pumpspeicherkraftwerk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: ruhige Einzelseite, Kopf mit Problem, dann Ablauf als Lektionskarten; Farben aus dem Kartenset «BNE meets Making» */
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --ink: #2a2b28;
+  --ink-soft: #55574f;
+  --ink-mute: #6c6e66;
+  --line: rgba(40, 44, 30, 0.14);
+  --green: #d8e9d9;      /* Systemdenken / Hauptfarbe Produkt */
+  --green-strong: #3f7a48;
+  --water: #d6e4ef;
+  --water-strong: #2f6690;
+  --peach: #f6e2c4;
+  --peach-strong: #9a6118;
+  --rose: #f2d8dd;
+  --lilac: #e6d9e8;
+  --gap-bg: #fff3d6;
+  --gap-line: #d9a93a;
+  --code-bg: #f1f3ee;
+  --focus: #1f5fbf;
+  --font-hand: 'Caveat Brush', 'Comic Sans MS', cursive;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --r: 14px;
+  --r-s: 8px;
+  --maxw: 1080px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171916; --surface: #20231f; --ink: #ecece6; --ink-soft: #c4c6bd; --ink-mute: #a3a69b;
+    --line: rgba(230, 235, 220, 0.16); --green: #26392a; --green-strong: #8fcf98; --water: #1f3140; --water-strong: #8dbfe6;
+    --peach: #3a2e1d; --peach-strong: #e9b76b; --rose: #3b282c; --lilac: #332a36; --gap-bg: #3a3120; --gap-line: #c99b35;
+    --code-bg: #2a2e28; --focus: #7fb0ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171916; --surface: #20231f; --ink: #ecece6; --ink-soft: #c4c6bd; --ink-mute: #a3a69b;
+  --line: rgba(230, 235, 220, 0.16); --green: #26392a; --green-strong: #8fcf98; --water: #1f3140; --water-strong: #8dbfe6;
+  --peach: #3a2e1d; --peach-strong: #e9b76b; --rose: #3b282c; --lilac: #332a36; --gap-bg: #3a3120; --gap-line: #c99b35;
+  --code-bg: #2a2e28; --focus: #7fb0ff; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--water-strong); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+img { display: block; max-width: 100%; height: auto; border-radius: var(--r-s); }
+body { margin: 0; }
+p { margin: 0 0 0.9em; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.hand { font-family: var(--font-hand); font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.02; }
+.eyebrow { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin: 0 0 0.5em; }
+.muted { color: var(--ink-mute); }
+.small { font-size: 0.88rem; }
+figure { margin: 0; }
+figcaption { font-size: 0.82rem; color: var(--ink-mute); margin-top: 6px; line-height: 1.45; }
+
+/* Entwurfsband */
+.entwurf { background: var(--gap-bg); border-bottom: 1px solid var(--gap-line); font-size: 0.88rem; }
+.entwurf .wrap { padding-block: 10px; display: flex; gap: 8px 16px; flex-wrap: wrap; align-items: center; }
+.entwurf strong { letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.78rem; }
+
+/* Kopf */
+.hero { padding-block: clamp(28px, 6vw, 64px) clamp(24px, 4vw, 40px); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(20px, 4vw, 44px); align-items: center; }
+@media (max-width: 820px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero h1 { font-size: clamp(3rem, 9vw, 5.6rem); }
+.hero h1 span { color: var(--water-strong); }
+.hero h1 { font-size: clamp(2.4rem, 7vw, 4.4rem); hyphens: manual; overflow-wrap: anywhere; }
+.hero .unter { font-family: var(--font-hand); text-transform: uppercase; font-size: clamp(1.15rem, 2.6vw, 1.5rem); color: var(--ink-soft); margin: 10px 0 18px; }
+.hero .lead { font-size: 1.08rem; color: var(--ink-soft); max-width: 60ch; }
+.fakten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 20px; padding: 0; list-style: none; }
+.fakten li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 10px 12px; }
+.fakten b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; }
+.hero-bild { position: relative; }
+.hero-bild img { width: 100%; border-radius: var(--r); }
+.ausgang { margin-top: 14px; background: var(--peach); border-radius: var(--r-s); padding: 14px 16px; font-size: 0.95rem; }
+.ausgang b { font-family: var(--font-hand); text-transform: uppercase; font-weight: 400; font-size: 1.1rem; display: block; margin-bottom: 2px; }
+
+/* Navigation */
+.sprung { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-block: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.sprung .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; }
+.sprung a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 0.93rem; padding: 7px 12px; border-radius: 999px; white-space: nowrap; }
+.sprung a:hover { background: var(--line); }
+
+section.teil { padding-block: clamp(36px, 6vw, 64px) 0; scroll-margin-top: 60px; }
+.teil > .wrap > h2 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); margin-bottom: 8px; }
+.teil-intro { color: var(--ink-soft); max-width: 66ch; margin-bottom: 22px; }
+
+/* Text zweispaltig */
+.zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; }
+@media (max-width: 820px) { .zwei { grid-template-columns: 1fr; } }
+.zwei > * { min-width: 0; }
+.ziele { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.ziele li { position: relative; padding-left: 26px; }
+.ziele li::before { content: ""; position: absolute; left: 4px; top: 0.55em; width: 10px; height: 10px; border-radius: 3px; background: var(--green-strong); }
+.kasten { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(16px, 3vw, 24px); }
+.kasten h3 { font-size: 1.05rem; margin-bottom: 10px; }
+
+/* Material */
+.material { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+.material li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 10px 12px; font-size: 0.93rem; }
+.material li span { display: block; font-size: 0.8rem; color: var(--ink-mute); }
+
+/* Lektionsleiste */
+.leiste { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; margin: 6px 0 26px; padding: 0; list-style: none; }
+.leiste a { display: flex; flex-direction: column; gap: 2px; text-decoration: none; color: var(--ink); background: var(--green); border-radius: 6px; padding: 8px 6px; min-height: 64px; font-size: 0.72rem; line-height: 1.2; }
+.leiste a b { font-family: var(--font-hand); font-size: 1.4rem; font-weight: 400; line-height: 1; }
+.leiste a.fehlt { background: repeating-linear-gradient(135deg, var(--gap-bg) 0 8px, var(--surface) 8px 16px); border: 1px dashed var(--gap-line); }
+.leiste .phase { grid-column: span 1; }
+@media (max-width: 760px) { .leiste { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.phasen { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--ink-mute); margin-bottom: 8px; }
+.phasen span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+
+/* Lektion */
+.lektion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 14px; overflow: hidden; scroll-margin-top: 64px; }
+.lektion > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 16px clamp(14px, 3vw, 22px); }
+.lektion > summary::-webkit-details-marker { display: none; }
+.lektion .nr { font-family: var(--font-hand); font-size: 2.2rem; line-height: 1; width: 52px; height: 52px; display: grid; place-items: center; border-radius: 12px; background: var(--green); color: var(--green-strong); }
+.lektion .kopf h3 { font-size: 1.15rem; }
+.lektion .kopf p { margin: 2px 0 0; font-size: 0.86rem; color: var(--ink-mute); }
+.lektion .pfeil { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: transform 0.2s; }
+.lektion[open] .pfeil { transform: rotate(180deg); }
+.lektion .inhalt { padding: 0 clamp(14px, 3vw, 22px) 20px; display: grid; gap: 16px; }
+.lektion .inhalt > * { min-width: 0; }
+.lernziel { background: var(--green); border-radius: var(--r-s); padding: 12px 14px; font-size: 0.95rem; }
+.lernziel b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-strong); }
+.auftrag { border-left: 4px solid var(--water-strong); padding: 2px 0 2px 14px; }
+.auftrag .atitel { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; }
+.auftrag h4 { margin: 0; font-size: 1rem; }
+.auftrag h4 span { color: var(--water-strong); }
+.zeit { font-size: 0.78rem; font-weight: 600; background: var(--water); color: var(--water-strong); border-radius: 999px; padding: 2px 10px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.auftrag ol, .auftrag ul { margin: 0 0 0.6em; padding-left: 1.3em; }
+.auftrag li { margin-bottom: 0.25em; }
+ol.abc { list-style: none; padding-left: 0; }
+ol.abc li { padding-left: 1.7em; text-indent: -1.7em; }
+ol.abc li b { display: inline-block; width: 1.7em; text-indent: 0; color: var(--water-strong); }
+.hinweis { background: var(--peach); border-radius: var(--r-s); padding: 10px 14px; font-size: 0.92rem; }
+.hinweis b { color: var(--peach-strong); }
+.doz { background: var(--lilac); border-radius: var(--r-s); padding: 10px 14px; font-size: 0.92rem; }
+.doz b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.fazit { background: var(--green); border-radius: var(--r-s); padding: 12px 14px; font-size: 0.94rem; }
+.fazit ol { margin: 6px 0 8px; padding-left: 1.3em; }
+.bilder { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.bilder.eng { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.bilder img { width: 100%; background: #fff; border: 1px solid var(--line); }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+
+.tabelle { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-s); background: var(--surface); }
+.tabelle table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 520px; }
+.tabelle th, .tabelle td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tabelle th { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; background: var(--bg); }
+.tabelle td.leer { background: repeating-linear-gradient(90deg, transparent 0 18px, var(--line) 18px 19px); }
+.tabelle tr:last-child td { border-bottom: 0; }
+
+/* Lücke */
+.luecke { border: 1.5px dashed var(--gap-line); background: var(--gap-bg); border-radius: var(--r); padding: 16px clamp(14px, 3vw, 22px); }
+.luecke .tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gap-line); color: #2a2208; padding: 2px 9px; border-radius: 999px; margin-bottom: 6px; }
+.lektion.fehlt { border-style: dashed; border-color: var(--gap-line); }
+.lektion.fehlt .nr { background: var(--gap-bg); color: var(--peach-strong); }
+
+/* Lösung */
+details.loesung { border: 1px solid var(--line); border-radius: var(--r-s); background: var(--bg); }
+details.loesung > summary { cursor: pointer; padding: 9px 14px; font-weight: 600; font-size: 0.92rem; color: var(--green-strong); }
+details.loesung .l-inhalt { padding: 0 14px 14px; display: grid; gap: 12px; }
+details.loesung img { background: #fff; border: 1px solid var(--line); width: 100%; }
+
+/* BNE */
+.sdgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+.sdgs li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 12px 14px; font-size: 0.9rem; }
+.sdgs b { display: block; font-size: 0.95rem; margin-bottom: 4px; }
+.sdgs b span { font-family: var(--font-hand); font-weight: 400; font-size: 1.3rem; color: var(--water-strong); margin-right: 6px; }
+.rsp { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px 22px; margin: 0; }
+.rsp div { border-top: 1px solid var(--line); padding-top: 8px; }
+.rsp dt { font-weight: 600; }
+.rsp dd { margin: 2px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.lp { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.lp .kasten b.code { font-family: var(--font-mono); font-size: 0.85rem; color: var(--green-strong); }
+
+.karten { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
+.karten a { display: grid; gap: 6px; text-decoration: none; color: var(--ink); background: var(--c); border-radius: var(--r); padding: 14px 16px; min-height: 100%; border: 1px solid var(--line); }
+.karten a:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+.karten .k { font-family: var(--font-hand); font-size: 1rem; color: var(--ink-mute); }
+.karten .t { font-family: var(--font-hand); text-transform: uppercase; font-size: 1.35rem; line-height: 1.05; }
+.karten .w { font-size: 0.88rem; color: var(--ink-soft); }
+.karten .l { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.k-sys { --c: #d8e9d9; } .k-kon { --c: #ececec; } .k-ite { --c: #f6e2c4; } .k-mat { --c: #e2d4e4; } .k-emo { --c: #d6deeb; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .karten a { color: #2a2b28; } :root:not([data-theme="light"]) .karten .w { color: #45473f; } }
+:root[data-theme="dark"] .karten a { color: #2a2b28; }
+:root[data-theme="dark"] .karten .w { color: #45473f; }
+
+.offen { display: grid; gap: 10px; list-style: none; padding: 0; margin: 0; counter-reset: o; }
+.offen li { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--gap-line); border-radius: var(--r-s); padding: 10px 14px; }
+
+footer { margin-top: clamp(44px, 7vw, 72px); border-top: 1px solid var(--line); padding-block: 22px 40px; font-size: 0.85rem; color: var(--ink-mute); }
+footer .wrap { display: flex; gap: 8px 28px; flex-wrap: wrap; justify-content: space-between; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+
+/* Ergänzungen Pumpspeicherkraftwerk */
+.leiste.sechs { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+@media (max-width: 760px) { .leiste.sechs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.leiste a { background: var(--water); }
+.lektion .nr { background: var(--water); color: var(--water-strong); }
+img.hell { background: #fff; border: 1px solid var(--line); width: 100%; }
+.stroemungen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 820px) { .stroemungen { grid-template-columns: 1fr; } }
+.stroemungen > div { display: grid; gap: 4px; align-content: start; background: var(--bg); border-radius: var(--r-s); padding: 12px 14px; border: 1px solid var(--line); }
+.stroemungen > div.leit { background: var(--water); border-color: var(--water-strong); }
+.stroemungen b { font-size: 0.95rem; }
+.stroemungen span { font-size: 0.9rem; }
+.stroemungen em { font-style: normal; font-size: 0.8rem; color: var(--ink-mute); }
+.kennzahlen { list-style: none; padding: 0; margin: 18px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.kennzahlen li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 12px 14px; display: grid; gap: 2px; }
+.kennzahlen b { font-family: var(--font-hand); font-weight: 400; font-size: 1.9rem; line-height: 1; color: var(--water-strong); font-variant-numeric: tabular-nums; }
+.kennzahlen span { font-weight: 600; font-size: 0.9rem; }
+.kennzahlen em { font-style: normal; font-size: 0.82rem; color: var(--ink-mute); }
+.matrix-rsp td:not(:first-child), .matrix-rsp th:not(:first-child) { text-align: center; }
+.matrix-rsp td:not(:first-child) { color: var(--water-strong); font-size: 1rem; }
+.quellen { padding-left: 1.2em; margin: 0; display: grid; gap: 6px; font-size: 0.92rem; }
+
+.zurueck { background: var(--surface); border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+.zurueck .wrap { padding-block: 10px; }
+.zurueck a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.zurueck a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="zurueck"><div class="wrap"><a href="/">← Zur Ausstellung Making × BNE</a></div></nav>
+<div class="entwurf" role="note">
+  <div class="wrap">
+    <strong>Entwurf zur Diskussion</strong>
+    <span>Aufbereitet aus dem eingereichten Dossier «Pumpspeicherkraftwerk_BNE3_final» (Stand 23.11.2026). Offene Punkte sind gelb markiert.</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">BNE-Lerneinheit · Modul NMG05C · PH Graubünden</p>
+      <h1 class="hand">Pump&shy;speicher&shy;<span>kraftwerk</span></h1>
+      <p class="unter">Energiespeicherung zwischen Technik, Landschaft und Gesellschaft</p>
+      <p class="lead">Angehende Lehrpersonen bauen ein Tischmodell eines Pumpspeichers, rechnen mit Daten des Kraftwerks Ferrera und verhandeln, welche Energiezukunft für eine Bergregion wünschenswert wäre. Ein Kraftwerksausbau ist dabei nicht vorentschieden.</p>
+      <ul class="fakten">
+        <li><b>Zielgruppe</b>Studierende einer PH (Bachelor)</li>
+        <li><b>Umfang</b>6 Lektionen à 45 Min. plus Selbstarbeitsphasen</li>
+        <li><b>Sozialform</b>Teams mit 3–4 Studierenden</li>
+        <li><b>Fallbeispiel</b>Kraftwerke Hinterrhein AG · Ferrera · Valle di Lei</li>
+      </ul>
+    </div>
+    <div class="hero-bild">
+      <figure>
+        <img src="/produkte/pumpspeicherkraftwerk/img/foto-modell.webp" alt="Studierende arbeiten an einem Landschaftsmodell eines Pumpspeicherkraftwerks mit Schläuchen und Pumpe" width="1300" height="1199">
+        <figcaption>Modellbau in der Erprobung, PH Graubünden.</figcaption>
+      </figure>
+      <div class="ausgang">
+        <b>Ausgangssituation</b>
+        Die fiktive Gemeinde «Bergtal» plant mehr Photovoltaik und Windenergie. Zeitweise entsteht ein Stromüberschuss, zu anderen Zeiten ist die Produktion gering. Ein Hochtal könnte technisch als Speicher dienen. Der Gemeinderat fragt nicht nur, ob sich ein Kraftwerk lohnt, sondern auch, welche Energiezukunft für Menschen, Wirtschaft und Landschaft tragfähig wäre.
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="sprung" aria-label="Abschnitte">
+  <div class="wrap">
+    <a href="#ueberblick">Überblick</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#ferrera">Fallbeispiel Ferrera</a>
+    <a href="#beurteilung">Beurteilung</a>
+    <a href="#material">Material</a>
+    <a href="#bne">BNE-Bezug</a>
+    <a href="#kartenset">Kartenset</a>
+    <a href="#quellen">Quellen</a>
+    <a href="#offen">Offene Punkte</a>
+  </div>
+</nav>
+
+<main>
+<section class="teil" id="ueberblick" aria-labelledby="h-ueberblick">
+  <div class="wrap">
+    <h2 id="h-ueberblick" class="hand">Überblick</h2>
+    <div class="zwei">
+      <div>
+        <p class="eyebrow">Motivation</p>
+        <p>Die Transformation des Energiesystems verlangt, eine verlässliche Stromversorgung mit einem wachsenden Anteil fluktuierender erneuerbarer Energien zu verbinden. Sonne und Wind liefern nicht jederzeit gleich viel Strom. Pumpspeicherkraftwerke können zeitliche Unterschiede zwischen Produktion und Verbrauch ausgleichen: Bei Stromüberschuss wird Wasser in ein höher gelegenes Becken gepumpt, bei Bedarf fliesst es zurück und treibt Turbinen und Generatoren an. Moderne Anlagen erreichen Gesamtwirkungsgrade von über 80 %, ältere liegen häufig um 70 % (BFE, 2021).</p>
+        <p>Die Lerneinheit verbindet dieses Fachwissen mit einer offenen Zukunftsfrage: Wie möchten wir Energieversorgung und -verbrauch unter ökologischen und sozialen Bedingungen gestalten? Die Studierenden durchlaufen einen Making- und Inquiry-Prozess und greifen ihre anfänglichen Positionen am Schluss erneut auf. Das Ergebnis muss weder ein Kraftwerksausbau noch ein Konsens sein.</p>
+      </div>
+      <div class="kasten">
+        <h3>Übergeordnete Lernziele</h3>
+        <p class="small muted" style="margin-bottom:8px">Die Studierenden können …</p>
+        <ul class="ziele">
+          <li>Funktionsprinzip, Energieformen und Energieumwandlungen eines Pumpspeicherkraftwerks fachlich korrekt erklären.</li>
+          <li>Wirkungsgrad und Energieverluste anhand einfacher Daten berechnen und interpretieren.</li>
+          <li>Chancen, Grenzen und Widersprüche einer nachhaltigen Energiezukunft aus ökologischer, ökonomischer, technischer und gesellschaftlicher Sicht kritisch untersuchen und eigene Wertannahmen hinterfragen.</li>
+          <li>ein funktionsfähiges Anschauungsmodell planen, bauen, testen und iterativ verbessern.</li>
+          <li>eine offene BNE-Lernaufgabe für Zyklus 2 entwickeln, die neben Urteilsbildung Zukunftsvorstellungen, Perspektivenwechsel und eigenes Erproben ermöglicht.</li>
+          <li>Quellen wissenschaftlich dokumentieren, die eigene Position nachvollziehbar begründen und Veränderungen oder offene Fragen im Lernprozess reflektieren.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="kasten bne3" style="margin-top:22px">
+      <p class="eyebrow">Leitperspektive BNE 3 nach Pettig &amp; Ohl (2023)</p>
+      <div class="stroemungen">
+        <div><b>BNE 1 · instrumentell</b><span>Expertenwissen vermitteln, als nachhaltig geltende Verhaltensweisen fördern.</span><em>Lektionen 2–4: Energieumwandlung, Wirkungsgrad, Modellbau</em></div>
+        <div><b>BNE 2 · emanzipatorisch</b><span>Fachwissen, Interessen und Zielkonflikte kritisch hinterfragen, eigene Urteile bilden.</span><em>Quellenkritik, Stakeholder-Hearing, Bewertung, Positionslinie</em></div>
+        <div class="leit"><b>BNE 3 · transformativ</b><span>Eigene Denk- und Handlungsmuster reflektieren, Widersprüche bearbeiten, offene Zukünfte mitgestalten.</span><em>Grundannahmen sichtbar machen, Zukünfte entwerfen, Perspektivenwechsel prüfen</em></div>
+      </div>
+      <p class="small" style="margin:12px 0 0">Die drei Strömungen ergänzen sich und sind keine starre Stufenfolge. Die Lernspur folgt dem Handlungsrahmen <b>Positionieren</b> (Lektion 1), <b>Reflektieren</b> (Lektionen 2, 4, 5) und <b>Experimentieren</b> (Lektionen 3, 4, 6).</p>
+    </div>
+
+    <div class="zwei" style="margin-top:22px">
+      <div>
+        <p class="eyebrow">Projektauftrag</p>
+        <p>Sie arbeiten als didaktisches Entwicklungsteam für die fiktive Gemeinde «Bergtal». Statt allein über ein Pumpspeicherkraftwerk zu entscheiden, entwickeln Sie mehrere mögliche Energiezukünfte: mit und ohne zusätzlichen Pumpspeicher, unter Berücksichtigung von Alternativen und veränderten Bedürfnissen. Sie machen strittige Fragen öffentlich besprechbar und gestalten einen Unterrichtsprototyp für Zyklus 2.</p>
+      </div>
+      <div class="kasten">
+        <h3>Das Dossier enthält</h3>
+        <ol class="small" style="margin:0;padding-left:1.3em">
+          <li>Systemskizze und Energiefluss</li>
+          <li>dokumentiertes Modell mit Testdaten</li>
+          <li>einfache Wirkungsgradrechnung</li>
+          <li>Stakeholder- und Zielkonfliktanalyse</li>
+          <li>zwei unterschiedliche Zukunftsoptionen mit offenen Widersprüchen</li>
+          <li>eine begründete, revidierbare Position und einen kurzen Dialog- oder Resonanzimpuls</li>
+          <li>BNE-Lernaufgabe für Zyklus 2 mit Selbstreflexion sowie Quellen- und Abbildungsverzeichnis</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="ablauf" aria-labelledby="h-ablauf">
+  <div class="wrap">
+    <h2 id="h-ablauf" class="hand">Ablauf in 6 Lektionen</h2>
+    <p class="teil-intro">Vom eigenen Standpunkt über Daten und Modellbau zur Urteilsbildung und zum Transfer in eine Lernaufgabe für Zyklus 2. Die Aufträge sind durchgehend nummeriert (1–14).</p>
+    <ol class="leiste sechs">
+      <li><a href="#l1"><b>1</b>Problem verstehen</a></li>
+      <li><a href="#l2"><b>2</b>Technik und Daten</a></li>
+      <li><a href="#l3"><b>3</b>Modell planen und bauen</a></li>
+      <li><a href="#l4"><b>4</b>Experimentieren, Modellkritik</a></li>
+      <li><a href="#l5"><b>5</b>BNE-Urteilsbildung</a></li>
+      <li><a href="#l6"><b>6</b>Transfer Zyklus 2</a></li>
+    </ol>
+
+    <details class="lektion" id="l1" open>
+      <summary><span class="nr">1</span><span class="kopf"><h3>Problem verstehen: Strom speichern – aber wie?</h3><p>Aufträge 1–3 · Positionieren · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Die Studierenden aktivieren ihr Vorwissen, legen ihre eigenen Zukunftsvorstellungen und Werte offen, analysieren die Ausgangslage und formulieren erste Hypothesen zur Funktion und Nachhaltigkeit von Pumpspeichern.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 1</span> Individuelle Analyse</h4><span class="zeit">10 min</span></div>
+          <ul>
+            <li>Warum können Stromproduktion und Stromverbrauch zeitlich auseinanderfallen?</li>
+            <li>Welche Speicherlösungen kennen Sie? Welche Kriterien wären für einen Vergleich relevant?</li>
+            <li>Welche Chancen und Risiken vermuten Sie bei einem Pumpspeicherkraftwerk?</li>
+            <li>Welche Informationen benötigen Sie, bevor Sie eine Empfehlung abgeben können? Welche Ihrer Annahmen zum Energiebedarf oder zum «guten Leben» möchten Sie überprüfen? Notieren Sie Ihre persönliche Ausgangsposition für die Schlussreflexion.</li>
+          </ul>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 2</span> Systembild und Hypothesen</h4><span class="zeit">20 min</span></div>
+          <p style="margin:0">Arbeiten Sie in Dreiergruppen. Ordnen Sie die Begriffe Oberbecken, Unterbecken, Pumpe, Turbine, Generator, Stromnetz, elektrische Energie, Lageenergie und Bewegungsenergie. Zeichnen Sie zwei Betriebszustände: Pumpbetrieb und Turbinenbetrieb. Markieren Sie Stellen, an denen Energieverluste auftreten könnten.</p>
+        </div>
+        <figure>
+          <img class="hell" src="/produkte/pumpspeicherkraftwerk/img/abb02-energiekette.webp" alt="Energieumwandlungskette: beim Pumpen elektrische Energie über mechanische Energie zu Lageenergie, beim Turbinieren zurück, jeweils mit Verlusten durch Wärme, Reibung und Schall" width="1600" height="573" loading="lazy">
+          <figcaption>Vereinfachte Energieumwandlungskette des Pumpspeichers. Eigene Darstellung nach Bundesamt für Energie (2021).</figcaption>
+        </figure>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 3</span> Concept Map und Forschungsfragen</h4><span class="zeit">15 min</span></div>
+          <p style="margin:0">Erstellen Sie eine Concept Map «Pumpspeicher als Teil eines nachhaltigen Energiesystems». Verwenden Sie mindestens die Knoten Technik, Energie, Wasser, Landschaft, Klima, Kosten, Menschen und Zukunft. Ergänzen Sie «Bedürfnisse», «Gerechtigkeit» sowie eine selbst gewählte Gegenperspektive; kennzeichnen Sie zwei Widersprüche. Formulieren Sie zwei offene Forschungsfragen statt einer Bestätigungsfrage für das Kraftwerk.</p>
+        </div>
+        <figure>
+          <img class="hell" src="/produkte/pumpspeicherkraftwerk/img/abb03-conceptmap.webp" alt="Beispiel einer Concept Map mit Pumpspeicher im Zentrum und den Knoten Energie, Technik, Klima, Landschaft, Kosten und Menschen" width="1600" height="655" loading="lazy">
+          <figcaption>Beispiel für eine offene Concept Map zur BNE-Analyse. Eigene didaktische Darstellung; die Lernenden entwickeln ihre Karte selbst.</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="lektion" id="l2">
+      <summary><span class="nr">2</span><span class="kopf"><h3>Technik und Daten: Funktionsweise, Leistung und Wirkungsgrad</h3><p>Aufträge 4–5 · Reflektieren · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Die Studierenden erklären Pump- und Turbinenbetrieb, unterscheiden Leistung und Energie und berechnen Verluste anhand realer Kennzahlen.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 4</span> Kraftwerk Ferrera / Stausee Valle di Lei analysieren</h4><span class="zeit">20 min</span></div>
+          <p>Nutzen Sie die bereitgestellten Quellen der Kraftwerke Hinterrhein AG (KHR). Das Pumpspeicherwerk Ferrera liegt im Kanton Graubünden und arbeitet mit dem Stausee Valle di Lei als höher gelegenem Speicher. Die Kennzahlen finden Sie unter <a href="#ferrera">Fallbeispiel Ferrera</a>.</p>
+          <p style="margin:0"><b>Rechenauftrag:</b> Ein Pumpspeicher nimmt 1 000 kWh elektrische Energie zum Hochpumpen auf. Berechnen Sie bei 80 % Gesamtwirkungsgrad die zurückgewinnbare elektrische Energie und den Verlust. Diskutieren Sie anschliessend: Weshalb kann ein Speicher trotz Verlusten sinnvoll sein?</p>
+        </div>
+        <div class="hinweis"><b>Wissenschaftliche Einordnung:</b> Der angenommene Gesamtwirkungsgrad von 80 % ist ein allgemeines Unterrichtsbeispiel nach BFE (2021), kein veröffentlichter Messwert des Kraftwerks Ferrera. Der Speicher erzeugt bei der Rückverstromung weniger Strom, als zum Pumpen benötigt wurde.</div>
+        <details class="loesung">
+          <summary>Lösungshinweis zu Auftrag 4</summary>
+          <div class="l-inhalt"><p style="margin:0">Bei 1 000 kWh eingesetzter elektrischer Energie und einem angenommenen Gesamtwirkungsgrad von 80 % werden rechnerisch <b>800 kWh</b> wieder ins Stromnetz abgegeben. Die Differenz von <b>200 kWh</b> ist die Verlustenergie. Die Beispielrechnung bezieht sich nicht auf eine Messung in Ferrera (BFE, 2021).</p></div>
+        </details>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 5</span> Quellenkritik</h4><span class="zeit">15 min</span></div>
+          <p style="margin:0">Vergleichen Sie eine Betreiberquelle mit einer Behördenquelle. Prüfen Sie Autorenschaft, Zweck, Aktualität, Kennzahlen und mögliche Interessen. Was können beide Quellen nicht beantworten, etwa zum guten Leben, zum Bedarf oder zu betroffenen Gruppen? Prüfen Sie auch Ihre eigenen Vorannahmen. Formulieren Sie drei Regeln für eine quellenkritische und kontroverse Unterrichtsgestaltung.</p>
+        </div>
+        <div class="fazit"><b>Sicherung (10 min).</b> Jede Gruppe formuliert einen fachlich präzisen Erklärungssatz: «Ein Pumpspeicherkraftwerk erzeugt nicht aus dem Nichts Energie, sondern …» Ergänzen Sie den Satz um die Begriffe Umwandlung, Speicherung, Wirkungsgrad und Verlust.</div>
+      </div>
+    </details>
+
+    <details class="lektion" id="l3">
+      <summary><span class="nr">3</span><span class="kopf"><h3>Making: Modell planen und bauen</h3><p>Aufträge 6–7 · Experimentieren · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Die Studierenden übersetzen das technische Prinzip in ein didaktisch reduziertes Modell und erkennen: Ein Modell kann technische Teilaspekte erklären, aber nicht gesellschaftlich entscheiden, welche Energiezukunft erstrebenswert ist.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 6</span> Modellplanung</h4><span class="zeit">15 min</span></div>
+          <p>Planen Sie ein Tischmodell mit zwei unterschiedlich hohen Behältern, Wasserweg und Turbinen-/Wasserrad. Optional kann eine kleine Niedervolt-Pumpe verwendet werden. Zeichnen Sie eine beschriftete Skizze und definieren Sie drei Beobachtungskriterien.</p>
+          <ul style="margin:0">
+            <li>Wasserweg und Höhenunterschied sind sichtbar.</li>
+            <li>Pump- und Turbinenbetrieb können erklärt oder simuliert werden.</li>
+            <li>Mindestens eine messbare Grösse wird erhoben (z. B. Wassermenge, Zeit, Höhendifferenz).</li>
+            <li>Material wird sparsam, wiederverwendbar und sicher eingesetzt.</li>
+            <li>Die Grenzen des Modells werden explizit benannt.</li>
+          </ul>
+        </div>
+        <figure>
+          <img class="hell" src="/produkte/pumpspeicherkraftwerk/img/abb04-tischmodell.webp" alt="Schema des Tischmodells: Oberbecken auf einem Tisch, Wasserweg über ein Wasserrad ins Unterbecken, optionale Pumpe zurück" width="1600" height="684" loading="lazy">
+          <figcaption>Didaktisch reduziertes Tischmodell mit getrenntem Pump- und Wasserweg (schematisch). Eigene Darstellung.</figcaption>
+        </figure>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 7</span> Bauwerkstatt und Test 1</h4><span class="zeit">25 min</span></div>
+          <p style="margin:0">Bauen Sie den Prototyp. Führen Sie einen ersten Test mit kleiner Wassermenge durch. Dokumentieren Sie Beobachtungen in der Form «Vorher – Veränderung – Nachher». Verändern Sie jeweils nur einen Faktor, damit die Wirkung nachvollziehbar bleibt.</p>
+        </div>
+        <figure>
+          <img class="hell" src="/produkte/pumpspeicherkraftwerk/img/abb05-making-prozess.webp" alt="Iterativer Making-Prozess in fünf Schritten: Problem verstehen, Modell planen, Bauen, Testen und messen, Auswerten und verbessern, mit Rückkopplung" width="1600" height="416" loading="lazy">
+          <figcaption>Iterativer Making-Prozess. Eigene didaktische Darstellung.</figcaption>
+        </figure>
+        <div class="fazit"><b>Kurzreflexion (5 min).</b> Welche Fehlvorstellung könnte Ihr Modell erzeugen? Beispiel: Ein Wasserrad mit LED kann eine verlustfreie Umwandlung nahelegen. Notieren Sie eine didaktische Gegenmassnahme. Fragen Sie zusätzlich: Welche Interessen, Unsicherheiten und Lebensweisen bleiben auch bei einem «perfekten» technischen Modell unsichtbar?</div>
+        <p class="eyebrow" style="margin-bottom:0">Aus der Erprobung</p>
+        <div class="bilder eng">
+          <img src="/produkte/pumpspeicherkraftwerk/img/foto-material.webp" alt="Material in einer Kunststoffwanne: zwei PET-Flaschen und Schläuche" width="1300" height="1028" loading="lazy">
+          <img src="/produkte/pumpspeicherkraftwerk/img/foto-bau-1.webp" alt="Studentin baut am Tisch ein Wasserrad aus Holzlöffeln in eine Kunststoffwanne" width="1300" height="1126" loading="lazy">
+          <img src="/produkte/pumpspeicherkraftwerk/img/foto-bau-2.webp" alt="Studentin montiert das Wasserrad mit Holzlöffeln an einer Achse" width="1300" height="975" loading="lazy">
+          <img src="/produkte/pumpspeicherkraftwerk/img/foto-test-1.webp" alt="Studentin schliesst das Wasserrad an einen kleinen Generator an" width="1300" height="725" loading="lazy">
+          <img src="/produkte/pumpspeicherkraftwerk/img/foto-test-2.webp" alt="Nahaufnahme des Wasserrads mit Holzlöffeln und Generator mit Kabeln" width="1035" height="1300" loading="lazy">
+        </div>
+        <figure>
+          <img src="/produkte/pumpspeicherkraftwerk/img/abb06-versuchsreihe-ki.webp" alt="Bildreihe in sechs Schritten: Material, Aufbau, Pumpbetrieb, Turbinenbetrieb, Vergleichsversuch, Messung und Auswertung" width="1491" height="1055" loading="lazy" style="max-width:720px">
+          <figcaption><b>KI-generierte Visualisierung</b> als Planungs- und Dokumentationshilfe: Material, Aufbau, Pump- und Turbinenbetrieb, Vergleich und Auswertung. Keine Fotografie eines real durchgeführten Versuchs.</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="lektion" id="l4">
+      <summary><span class="nr">4</span><span class="kopf"><h3>Experimentieren und Modellkritik: Was beeinflusst die «Leistung»?</h3><p>Aufträge 8–9 · Experimentieren und Reflektieren · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Die Studierenden erheben und prüfen Messdaten, erkennen Grenzen technischer Modelle und diskutieren alternative Wege im Umgang mit demselben gesellschaftlichen Energieproblem.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 8</span> Vergleichsversuch</h4><span class="zeit">30 min</span></div>
+          <p style="margin:0">Untersuchen Sie eine Variable systematisch. Geeignet sind Höhendifferenz, Wassermenge pro Zeit, Düsen-/Schlauchquerschnitt oder Turbinenradform. Formulieren Sie eine Hypothese, halten Sie andere Bedingungen möglichst konstant und führen Sie mindestens drei Messungen pro Variante durch.</p>
+        </div>
+        <div class="hinweis"><b>Messqualität:</b> Die drei Messungen je Variante erfolgen unter möglichst identischen Bedingungen. Dokumentiert werden die kontrollierten Grössen, Messunsicherheiten und die tatsächliche Beobachtung. Eine kürzere Fliesszeit allein weist keine höhere elektrische Leistung nach; dazu wären geeignete Leistungs- beziehungsweise Energiemessungen nötig.</div>
+        <div class="tabelle">
+          <table>
+            <thead><tr><th>Variable</th><th>Messung 1</th><th>Messung 2</th><th>Messung 3</th><th>Mittelwert / Beobachtung</th></tr></thead>
+            <tbody>
+              <tr><td>Variante A</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Variante B</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Variante C (optional)</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin:0"><b>Auswertung:</b> Was zeigen Ihre Daten tatsächlich und wo wäre eine Verallgemeinerung unzulässig? Welche Messungen bräuchte ein echtes Kraftwerk? Ein technischer Gewinn beantwortet nicht die gesellschaftliche Frage: Könnte eine Verringerung oder zeitliche Verlagerung des Strombedarfs denselben Zielkonflikt anders verändern?</p>
+        <details class="loesung">
+          <summary>Lösungshinweis zu Auftrag 8 – faire Vergleichsversuche</summary>
+          <div class="l-inhalt">
+            <p style="margin:0">Eine prüfbare Hypothese nennt die unabhängige Variable, eine beobacht- oder messbare abhängige Grösse und eine vermutete Richtung. Bei Varianten mit unterschiedlicher Höhendifferenz sind Wasservolumen, Schlauch und Wasserradform möglichst konstant zu halten.</p>
+            <div class="tabelle">
+              <table style="min-width:0">
+                <thead><tr><th>Schritt</th><th>Beispiel für ein belastbares Vorgehen</th></tr></thead>
+                <tbody>
+                  <tr><td>Hypothese</td><td>Bei grösserer Höhendifferenz verändert sich bei sonst gleichem Aufbau die gemessene Fliesszeit.</td></tr>
+                  <tr><td>Konstant halten</td><td>Wasservolumen, Schlauch, Austrittsöffnung, Position des Rads und Messmethode.</td></tr>
+                  <tr><td>Messung</td><td>Mindestens drei Wiederholungen je Variante; Mittelwert und Streuung dokumentieren.</td></tr>
+                  <tr><td>Auswertung</td><td>Beobachtung, Interpretation und unzulässige Verallgemeinerung getrennt notieren.</td></tr>
+                  <tr><td>Modellkritik</td><td>Das Tischmodell macht Wasserweg und Energieumwandlung sichtbar, bildet aber keine Netzregelung oder realen Gesamtwirkungsgrad ab.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 9</span> Modellgrenzen</h4><span class="zeit">15 min</span></div>
+          <p style="margin:0">Erstellen Sie eine Zweispaltentabelle «Das Modell zeigt … / Das Modell zeigt nicht …» zu Energieverlusten, Pumpbetrieb, Generator, Netz, Ökosystemen und gesellschaftlichen Konflikten. Ergänzen Sie ein Gedankenexperiment mit zwei alternativen Energiezukünften: «mehr Speicherkapazität» und «anders mit Energie umgehen». Welche neuen Probleme erzeugt jede Option?</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="lektion" id="l5">
+      <summary><span class="nr">5</span><span class="kopf"><h3>BNE-Urteilsbildung: Zielkonflikte und Perspektiven</h3><p>Aufträge 10–11 · Reflektieren · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Die Studierenden bearbeiten gegensätzliche Zukunftsvorstellungen und Interessen, halten nicht auflösbare Zielkonflikte aus und prüfen, ob ihre eigenen Wertannahmen auch aus anderer Perspektive überzeugen.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 10</span> Stakeholder-Hearing</h4><span class="zeit">25 min</span></div>
+          <p style="margin:0">Verteilen Sie Rollen: Energieversorger, Gemeinde, Naturschutz, Tourismus/Landwirtschaft, Anwohnende oder Netzbetreiber. Benennen Sie je Rolle Interessen, Chancen und Bedenken. Diskutieren Sie mindestens zwei verschiedene Zukunftswege (z. B. Speicher ausbauen oder Bedarf verändern). Welche widersprüchlichen Erwartungen können gleichzeitig berechtigt sein? Trennen Sie Fakten, Werte und offene Fragen; übergehen Sie keine Position zugunsten eines schnellen Konsenses.</p>
+        </div>
+        <div class="doz"><b>Regionale Ergänzung</b>Der Stausee Sufers zeigt, dass Wasserkraft auch Nutzungsansprüche an Landschaft und Landwirtschaft berührt. Die KHR dokumentieren den Verlust von rund 30 ha Wiesland beim damaligen Einstau und beschreiben begleitende Bodenverbesserungsmassnahmen. Die Betreiberperspektive ist für eine vollständige Bewertung mit unabhängigen Quellen zu vergleichen.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 11</span> Mehrkriterielle Bewertung</h4><span class="zeit">15 min</span></div>
+        </div>
+        <div class="tabelle">
+          <table>
+            <thead><tr><th>Kriterium</th><th>Gewichtung 1–3</th><th>Bewertung −2 bis +2</th><th>Begründung / Evidenz</th></tr></thead>
+            <tbody>
+              <tr><td>Versorgungssicherheit</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Klimawirkung</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Biodiversität/Landschaft</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Ressourcen und Wirkungsgrad</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Kosten/Wirtschaftlichkeit</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Akzeptanz/Gerechtigkeit</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Langfristige Anpassungsfähigkeit</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="hinweis"><b>Wichtig:</b> Eine Punktesumme ersetzt kein Urteil. Vergleichen Sie mindestens zwei Zukunftsoptionen, legen Sie Ihre Gewichtungen und Wertannahmen offen und benennen Sie einen Widerspruch, der sich auch durch die Bewertung nicht auflösen lässt. Halten Sie eine bedingte Empfehlung oder eine begründete Vertagung der Entscheidung fest – samt der Information, die Ihre Position verändern könnte.</div>
+        <div class="fazit"><b>Sicherung: Positionslinie (5 min).</b> Positionieren Sie sich zur Aussage: «Die Schweiz sollte Pumpspeicherkraftwerke als zentralen Baustein der Energiewende weiter nutzen und ausbauen.» Vergleichen Sie Ihre Haltung mit Ihrer Notiz aus Lektion 1: Was hat Sie irritiert oder bestätigt? Welche Einwände einer anderen Perspektive bleiben bestehen? Eine unveränderte Haltung ist zulässig, wenn sie begründet reflektiert wird.</div>
+      </div>
+    </details>
+
+    <details class="lektion" id="l6">
+      <summary><span class="nr">6</span><span class="kopf"><h3>Transfer in die Lehrer:innenbildung: BNE-Lernaufgabe entwickeln</h3><p>Aufträge 12–14 · Experimentieren · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Die Studierenden übertragen die fachlichen und BNE-bezogenen Erkenntnisse in eine offene Lernaufgabe für Zyklus 2. Sie schaffen Gelegenheiten für Positionierung, Perspektivenwechsel und Erprobung von Alternativen, ohne bestimmte Werte oder Lösungen vorzuschreiben.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 12</span> Unterrichtsdesign</h4><span class="zeit">25 min</span></div>
+          <p>Entwickeln Sie eine 45-minütige Lernaufgabe für eine 6. Klasse, orientiert an NMG.3.2 (Lehrplan 21). Die Kinder sollen zunächst eine eigene Vorstellung einer guten Energiezukunft formulieren, technische Möglichkeiten erkunden, widersprüchliche Perspektiven diskutieren und eine kleine, sichere Handlungs- oder Gesprächsidee erproben. Eine «richtige» Entscheidung für oder gegen Pumpspeicher darf nicht vorgegeben sein.</p>
+          <ul style="margin:0">
+            <li>Einstieg mit einer echten Problemfrage statt Definition.</li>
+            <li>Eine Modell-, Experiment- oder Datenphase.</li>
+            <li>Mindestens zwei Nachhaltigkeitsperspektiven.</li>
+            <li>Sprachliche Unterstützung für Begründungen.</li>
+            <li>Eine Sicherung, die zwischen Fakten und Bewertungen unterscheidet.</li>
+            <li>Ein Lernprodukt, das offene Zukunftsentwürfe, einen begründeten Perspektivenwechsel oder fortbestehende Fragen sichtbar macht.</li>
+          </ul>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 13</span> Peer-Review</h4><span class="zeit">10 min</span></div>
+          <p style="margin:0">Tauschen Sie Ihre Lernaufgabe mit einer anderen Gruppe. Prüfen Sie fachliche Richtigkeit, Offenheit, Überwältigungsverbot, Quellenqualität, Differenzierung und Realisierbarkeit. Spielen Sie zusätzlich kritische Rückfragen einer betroffenen Person durch: Welche Stimme fehlt? Welche Alltagspraxis oder Zukunftsannahme bleibt unangetastet? Überarbeiten Sie einen Punkt anhand dieses Resonanztests.</p>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 14</span> Abschlusspräsentation und Reflexion</h4><span class="zeit">10 min</span></div>
+          <p style="margin:0">Präsentieren Sie Ihr Entscheidungsdossier in maximal drei Minuten. Zeigen Sie mindestens zwei Zukunftsoptionen, einen offenen Zielkonflikt und Ihren revidierbaren Standpunkt. Vergleichen Sie mit Ihrer ersten Position: Was haben Sie neu gesehen, was bleibt unklar? Benennen Sie eine realistische Möglichkeit, mit Betroffenen über Ihre Idee ins Gespräch zu kommen; dies ist ein Gesprächsangebot und kein vorgeschriebenes «nachhaltiges» Verhalten.</p>
+        </div>
+        <div class="doz"><b>Erweiterung für regionales BNE-Urteilen</b>Die fiktive Gemeinde «Bergtal» kann mit Ferrera, Valle di Lei und Sufers verglichen werden. Ein Vergleich «bestehendes Kraftwerk – Neubau – veränderte Nachfrage» öffnet unterschiedliche Zukünfte. Optional diskutieren Studierende ihren Zukunftsentwurf im hochschulinternen Umfeld oder mit freiwillig Beteiligten und dokumentieren die Rückmeldungen. Eine reale Beteiligung wird nicht behauptet, wenn keine stattgefunden hat.</div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="teil" id="ferrera" aria-labelledby="h-ferrera">
+  <div class="wrap">
+    <h2 id="h-ferrera" class="hand">Fallbeispiel Ferrera</h2>
+    <p class="teil-intro">Das Pumpspeicherwerk Ferrera der Kraftwerke Hinterrhein AG arbeitet mit dem Stausee Valle di Lei als höher gelegenem Speicher. Bei Bedarf wird Wasser aus dem Ausgleichsbecken Ferrera beziehungsweise über Zubringerpumpen aus dem Stausee Sufers hochgepumpt.</p>
+    <figure>
+      <img class="hell" src="/produkte/pumpspeicherkraftwerk/img/abb01-ferrera.webp" alt="Schema der zwei Betriebszustände: Pumpbetrieb mit Speicherpumpe vom unteren Niveau Ferrera/Sufers in den Stausee Valle di Lei, Turbinenbetrieb mit Francisturbine zurück" width="1600" height="652" loading="lazy">
+      <figcaption>Funktionsprinzip des Kraftwerks Ferrera mit zwei getrennten Betriebszuständen, didaktisch reduziert; nach Kraftwerke Hinterrhein AG (o. J.).</figcaption>
+    </figure>
+    <ul class="kennzahlen">
+      <li><b>185 MW</b><span>Turbinenleistung</span><em>Wie schnell kann elektrische Energie bereitgestellt werden?</em></li>
+      <li><b>90 MW</b><span>Pumpenleistung</span><em>Mit welcher elektrischen Leistung wird Wasser hochgepumpt?</em></li>
+      <li><b>524 m</b><span>Bruttogefälle</span><em>Wie beeinflusst der Höhenunterschied die verfügbare Lageenergie?</em></li>
+      <li><b>45 m³/s</b><span>Betriebswassermenge</span><em>Wie viel Wasser kann bei der Turbinierung pro Sekunde genutzt werden?</em></li>
+      <li><b>197 Mio. m³</b><span>Nutzinhalt Valle di Lei</span><em>Warum ist Speicherinhalt nicht mit Speicherkapazität in kWh gleichzusetzen?</em></li>
+    </ul>
+    <p class="small muted" style="margin-top:8px">Technische Kenndaten aus Betreiberangaben (Kraftwerke Hinterrhein AG, o. J.-a, o. J.-b).</p>
+  </div>
+</section>
+
+<section class="teil" id="beurteilung" aria-labelledby="h-beurteilung">
+  <div class="wrap">
+    <h2 id="h-beurteilung" class="hand">Beurteilung</h2>
+    <p class="teil-intro">Formativ oder als kleiner Leistungsnachweis einsetzbar. Bewertet wird weder eine vorgegebene «richtige» Position noch, ob sich eine Meinung verändert hat, sondern fachliche Genauigkeit, Evidenz, Offenheit, Reflexion eigener Annahmen, Umgang mit Widersprüchen und didaktischer Transfer.</p>
+    <div class="tabelle">
+      <table>
+        <thead><tr><th>Kriterium</th><th>Noch im Aufbau</th><th>Erreicht</th><th>Erweitert</th></tr></thead>
+        <tbody>
+          <tr><td><b>Fachverständnis</b></td><td>Begriffe teilweise korrekt</td><td>Pump-/Turbinenbetrieb und Energieformen korrekt erklärt</td><td>Verknüpft Energie, Leistung, Wirkungsgrad und Netzfunktion präzise</td></tr>
+          <tr><td><b>Modell/Experiment</b></td><td>Modell vorwiegend demonstrativ</td><td>Systematisch getestet und dokumentiert</td><td>Modellgrenzen und Messunsicherheiten differenziert reflektiert</td></tr>
+          <tr><td><b>BNE-Urteil</b></td><td>Einseitige Pro-/Contra-Sicht</td><td>Mehrere Perspektiven und Kriterien begründet</td><td>Widersprüche, Werte, Unsicherheit und eigene Vorannahmen werden reflektiert; offene Zukunftsoptionen bleiben begründbar</td></tr>
+          <tr><td><b>Quellenarbeit</b></td><td>Quellen unsystematisch</td><td>Seriöse Quellen korrekt belegt</td><td>Quelleninteressen und Evidenzqualität kritisch verglichen</td></tr>
+          <tr><td><b>Didaktischer Transfer</b></td><td>Aufgabe primär reproduktiv</td><td>Handlungs- und urteilsorientierte Lernaufgabe</td><td>BNE-Kompetenzen, Differenzierung und Fehlvorstellungen gezielt integriert</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="material" aria-labelledby="h-material">
+  <div class="wrap">
+    <h2 id="h-material" class="hand">Material und Sicherheit</h2>
+    <div class="zwei">
+      <ul class="material">
+        <li>2 transparente Behälter oder PET-Flaschen<span>als Ober- und Unterbecken</span></li>
+        <li>Schlauch oder Rinne, Klebeband<span>Schere/Cutter nur unter geeigneten Sicherheitsbedingungen</span></li>
+        <li>Messbecher, Stoppuhr, Lineal/Massband<span>kleine Wassermenge</span></li>
+        <li>Karton, Löffel oder Kunststoffdeckel<span>für ein Turbinen-/Wasserrad</span></li>
+        <li>Niedervolt-Tauchpumpe<span>optional, mit sicherer Stromversorgung</span></li>
+        <li>Handtuch/Unterlage, Auffangwanne</li>
+        <li>Arbeitsblätter, Rollen- und Kriterienkarten</li>
+      </ul>
+      <div class="hinweis" style="align-self:start"><b>Sicherheit und Nachhaltigkeit:</b> Wasser und elektrische Komponenten sind räumlich zu trennen. Es werden ausschliesslich sichere Kleinspannungskomponenten verwendet; elektrische Komponenten trocken und ausserhalb der Auffangwanne aufbauen. Wasser wird aufgefangen und wiederverwendet. Beim Modellbau werden Restmaterialien bevorzugt und Verbrauchsmaterialien sparsam eingesetzt. Experimentierarbeiten erfolgen unter fachkundiger Aufsicht.</div>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="bne" aria-labelledby="h-bne">
+  <div class="wrap">
+    <h2 id="h-bne" class="hand">BNE-Bezug</h2>
+    <p class="teil-intro">Die SDGs werden nicht als Dekoration eingesetzt, sondern als Perspektiven für die Analyse von Energieversorgung, Infrastruktur, Ressourceneinsatz, Klimaschutz und Eingriffen in Ökosysteme.</p>
+    <p class="eyebrow">Sustainable Development Goals</p>
+    <ul class="sdgs">
+      <li><b><span>7</span>Bezahlbare und saubere Energie</b>Energiespeicherung als Baustein einer verlässlichen Versorgung mit erneuerbaren Energien analysieren.</li>
+      <li><b><span>9</span>Industrie, Innovation, Infrastruktur</b>Technische Infrastruktur, Innovation, Netzstabilität und langfristige Investitionen beurteilen.</li>
+      <li><b><span>12</span>Nachhaltiger Konsum und Produktion</b>Wirkungsgrad, Energieverluste, Materialeinsatz und bewussten Energieverbrauch reflektieren.</li>
+      <li><b><span>13</span>Massnahmen zum Klimaschutz</b>Speicher im Kontext einer fossilärmeren Stromversorgung und der Energiewende einordnen.</li>
+      <li><b><span>15</span>Leben an Land</b>Auswirkungen von Staubecken, Leitungen und Bauwerken auf Landschaft und Lebensräume abwägen.</li>
+    </ul>
+
+    <p class="eyebrow" style="margin-top:28px">RSP-Kompetenzen und Aufträge</p>
+    <p class="small muted" style="margin-top:-4px">● Schwerpunkt · ○ Mitförderung. Didaktische Interpretation der Aufträge 1–14 durch die Autorinnen und Autoren.</p>
+    <div class="tabelle">
+      <table class="matrix-rsp">
+        <thead><tr><th>Kompetenz</th><th>1–3</th><th>4–5</th><th>6–7</th><th>8–9</th><th>10–11</th><th>12–14</th></tr></thead>
+        <tbody>
+          <tr><td>Systeme</td><td>●</td><td>●</td><td>○</td><td>●</td><td>●</td><td>○</td></tr>
+          <tr><td>Aufmerksamkeit</td><td>●</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+          <tr><td>Transdisziplinarität</td><td>○</td><td>●</td><td>○</td><td>●</td><td>○</td><td>●</td></tr>
+          <tr><td>Kritisches Denken</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+          <tr><td>Zukünfte</td><td>●</td><td>○</td><td>○</td><td>○</td><td>●</td><td>●</td></tr>
+          <tr><td>Empathie</td><td>○</td><td>○</td><td>○</td><td>○</td><td>●</td><td>○</td></tr>
+          <tr><td>Kreativität</td><td>○</td><td>○</td><td>●</td><td>●</td><td>○</td><td>●</td></tr>
+          <tr><td>Verantwortung</td><td>○</td><td>○</td><td>●</td><td>●</td><td>○</td><td>●</td></tr>
+          <tr><td>Partizipation</td><td>●</td><td>○</td><td>●</td><td>○</td><td>●</td><td>●</td></tr>
+          <tr><td>Werte</td><td>○</td><td>○</td><td>○</td><td>○</td><td>●</td><td>●</td></tr>
+          <tr><td>Handeln</td><td>○</td><td>○</td><td>●</td><td>●</td><td>○</td><td>●</td></tr>
+          <tr><td>Entscheidungsfreudigkeit</td><td>○</td><td>○</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="eyebrow" style="margin-top:28px">Lehrplan 21</p>
+    <div class="lp">
+      <div class="kasten"><b class="code">NMG.3.2 Energie und Energieumwandlungen</b><p class="small" style="margin:4px 0 0">Zyklus 2. Bezugspunkt für die Lernaufgabe einer 6. Klasse in Auftrag 12.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="kartenset" aria-labelledby="h-kartenset">
+  <div class="wrap">
+    <h2 id="h-kartenset" class="hand">Verortung im Kartenset</h2>
+    <p class="teil-intro">Vorschlag zur Diskussion: An diesen Stellen nimmt die Lerneinheit Felder aus dem Kartenset «BNE meets Making» auf. Die Zuordnung stammt nicht aus dem Dossier.</p>
+    <ul class="karten">
+      <li><a class="k-sys" href="https://bne-meets-making.vercel.app/karten/k01/" target="_blank" rel="noopener"><span class="k">K01 · Systemdenken × Systemwissen</span><span class="t">Systeme modellieren</span><span class="w">Systembild mit Pump- und Turbinenbetrieb, Concept Map.</span><span class="l">Aufträge 2–3</span></a></li>
+      <li><a class="k-emo" href="https://bne-meets-making.vercel.app/karten/k11/" target="_blank" rel="noopener"><span class="k">K11 · Emotionen × Zielwissen</span><span class="t">Zielbilder berühren</span><span class="w">Eigene Ausgangsposition und Annahmen zum «guten Leben» notieren.</span><span class="l">Auftrag 1</span></a></li>
+      <li><a class="k-kon" href="https://bne-meets-making.vercel.app/karten/k04/" target="_blank" rel="noopener"><span class="k">K04 · Kontroversität × Systemwissen</span><span class="t">Systembilder hinterfragen</span><span class="w">Quellenkritik und «Das Modell zeigt nicht …».</span><span class="l">Aufträge 5 und 9</span></a></li>
+      <li><a class="k-ite" href="https://bne-meets-making.vercel.app/karten/k07/" target="_blank" rel="noopener"><span class="k">K07 · Iteratives Handeln × Systemwissen</span><span class="t">Systeme erforschen</span><span class="w">Tischmodell bauen, Vergleichsversuch mit einer Variable.</span><span class="l">Aufträge 6–8</span></a></li>
+      <li><a class="k-kon" href="https://bne-meets-making.vercel.app/karten/k06/" target="_blank" rel="noopener"><span class="k">K06 · Kontroversität × Transformationswissen</span><span class="t">Veränderungswege aushandeln</span><span class="w">Stakeholder-Hearing zu «Speicher ausbauen» oder «Bedarf verändern».</span><span class="l">Aufträge 10–11</span></a></li>
+      <li><a class="k-mat" href="https://bne-meets-making.vercel.app/karten/k13/" target="_blank" rel="noopener"><span class="k">K13 · Querschnitt</span><span class="t">Materielle Praxis</span><span class="w">Restmaterial bevorzugen, Wasser auffangen und wiederverwenden.</span><span class="l">Material und Sicherheit</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="teil" id="quellen" aria-labelledby="h-quellen">
+  <div class="wrap">
+    <h2 id="h-quellen" class="hand">Quellen</h2>
+    <ul class="quellen">
+      <li>A Rounder Sense of Purpose. (o. J.). Der RSP-Kompetenzrahmen. <a href="https://aroundersenseofpurpose.eu/de/framework/themodel/" target="_blank" rel="noopener">aroundersenseofpurpose.eu</a></li>
+      <li>Bundesamt für Energie (BFE). (2021). Energiespeichertechnologien: Kurzübersicht 2021 (Abschnitt 4.2.1 Pumpspeicher). <a href="https://pubdb.bfe.admin.ch/de/publication/download/10623" target="_blank" rel="noopener">pubdb.bfe.admin.ch</a></li>
+      <li>Kraftwerke Hinterrhein AG. (o. J.-a). Kraftwerke: Kraftwerk Ferrera. <a href="https://www.khr.ch/de/kraftwerke" target="_blank" rel="noopener">khr.ch/de/kraftwerke</a></li>
+      <li>Kraftwerke Hinterrhein AG. (o. J.-b). Stauseen: Stausee Valle di Lei, Stausee Sufers. <a href="https://www.khr.ch/de/stauseen" target="_blank" rel="noopener">khr.ch/de/stauseen</a></li>
+      <li>Kraftwerke Hinterrhein AG. (o. J.-c). Übersicht. <a href="https://www.khr.ch/de/uebersicht" target="_blank" rel="noopener">khr.ch/de/uebersicht</a></li>
+      <li>Lehrplan 21. (o. J.). NMG.3.2 – Energie und Energieumwandlungen (Zyklus 2). <a href="https://www.zebis.ch/lp21/NMG/3/2?v=v-fe" target="_blank" rel="noopener">zebis.ch</a></li>
+      <li>Pettig, F., &amp; Ohl, U. (2023). Transformatives Lernen für einen sozial-ökologischen Wandel: Facetten eines zukunftsfähigen Geographieunterrichts. <em>Praxis Geographie</em>, 1/2023, 4–9.</li>
+      <li>United Nations. (o. J.). Sustainable Development Goals. <a href="https://sdgs.un.org/goals" target="_blank" rel="noopener">sdgs.un.org/goals</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="teil" id="offen" aria-labelledby="h-offen">
+  <div class="wrap">
+    <h2 id="h-offen" class="hand">Offene Punkte</h2>
+    <p class="teil-intro">Das Dossier ist vollständig. Für die finale Fassung sind diese Punkte mit der Projektgruppe zu klären.</p>
+    <ol class="offen">
+      <li><b>Zielgruppe:</b> Die Titelseite nennt «Studierende Zyklus 1 und 2 im Bachelorstudiengang», der Abschnitt «Rahmen und Lernziele» «Primarstufen- bzw. Sekundarstufenausbildung». Welche Angabe gilt?</li>
+      <li><b>SDG 4:</b> In der Kompetenzmatrix steht bei den Aufträgen 12–14 auch SDG 4, in der SDG-Übersicht fehlt es.</li>
+      <li><b>Fotodokumentation:</b> Das Inhaltsverzeichnis nennt einen Abschnitt «Fotodokumentation und Quellenredlichkeit», der im Dokument fehlt. Die eingereichten Fotos aus der Erprobung sind ohne Beschriftung.</li>
+      <li><b>Titel in der Einreichung:</b> Im Formular steht «Pumpspiecherkraftwerk»; die Ausstellung zeigt den Titel so, bis er korrigiert ist.</li>
+      <li><b>Downloads:</b> Arbeitsblätter, Rollen- und Kriterienkarten als PDF.</li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Pumpspeicherkraftwerk – BNE-Lerneinheit Modul NMG05C · Evelyne Jacober, Ivano Laudonia · PH Graubünden</span>
+    <span>Ausstellung Making × BNE, Teilprojekt PgB 1b</span>
+  </div>
+</footer>
+
+</body>
+</html>
