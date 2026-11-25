@@ -23,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav>
               <Link href="/">Ausstellung</Link>
+              <Link href="/indikatoren">Indikatoren</Link>
               <Link href="/einreichen">Produkt einreichen</Link>
             </nav>
           </div>

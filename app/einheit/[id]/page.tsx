@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, presenterSlug } from "@/lib/entries";
-import { produktseite } from "@/lib/produkte";
+import { anzeigetitel, produktseite } from "@/lib/produkte";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +19,7 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
       <div className="eyebrow" style={{ marginTop: 24 }}>
         {[e.presenter, e.group, e.subject].filter(Boolean).join(" · ")}
       </div>
-      <h1>{e.title}</h1>
+      <h1>{anzeigetitel(e)}</h1>
       <p className="lead prewrap">{e.summary}</p>
 
       {seite && (

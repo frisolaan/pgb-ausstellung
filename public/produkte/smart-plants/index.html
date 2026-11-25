@@ -214,6 +214,19 @@ html { scroll-behavior: smooth; }
 .zurueck a { color: var(--ink); text-decoration: none; font-weight: 500; }
 .zurueck a:hover { text-decoration: underline; }
 </style>
+<style id="indik-css">
+.indik { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.indik li > a { display: grid; grid-template-columns: 2.2em 1fr auto; gap: 4px 12px; align-items: baseline; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-left: 5px solid #9a988f; border-radius: var(--r, 12px); padding: 12px 14px; }
+.indik li > a:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+.indik .deutlich > a { border-left-color: #2f6b4f; }
+.indik .teilweise > a { border-left-color: #c58a1c; }
+.indik .nr { font-weight: 700; color: var(--ink-mute, #777); }
+.indik .t { font-weight: 700; }
+.indik .s { font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute, #777); }
+.indik .w { grid-column: 2 / -1; font-size: .9rem; color: var(--ink-soft, #555); }
+.indik-mehr { margin-top: 14px; }
+@media (max-width: 560px) { .indik li > a { grid-template-columns: 2.2em 1fr; } .indik .s { grid-column: 2; } }
+</style>
 </head>
 <body>
 <nav class="zurueck"><div class="wrap"><a href="/">← Zur Ausstellung Making × BNE</a></div></nav>
@@ -258,7 +271,7 @@ html { scroll-behavior: smooth; }
     <a href="#ablauf">Ablauf</a>
     <a href="#technik">Technik</a>
     <a href="#bne">BNE-Bezug</a>
-    <a href="#kartenset">Kartenset</a>
+    <a href="#indikatoren">Indikatoren</a>
     <a href="#offen">Offene Punkte</a>
   </div>
 </nav>
@@ -772,18 +785,20 @@ html { scroll-behavior: smooth; }
   </div>
 </section>
 
-<section class="teil" id="kartenset" aria-labelledby="h-kartenset">
+<section class="teil" id="indikatoren" aria-labelledby="h-indikatoren">
   <div class="wrap">
-    <h2 id="h-kartenset" class="hand">Verortung im Kartenset</h2>
-    <p class="teil-intro">Vorschlag zur Diskussion: An diesen Stellen nimmt die Lerneinheit Felder aus dem Kartenset «BNE meets Making» auf. Die Zuordnung stammt nicht aus dem Dossier.</p>
-    <ul class="karten">
-      <li><a class="k-sys" href="https://bne-meets-making.vercel.app/karten/k01/" target="_blank" rel="noopener"><span class="k">K01 · Systemdenken × Systemwissen</span><span class="t">Systeme modellieren</span><span class="w">Concept Map «Wasserknappheit» in Lektion 1.</span><span class="l">Lektion 1</span></a></li>
-      <li><a class="k-sys" href="https://bne-meets-making.vercel.app/karten/k02/" target="_blank" rel="noopener"><span class="k">K02 · Systemdenken × Zielwissen</span><span class="t">Zielräume als System denken</span><span class="w">Anforderungen an ein nachhaltiges System: Wasser, Energie, Regenwasser.</span><span class="l">Lektion 2</span></a></li>
-      <li><a class="k-ite" href="https://bne-meets-making.vercel.app/karten/k07/" target="_blank" rel="noopener"><span class="k">K07 · Iteratives Handeln × Systemwissen</span><span class="t">Systeme erforschen</span><span class="w">Kalibrierung und Messprotokoll, Fördermenge prüfen.</span><span class="l">Lektion 4</span></a></li>
-      <li><a class="k-ite" href="https://bne-meets-making.vercel.app/karten/k09/" target="_blank" rel="noopener"><span class="k">K09 · Iteratives Handeln × Transformationswissen</span><span class="t">Wandel im Kleinen testen</span><span class="w">Prototyp schrittweise bauen, testen und verbessern.</span><span class="l">Lektionen 4–8</span></a></li>
-      <li><a class="k-kon" href="https://bne-meets-making.vercel.app/karten/k05/" target="_blank" rel="noopener"><span class="k">K05 · Kontroversität × Zielwissen</span><span class="t">Zielkonflikte aushandeln</span><span class="w">Low-Tech oder High-Tech, Stakeholder-Hearing, Empfehlung mit Bedingung.</span><span class="l">Lektion 9</span></a></li>
-      <li><a class="k-mat" href="https://bne-meets-making.vercel.app/karten/k13/" target="_blank" rel="noopener"><span class="k">K13 · Querschnitt</span><span class="t">Materielle Praxis</span><span class="w">Graue Energie und Ende der Nutzungsdauer von Calliope, Sensor und Pumpe.</span><span class="l">Auftrag 8.2 e</span></a></li>
+    <h2 id="h-indikatoren" class="hand">Indikatoren Making × BNE</h2>
+    <p class="teil-intro">Entwurf zur Diskussion: Wo die sieben Indikatoren der Projektgruppe in dieser Lerneinheit vorkommen. Die Zuordnung stammt nicht aus dem Dossier und ist von der Projektgruppe noch zu bestätigen.</p>
+    <ul class="indik">
+      <li class="teilweise"><a href="/indikatoren/materialeignung"><span class="nr">1</span><span class="t">Analyse der Materialeignung</span><span class="s">teilweise</span><span class="w">Auftrag 8.2 e: Materialien und Graue Energie von Calliope mini, Sensor, Pumpe und Netzteil abschätzen; Ende der Nutzungsdauer; Hinweis zu Auftrag 4.1: Resistive Sensoren korrodieren, kapazitive halten länger: eine Materialfrage mit Folgen für die Lebensdauer.</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/produktfunktion"><span class="nr">2</span><span class="t">Analyse der Produktfunktion</span><span class="s">teilweise</span><span class="w">Auftrag 8.2 d: Tabelle «Unser System kann … / kann nicht …» mit Ausfällen während der Ferien und Wartungsaufwand; Auftrag 8.2 e: Was geschieht am Ende der Nutzungsdauer?</span></a></li>
+      <li class="deutlich"><a href="/indikatoren/kollaboratives-tuefteln"><span class="nr">3</span><span class="t">Kollaboratives Tüfteln</span><span class="s">ausdrücklich</span><span class="w">Auftrag 2.2 · Erste Lösungsidee: Lösungsidee in der Gruppe skizzieren; nicht umsetzbare Ideen werden mit Impulsen weiterentwickelt; Lektionen 4–8: Bewässerungssystem in Teams zu 2–3 schrittweise bauen, testen und optimieren; Auftrag 10.2 · Peer-Review: Lernaufgaben gegenseitig kriteriengeleitet prüfen.</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/endnutzer"><span class="nr">4</span><span class="t">Mitwirkung durch die Endnutzer</span><span class="s">teilweise</span><span class="w">Auftrag 9.2 · Stakeholder-Hearing: Rollen Hauswart (Wartung, Ferienbetreuung) und Gartengruppe der Klasse (Mitbestimmung); Auftrag 8.2 d: Wartungsaufwand als Grenze des Systems benennen.</span></a></li>
+      <li class="deutlich"><a href="/indikatoren/notwendigkeit"><span class="nr">5</span><span class="t">Gedanken zur Notwendigkeit des Produktes</span><span class="s">ausdrücklich</span><span class="w">Auftrag 9.1 · Low-Tech oder High-Tech?: «Nicht jedes Nachhaltigkeitsproblem braucht eine digitale Lösung.» Vergleich mit Mulchen, Ollas, Regentonne, Giessplan; Effizienz und Suffizienz unterscheiden; Auftrag 9.3 · Empfehlung: Empfehlung mit einer Bedingung, unter der sie sich ändern würde.</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/produktionsprozess"><span class="nr">6</span><span class="t">Gedanken zum Produktionsprozess</span><span class="s">teilweise</span><span class="w">Auftrag 8.2 e: Graue Energie der eingesetzten Elektronik abschätzen; Auftrag 9.3: Kriterium «Übertragbarkeit (Schulgarten, Stadtgrün)»</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/nutzerverhalten"><span class="nr">7</span><span class="t">Beeinflussung des Nutzerverhaltens</span><span class="s">teilweise</span><span class="w">Auftrag 9.1: Giessplan für die Ferien und Suffizienz als Alternative zur Technik.</span></a></li>
     </ul>
+    <p class="indik-mehr"><a href="/indikatoren">Alle Indikatoren im Vergleich der Produkte →</a></p>
   </div>
 </section>
 
@@ -810,5 +825,17 @@ html { scroll-behavior: smooth; }
   </div>
 </footer>
 
+<script id="hash-oeffnen">
+(function () {
+  function oeffnen() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el && el.tagName === "DETAILS") { el.open = true; el.scrollIntoView(); }
+  }
+  window.addEventListener("hashchange", oeffnen);
+  oeffnen();
+})();
+</script>
 </body>
 </html>

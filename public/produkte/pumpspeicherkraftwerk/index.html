@@ -236,6 +236,19 @@ img.hell { background: #fff; border: 1px solid var(--line); width: 100%; }
 .zurueck a { color: var(--ink); text-decoration: none; font-weight: 500; }
 .zurueck a:hover { text-decoration: underline; }
 </style>
+<style id="indik-css">
+.indik { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.indik li > a { display: grid; grid-template-columns: 2.2em 1fr auto; gap: 4px 12px; align-items: baseline; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-left: 5px solid #9a988f; border-radius: var(--r, 12px); padding: 12px 14px; }
+.indik li > a:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+.indik .deutlich > a { border-left-color: #2f6b4f; }
+.indik .teilweise > a { border-left-color: #c58a1c; }
+.indik .nr { font-weight: 700; color: var(--ink-mute, #777); }
+.indik .t { font-weight: 700; }
+.indik .s { font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute, #777); }
+.indik .w { grid-column: 2 / -1; font-size: .9rem; color: var(--ink-soft, #555); }
+.indik-mehr { margin-top: 14px; }
+@media (max-width: 560px) { .indik li > a { grid-template-columns: 2.2em 1fr; } .indik .s { grid-column: 2; } }
+</style>
 </head>
 <body>
 <nav class="zurueck"><div class="wrap"><a href="/">← Zur Ausstellung Making × BNE</a></div></nav>
@@ -281,7 +294,7 @@ img.hell { background: #fff; border: 1px solid var(--line); width: 100%; }
     <a href="#beurteilung">Beurteilung</a>
     <a href="#material">Material</a>
     <a href="#bne">BNE-Bezug</a>
-    <a href="#kartenset">Kartenset</a>
+    <a href="#indikatoren">Indikatoren</a>
     <a href="#quellen">Quellen</a>
     <a href="#offen">Offene Punkte</a>
   </div>
@@ -656,18 +669,20 @@ img.hell { background: #fff; border: 1px solid var(--line); width: 100%; }
   </div>
 </section>
 
-<section class="teil" id="kartenset" aria-labelledby="h-kartenset">
+<section class="teil" id="indikatoren" aria-labelledby="h-indikatoren">
   <div class="wrap">
-    <h2 id="h-kartenset" class="hand">Verortung im Kartenset</h2>
-    <p class="teil-intro">Vorschlag zur Diskussion: An diesen Stellen nimmt die Lerneinheit Felder aus dem Kartenset «BNE meets Making» auf. Die Zuordnung stammt nicht aus dem Dossier.</p>
-    <ul class="karten">
-      <li><a class="k-sys" href="https://bne-meets-making.vercel.app/karten/k01/" target="_blank" rel="noopener"><span class="k">K01 · Systemdenken × Systemwissen</span><span class="t">Systeme modellieren</span><span class="w">Systembild mit Pump- und Turbinenbetrieb, Concept Map.</span><span class="l">Aufträge 2–3</span></a></li>
-      <li><a class="k-emo" href="https://bne-meets-making.vercel.app/karten/k11/" target="_blank" rel="noopener"><span class="k">K11 · Emotionen × Zielwissen</span><span class="t">Zielbilder berühren</span><span class="w">Eigene Ausgangsposition und Annahmen zum «guten Leben» notieren.</span><span class="l">Auftrag 1</span></a></li>
-      <li><a class="k-kon" href="https://bne-meets-making.vercel.app/karten/k04/" target="_blank" rel="noopener"><span class="k">K04 · Kontroversität × Systemwissen</span><span class="t">Systembilder hinterfragen</span><span class="w">Quellenkritik und «Das Modell zeigt nicht …».</span><span class="l">Aufträge 5 und 9</span></a></li>
-      <li><a class="k-ite" href="https://bne-meets-making.vercel.app/karten/k07/" target="_blank" rel="noopener"><span class="k">K07 · Iteratives Handeln × Systemwissen</span><span class="t">Systeme erforschen</span><span class="w">Tischmodell bauen, Vergleichsversuch mit einer Variable.</span><span class="l">Aufträge 6–8</span></a></li>
-      <li><a class="k-kon" href="https://bne-meets-making.vercel.app/karten/k06/" target="_blank" rel="noopener"><span class="k">K06 · Kontroversität × Transformationswissen</span><span class="t">Veränderungswege aushandeln</span><span class="w">Stakeholder-Hearing zu «Speicher ausbauen» oder «Bedarf verändern».</span><span class="l">Aufträge 10–11</span></a></li>
-      <li><a class="k-mat" href="https://bne-meets-making.vercel.app/karten/k13/" target="_blank" rel="noopener"><span class="k">K13 · Querschnitt</span><span class="t">Materielle Praxis</span><span class="w">Restmaterial bevorzugen, Wasser auffangen und wiederverwenden.</span><span class="l">Material und Sicherheit</span></a></li>
+    <h2 id="h-indikatoren" class="hand">Indikatoren Making × BNE</h2>
+    <p class="teil-intro">Entwurf zur Diskussion: Wo die sieben Indikatoren der Projektgruppe in dieser Lerneinheit vorkommen. Die Zuordnung stammt nicht aus dem Dossier und ist von der Projektgruppe noch zu bestätigen.</p>
+    <ul class="indik">
+      <li class="teilweise"><a href="/indikatoren/materialeignung"><span class="nr">1</span><span class="t">Analyse der Materialeignung</span><span class="s">teilweise</span><span class="w">Auftrag 6 · Beobachtungskriterium: Material wird sparsam, wiederverwendbar und sicher eingesetzt; Material und Sicherheit: PET-Flaschen, Karton, Löffel oder Deckel als Wasserrad; Restmaterialien bevorzugen, Wasser auffangen und wiederverwenden.</span></a></li>
+      <li class="offen"><a href="/indikatoren/produktfunktion"><span class="nr">2</span><span class="t">Analyse der Produktfunktion</span><span class="s">nicht ausgewiesen</span><span class="w">Das Tischmodell ist ein Anschauungsmodell; seine Lebensdauer oder Weiterverwendung ist kein Thema. Am nächsten kommt das Kriterium «wiederverwendbar» in Auftrag 6.</span></a></li>
+      <li class="deutlich"><a href="/indikatoren/kollaboratives-tuefteln"><span class="nr">3</span><span class="t">Kollaboratives Tüfteln</span><span class="s">ausdrücklich</span><span class="w">Auftrag 2 · Systembild: In Dreiergruppen Pump- und Turbinenbetrieb zeichnen; Aufträge 6–7 · Modell planen und bauen: Didaktisch reduziertes Modell statt Endprodukt; Bauwerkstatt mit Test und Kurzreflexion; Auftrag 13 · Peer-Review: Lernaufgaben tauschen und einen Resonanztest durchspielen.</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/endnutzer"><span class="nr">4</span><span class="t">Mitwirkung durch die Endnutzer</span><span class="s">teilweise</span><span class="w">Auftrag 13 · Resonanztest: Kritische Rückfragen einer betroffenen Person durchspielen: Welche Stimme fehlt?; Auftrag 14: Eine realistische Möglichkeit benennen, mit Betroffenen ins Gespräch zu kommen.</span></a></li>
+      <li class="deutlich"><a href="/indikatoren/notwendigkeit"><span class="nr">5</span><span class="t">Gedanken zur Notwendigkeit des Produktes</span><span class="s">ausdrücklich</span><span class="w">Auftrag 1: Eigene Annahmen zum Energiebedarf und zum «guten Leben» notieren; Auftrag 9 · Gedankenexperiment: Zwei Zukünfte: «mehr Speicherkapazität» oder «anders mit Energie umgehen»; Aufträge 10–11: Zukunftswege «Speicher ausbauen» oder «Bedarf verändern»; bedingte Empfehlung oder begründete Vertagung.</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/produktionsprozess"><span class="nr">6</span><span class="t">Gedanken zum Produktionsprozess</span><span class="s">teilweise</span><span class="w">Auftrag 10 · Regionale Ergänzung: Stausee Sufers: rund 30 ha Wiesland beim Einstau verloren; Betreiberangaben mit unabhängigen Quellen vergleichen; Auftrag 11: Kriterien Biodiversität/Landschaft und Akzeptanz/Gerechtigkeit.</span></a></li>
+      <li class="teilweise"><a href="/indikatoren/nutzerverhalten"><span class="nr">7</span><span class="t">Beeinflussung des Nutzerverhaltens</span><span class="s">teilweise</span><span class="w">Auftrag 8 · Auswertung: Könnte eine Verringerung oder zeitliche Verlagerung des Strombedarfs denselben Zielkonflikt verändern?; Auftrag 14: Gesprächsangebot an Betroffene statt vorgeschriebenes «nachhaltiges» Verhalten.</span></a></li>
     </ul>
+    <p class="indik-mehr"><a href="/indikatoren">Alle Indikatoren im Vergleich der Produkte →</a></p>
   </div>
 </section>
 
@@ -695,7 +710,7 @@ img.hell { background: #fff; border: 1px solid var(--line); width: 100%; }
       <li><b>Zielgruppe:</b> Die Titelseite nennt «Studierende Zyklus 1 und 2 im Bachelorstudiengang», der Abschnitt «Rahmen und Lernziele» «Primarstufen- bzw. Sekundarstufenausbildung». Welche Angabe gilt?</li>
       <li><b>SDG 4:</b> In der Kompetenzmatrix steht bei den Aufträgen 12–14 auch SDG 4, in der SDG-Übersicht fehlt es.</li>
       <li><b>Fotodokumentation:</b> Das Inhaltsverzeichnis nennt einen Abschnitt «Fotodokumentation und Quellenredlichkeit», der im Dokument fehlt. Die eingereichten Fotos aus der Erprobung sind ohne Beschriftung.</li>
-      <li><b>Titel in der Einreichung:</b> Im Formular steht «Pumpspiecherkraftwerk»; die Ausstellung zeigt den Titel so, bis er korrigiert ist.</li>
+      <li><b>Titel in der Einreichung:</b> Im Formular steht «Pumpspiecherkraftwerk». Die Ausstellung zeigt den korrigierten Titel; der Eintrag selbst ist noch unverändert.</li>
       <li><b>Downloads:</b> Arbeitsblätter, Rollen- und Kriterienkarten als PDF.</li>
     </ol>
   </div>
@@ -709,5 +724,17 @@ img.hell { background: #fff; border: 1px solid var(--line); width: 100%; }
   </div>
 </footer>
 
+<script id="hash-oeffnen">
+(function () {
+  function oeffnen() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el && el.tagName === "DETAILS") { el.open = true; el.scrollIntoView(); }
+  }
+  window.addEventListener("hashchange", oeffnen);
+  oeffnen();
+})();
+</script>
 </body>
 </html>

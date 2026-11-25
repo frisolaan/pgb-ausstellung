@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { groupByPresenter, listEntries } from "@/lib/entries";
-import { produktseite } from "@/lib/produkte";
+import { anzeigetitel, produktseite } from "@/lib/produkte";
 import Avatar from "../../avatar";
 
 export const dynamic = "force-dynamic";
@@ -35,7 +35,7 @@ export default async function PersonPage({ params }: { params: Promise<{ slug: s
               <div className="thumb" />
             )}
             <div className="body">
-              <h3>{e.title}</h3>
+              <h3>{anzeigetitel(e)}</h3>
               {e.subject && <div className="meta">{e.subject}</div>}
               {produktseite(e.id) && <div className="meta">Aufbereitete Lerneinheit verfügbar</div>}
             </div>

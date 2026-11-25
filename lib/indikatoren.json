@@ -1,0 +1,272 @@
+{
+  "quelle": {
+    "titel": "MakingBNE_Indikatoren",
+    "autorin": "Anja Küttel",
+    "prezi": "https://prezi.com/view/gtHzcGHanHKC2xsdWHLf/",
+    "embed": "https://prezi.com/p/embed/gtHzcGHanHKC2xsdWHLf/",
+    "leitsatz": "Ich fördere Nachhaltigkeitskompetenzen im Makingprozess, wenn ich diese Punkte bewusst steuere:"
+  },
+  "produkte": {
+    "smart-plants": { "name": "Smart Plants", "url": "/produkte/smart-plants", "kurz": "Hochbeet mit Calliope mini, PH Graubünden" },
+    "pumpspeicher": { "name": "Pumpspeicherkraftwerk", "url": "/produkte/pumpspeicherkraftwerk", "kurz": "Tischmodell und Fallbeispiel Ferrera, PH Graubünden" },
+    "solar": { "name": "Solar-Tracking", "url": "https://magenta-platypus-93095a.netlify.app/", "kurz": "MINT & BNE in 9 Phasen (externe App)", "extern": true }
+  },
+  "stufen": {
+    "deutlich": "ausdrücklich angelegt",
+    "teilweise": "angelegt, aber mit anderem Schwerpunkt",
+    "offen": "in der Einheit nicht ausgewiesen"
+  },
+  "indikatoren": [
+    {
+      "slug": "materialeignung",
+      "titel": "Analyse der Materialeignung",
+      "text": "Die Lernenden führen eine genaue Analyse der Materialeignung für das zu konzipierende Produkt bei Materialrecycling oder -upcycling durch.",
+      "beispiele": [
+        "Herkunft des Materials muss nachvollziehbar sein",
+        "Prüfen, ob lokale Produktion möglich ist",
+        "Weiterverwendung von Produktionsresten",
+        "Erneuerbares Material verwenden",
+        "Lösungssuche und neues Betrachten von vorhandenen Materialien fördern",
+        "Materialrecycling: Materialeigenschaften genau auf ihre Eignung für das neue Produkt analysieren",
+        "Den ästhetischen Eindruck von wenig nachhaltigen Materialien (z. B. Kunststoffe) anders erzielen?",
+        "Weiterverwendung fördern, indem Produkte und deren Funktion neu definiert werden",
+        "Schlecht recyclebare Materialien als bereits vorhandenes Material weiterverwenden – reduziert Abfall",
+        "Eine Wiederverwendung von Materialien wie Plastik ohne Nachdenken über den ästhetischen und funktionalen Sinn für das neue Produkt bedeutet evtl. eine Nicht-Nutzung durch die Verbraucher, sobald das neue Produkt am Ende seiner Lebensdauer ist",
+        "Forschung im handwerklichen Sinn, um mit erneuerbaren Materialien ein Gestaltungsmaterial zu finden",
+        "Experimente mit Resten und Abfall aus der Werkstatt (Sägemehl, Papier- und Kartonreste, Plastikreste)",
+        "Experimente mit Oberflächenbeschichtungen: gezieltes Ausprobieren von Farben und Lacken auf recyclefähiger Basis"
+      ],
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 8.2 e", "href": "#l8", "was": "Materialien und Graue Energie von Calliope mini, Sensor, Pumpe und Netzteil abschätzen; Ende der Nutzungsdauer." },
+            { "wo": "Hinweis zu Auftrag 4.1", "href": "#l4", "was": "Resistive Sensoren korrodieren, kapazitive halten länger: eine Materialfrage mit Folgen für die Lebensdauer." }
+          ],
+          "hinweis": "Bewertet wird das gekaufte Material im Nachhinein. Recycling oder Upcycling als Ausgangsmaterial ist nicht angelegt."
+        },
+        "pumpspeicher": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 6 · Beobachtungskriterium", "href": "#l3", "was": "Material wird sparsam, wiederverwendbar und sicher eingesetzt." },
+            { "wo": "Material und Sicherheit", "href": "#material", "was": "PET-Flaschen, Karton, Löffel oder Deckel als Wasserrad; Restmaterialien bevorzugen, Wasser auffangen und wiederverwenden." }
+          ],
+          "hinweis": "Restmaterial wird genutzt, die Eignung des Materials ist aber kein eigener Lerngegenstand."
+        },
+        "solar": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Phase 7 · Nachhaltig optimieren", "was": "Ressourcen, Herstellung, Lebensdauer und Entsorgung des Tracking-Systems bewerten." },
+            { "wo": "Phase 4 · Technische Lösungen", "was": "Eine Lösung mit Funktion, Robustheit und Ressourcenbedarf begründen." }
+          ],
+          "hinweis": "Ressourcenbilanz des Systems, keine Analyse von Recycling- oder Upcyclingmaterial."
+        }
+      }
+    },
+    {
+      "slug": "produktfunktion",
+      "titel": "Analyse der Produktfunktion",
+      "text": "Die Lernenden analysieren und konzipieren die Funktion des zu erstellenden Produktes explizit auf die absolute Maximierung seiner Lebensdauer.",
+      "beispiele": [
+        "Nicht das Objekt (z. B. Kleidung) selbst ist «nachhaltig», sondern der Umgang damit (längere Tragedauer, Weiterverwendung etc.)",
+        "Konzeption eines Objekts von Beginn an als Objekt, das multifunktionell verwendet oder weiterverwendet werden kann – der Gedanke ist Bestandteil des Entwicklungskonzepts, nicht erst die Frage nach der Verwendung, wenn das Produkt nicht mehr gebraucht wird",
+        "De- und Ummontierbarkeit von Objekten, um dem Anspruch an Weiterverwendung gerecht werden zu können"
+      ],
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 8.2 d", "href": "#l8", "was": "Tabelle «Unser System kann … / kann nicht …» mit Ausfällen während der Ferien und Wartungsaufwand." },
+            { "wo": "Auftrag 8.2 e", "href": "#l8", "was": "Was geschieht am Ende der Nutzungsdauer?" }
+          ],
+          "hinweis": "Lebensdauer wird am Schluss reflektiert, nicht von Beginn an in die Konzeption (Lektion 2) eingebaut."
+        },
+        "pumpspeicher": {
+          "stufe": "offen",
+          "stellen": [],
+          "hinweis": "Das Tischmodell ist ein Anschauungsmodell; seine Lebensdauer oder Weiterverwendung ist kein Thema. Am nächsten kommt das Kriterium «wiederverwendbar» in Auftrag 6."
+        },
+        "solar": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Phase 5 · Making", "was": "Einen funktionsfähigen, reparierbaren Prototyp iterativ bauen und Designentscheidungen dokumentieren." },
+            { "wo": "Phase 7 · Nachhaltig optimieren", "was": "Lebensdauer, Wartung und Reparierbarkeit als Bewertungskriterien." }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "kollaboratives-tuefteln",
+      "titel": "Kollaboratives Tüfteln",
+      "text": "Die Lernenden durchlaufen den Design- oder Entwicklungsprozess gemeinschaftlich.",
+      "beispiele": [
+        "Nachhaltiger Konsum von Produkten ist ein gemeinschaftlicher Prozess, der sich sozial etablieren muss – erfordert eine Veränderung der Wertevorstellungen der Gesellschaft",
+        "Bewusstes Ausnutzen des spielerischen Annäherns",
+        "Bewusstes Erstellen von Modellen – nicht direkt auf die Produktion eines Endresultats fokussieren",
+        "Machbarkeit steht verstärkt im Vordergrund des Suchprozesses",
+        "Inspirationsquellen aus vielen Bereichen suchen / Interdisziplinarität"
+      ],
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Auftrag 2.2 · Erste Lösungsidee", "href": "#l2", "was": "Lösungsidee in der Gruppe skizzieren; nicht umsetzbare Ideen werden mit Impulsen weiterentwickelt." },
+            { "wo": "Lektionen 4–8", "href": "#l4", "was": "Bewässerungssystem in Teams zu 2–3 schrittweise bauen, testen und optimieren." },
+            { "wo": "Auftrag 10.2 · Peer-Review", "href": "#l10", "was": "Lernaufgaben gegenseitig kriteriengeleitet prüfen." }
+          ]
+        },
+        "pumpspeicher": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Auftrag 2 · Systembild", "href": "#l1", "was": "In Dreiergruppen Pump- und Turbinenbetrieb zeichnen." },
+            { "wo": "Aufträge 6–7 · Modell planen und bauen", "href": "#l3", "was": "Didaktisch reduziertes Modell statt Endprodukt; Bauwerkstatt mit Test und Kurzreflexion." },
+            { "wo": "Auftrag 13 · Peer-Review", "href": "#l6", "was": "Lernaufgaben tauschen und einen Resonanztest durchspielen." }
+          ]
+        },
+        "solar": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Phasen 4–5", "was": "Sensorstrategien und mechanische Konzepte vergleichen, Prototyp iterativ bauen." }
+          ],
+          "hinweis": "Die App ist auf Einzel- oder Gruppenarbeit offen; gemeinsames Arbeiten wird nicht ausdrücklich angeleitet."
+        }
+      }
+    },
+    {
+      "slug": "endnutzer",
+      "titel": "Mitwirkung durch die Endnutzer",
+      "text": "Die Lernenden thematisieren und integrieren bei der Entwicklung des Objektes eine Reparierbarkeit oder Umgestaltung durch die Endnutzer explizit.",
+      "beispiele": [
+        "Handwerkliche Fähigkeiten der Allgemeinheit werden gefördert",
+        "Der Wert «traditioneller» Haushalts-Handwerkstechniken ohne Anspruch an Perfektionismus wird als Nachhaltigkeitswerkzeug identifiziert (nähen, häkeln, stricken)"
+      ],
+      "beispieleHinweis": "In der Prezi steht hier zusätzlich «De- und Ummontierbarkeit von Objekten …», wortgleich wie bei «Analyse der Produktfunktion». Vermutlich kopiert; hier weggelassen.",
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 9.2 · Stakeholder-Hearing", "href": "#l9", "was": "Rollen Hauswart (Wartung, Ferienbetreuung) und Gartengruppe der Klasse (Mitbestimmung)." },
+            { "wo": "Auftrag 8.2 d", "href": "#l8", "was": "Wartungsaufwand als Grenze des Systems benennen." }
+          ],
+          "hinweis": "Die Nutzenden kommen als Perspektive vor; Reparatur oder Umbau durch sie wird nicht entworfen."
+        },
+        "pumpspeicher": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 13 · Resonanztest", "href": "#l6", "was": "Kritische Rückfragen einer betroffenen Person durchspielen: Welche Stimme fehlt?" },
+            { "wo": "Auftrag 14", "href": "#l6", "was": "Eine realistische Möglichkeit benennen, mit Betroffenen ins Gespräch zu kommen." }
+          ],
+          "hinweis": "Mitwirkung meint hier Beteiligung an Entscheidungen, nicht Reparierbarkeit eines Objekts."
+        },
+        "solar": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Phase 5 · Making", "was": "Der Prototyp soll reparierbar sein." },
+            { "wo": "Phase 7", "was": "Reparierbarkeit und Wartung als Kriterien." }
+          ],
+          "hinweis": "Reparierbarkeit ist Anforderung; wer repariert, bleibt offen."
+        }
+      }
+    },
+    {
+      "slug": "notwendigkeit",
+      "titel": "Gedanken zur Notwendigkeit des Produktes",
+      "text": "Die Lernenden machen sich Gedanken dazu, ob ihr entwickeltes Produkt ein Nutzerbedürfnis befriedigt oder erzeugt.",
+      "beispiele": [],
+      "beispieleHinweis": "Zu diesem Indikator enthält die Prezi keine Beispielliste.",
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Auftrag 9.1 · Low-Tech oder High-Tech?", "href": "#l9", "was": "«Nicht jedes Nachhaltigkeitsproblem braucht eine digitale Lösung.» Vergleich mit Mulchen, Ollas, Regentonne, Giessplan; Effizienz und Suffizienz unterscheiden." },
+            { "wo": "Auftrag 9.3 · Empfehlung", "href": "#l9", "was": "Empfehlung mit einer Bedingung, unter der sie sich ändern würde." }
+          ]
+        },
+        "pumpspeicher": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Auftrag 1", "href": "#l1", "was": "Eigene Annahmen zum Energiebedarf und zum «guten Leben» notieren." },
+            { "wo": "Auftrag 9 · Gedankenexperiment", "href": "#l4", "was": "Zwei Zukünfte: «mehr Speicherkapazität» oder «anders mit Energie umgehen»." },
+            { "wo": "Aufträge 10–11", "href": "#l5", "was": "Zukunftswege «Speicher ausbauen» oder «Bedarf verändern»; bedingte Empfehlung oder begründete Vertagung." }
+          ]
+        },
+        "solar": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Leitfrage", "was": "Ist die technisch effizienteste Lösung auch die nachhaltigste Lösung?" },
+            { "wo": "Phase 7", "was": "Bedingungen formulieren, unter denen Tracking sinnvoll oder nicht sinnvoll ist." },
+            { "wo": "Phase 8 · Erneut positionieren", "was": "Zur Aussage «Mehr Energieertrag ist automatisch nachhaltiger» erneut Stellung nehmen." }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "produktionsprozess",
+      "titel": "Gedanken zum Produktionsprozess",
+      "text": "Die Lernenden stellen Überlegungen an, ob ein möglicher industrieller Produktionsprozess ihres Produktes sozial und ökologisch vertretbar ist.",
+      "beispiele": [
+        "Wie kann Serienproduktion nachhaltig gestaltet werden (sozial verträglich und energieressourcenschonend)?",
+        "Wie kann der 3D-Druck eingesetzt werden, um auf biologischer Kunststoffbasis z. B. Möbelelemente herzustellen, die immer neu zusammensetzbar sind?",
+        "Genauere Beobachtung der industriellen Produktionsprozesse und Identifikation von Interventionsmöglichkeiten in nachhaltigerem Sinn (Produktion von Bestandteilen eines Kleidungsstücks, handwerkliche Möglichkeiten, Import von vorgefertigten Teilen)"
+      ],
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 8.2 e", "href": "#l8", "was": "Graue Energie der eingesetzten Elektronik abschätzen." },
+            { "wo": "Auftrag 9.3", "href": "#l9", "was": "Kriterium «Übertragbarkeit (Schulgarten, Stadtgrün)»." }
+          ],
+          "hinweis": "Herstellung der Bauteile wird bilanziert; eine Serienfertigung des eigenen Systems wird nicht gedacht."
+        },
+        "pumpspeicher": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 10 · Regionale Ergänzung", "href": "#l5", "was": "Stausee Sufers: rund 30 ha Wiesland beim Einstau verloren; Betreiberangaben mit unabhängigen Quellen vergleichen." },
+            { "wo": "Auftrag 11", "href": "#l5", "was": "Kriterien Biodiversität/Landschaft und Akzeptanz/Gerechtigkeit." }
+          ],
+          "hinweis": "Es geht um Bau und Betrieb der realen Anlage, nicht um die Herstellung eines eigenen Produkts."
+        },
+        "solar": {
+          "stufe": "deutlich",
+          "stellen": [
+            { "wo": "Phase 7 · Nachhaltig optimieren", "was": "Herstellung, Ressourcen, Kosten und Entsorgung bewerten; SDGs 7, 9, 12 und 13 auf Synergien und Zielkonflikte prüfen." }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "nutzerverhalten",
+      "titel": "Beeinflussung des Nutzerverhaltens",
+      "text": "Die Lernenden stellen Überlegungen an, wie sie das Nutzerverhalten ihres Produktes zugunsten einer Verlängerung des Produktzyklus beeinflussen können.",
+      "beispiele": [
+        "Persönliche Vorlieben, Modevorstellungen und Ansprüche an Bequemlichkeit können nicht einfach in den Hintergrund gestellt werden – sie müssen beachtet und Lösungen dafür gefunden werden",
+        "Nachhaltigkeit und Luxusansprüche müssen idealerweise vereinbar bleiben, um allgemeingültig zu werden",
+        "Änderung der eigenen Vorstellung von «nachhaltigen Objekten»: Sie müssen nicht «alt» oder «retro» aussehen, können durchaus modernen und individuellen Ansprüchen entsprechen – neue Zielgruppen explizit gewinnen",
+        "Änderung des Werteverständnisses: Designikonen (z. B. Möbel) müssen nicht einzigartig und nicht-weiterverwendbar sein – sie können das «Ikonenverständnis» beeinflussen und nachhaltigeres Handeln bei einer Zielgruppe für Hochpreisiges fördern",
+        "Nicht nur das Produkt selber muss nachhaltig gestaltet sein, sondern auch einfach zugängliche Handlungsaufforderungen zu nachhaltigerem Verwenden beinhalten"
+      ],
+      "fundstellen": {
+        "smart-plants": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 9.1", "href": "#l9", "was": "Giessplan für die Ferien und Suffizienz als Alternative zur Technik." }
+          ],
+          "hinweis": "Verhalten wird als Alternative zum Produkt diskutiert, nicht als Mittel, den Produktzyklus zu verlängern."
+        },
+        "pumpspeicher": {
+          "stufe": "teilweise",
+          "stellen": [
+            { "wo": "Auftrag 8 · Auswertung", "href": "#l4", "was": "Könnte eine Verringerung oder zeitliche Verlagerung des Strombedarfs denselben Zielkonflikt verändern?" },
+            { "wo": "Auftrag 14", "href": "#l6", "was": "Gesprächsangebot an Betroffene statt vorgeschriebenes «nachhaltiges» Verhalten." }
+          ],
+          "hinweis": "Thema ist das Energieverhalten der Gesellschaft, nicht der Umgang mit einem Produkt."
+        },
+        "solar": {
+          "stufe": "offen",
+          "stellen": [],
+          "hinweis": "Wartung wird als Kriterium genannt (Phase 7), das Verhalten der Nutzenden aber nicht bearbeitet."
+        }
+      }
+    }
+  ]
+}

@@ -1,15 +1,18 @@
 import Link from "next/link";
-import { groupByPresenter, listEntries } from "@/lib/entries";
+import { listEntries } from "@/lib/entries";
+import { anzeigetitel, produktseite } from "@/lib/produkte";
 import Avatar from "./avatar";
+import IndikatorGrafik from "./indikator-grafik";
 
 export const dynamic = "force-dynamic";
 
-const PLACEHOLDERS = 3;
 const PREVIEWS = ["/vorschau/a.svg", "/vorschau/b.svg", "/vorschau/c.svg"];
+const SOLAR_URL = "https://magenta-platypus-93095a.netlify.app/";
 
 export default async function Home() {
   const entries = await listEntries("approved").catch(() => []);
-  const presenters = groupByPresenter(entries);
+  // Reihenfolge der Einreichung, keine Rangierung
+  const produkte = [...entries].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   const kartenUrl = process.env.NEXT_PUBLIC_KARTEN_APP_URL;
 
   return (
@@ -19,105 +22,79 @@ export default async function Home() {
         <h1>Making und Bildung für Nachhaltige Entwicklung</h1>
         <div className="teaser">
           <p className="lead">
-            Liebe Projektgruppe, hier entsteht unsere gemeinsame Ausstellung für die Synthesetagung vom
-            28. Januar 2027 in Olten.
+            Vier Produkte aus dem Teilprojekt 1b zeigen, wie Making und Bildung für Nachhaltige Entwicklung (BNE) in
+            der Ausbildung von Lehrpersonen zusammenkommen.
           </p>
           <p>
-            Im Teilprojekt 1b habt ihr Unterrichtseinheiten entwickelt und erprobt, die Making und Bildung für
-            Nachhaltige Entwicklung verbinden. Hier zeigt ihr eure Produkte: was entstanden ist, wie ihr es
-            eingesetzt habt und wo der Bezug zur Nachhaltigkeit liegt.
+            Den gemeinsamen Rahmen bilden sieben Indikatoren: Punkte im Makingprozess, an denen Nachhaltigkeits­kompetenzen
+            gefördert werden, wenn man sie bewusst steuert. Wählt einen Indikator, um zu sehen, an welcher Stelle er in
+            den Unterrichtseinheiten vorkommt, oder öffnet direkt ein Produkt.
           </p>
-          <p>
-            Unten rechts findet ihr mein Beispiel, das Kartenset «BNE meets Making». Nach diesem Vorbild können
-            auch eure Produkte aufbereitet werden, als interaktive Anwendung, die sich direkt im Browser
-            erkunden lässt. Ladet dazu über <Link href="/einreichen">Produkt einreichen</Link> eure Texte,
-            Bilder und Unterlagen hoch. Ich bereite sie anschliessend auf.
-          </p>
-          <p className="meta">Die drei Platzhalter füllen sich mit euren Beiträgen. – Friso</p>
         </div>
       </section>
 
-      <section className="grid two">
-        {presenters.map((p, i) => (
-          <Link key={p.slug} href={`/person/${p.slug}`} className="card person">
-            {p.cover ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img className="thumb" src={p.cover} alt="" loading="lazy" />
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img className="thumb" src={PREVIEWS[i % 3]} alt="" />
-            )}
+      <IndikatorGrafik />
+
+      <section aria-labelledby="h-produkte">
+        <h2 id="h-produkte" className="abschnitt">Produkte</h2>
+        <div className="grid two">
+          {produkte.map((e, i) => {
+            const seite = produktseite(e.id);
+            const href = seite?.url ?? `/einheit/${e.id}`;
+            const wer = [e.presenter, e.group].filter(Boolean).join(" · ");
+            return (
+              <a key={e.id} href={href} className="card">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="thumb" src={e.images[0] ?? PREVIEWS[i % 3]} alt="" loading="lazy" />
+                <div className="body">
+                  <div className="who">
+                    <Avatar name={anzeigetitel(e)} />
+                    <div>
+                      <h3>{anzeigetitel(e)}</h3>
+                      <div className="meta">{wer || "Lerneinheit"}</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+
+          <a href={SOLAR_URL} target="_blank" rel="noopener noreferrer" className="card">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="thumb" src="/vorschau/solar.svg" alt="" />
             <div className="body">
               <div className="who">
-                <Avatar name={p.name} />
+                <Avatar name="Solar Tracking" />
                 <div>
-                  <h3>{p.name}</h3>
-                  <div className="meta">
-                    {p.group ? `${p.group} · ` : ""}
-                    {p.entries.length === 1 ? "1 Produkt" : `${p.entries.length} Produkte`}
-                  </div>
+                  <h3>Solar-Tracking</h3>
+                  <div className="meta">MINT &amp; BNE in neun Phasen · App öffnen ↗</div>
                 </div>
               </div>
             </div>
-          </Link>
-        ))}
-        {Array.from({ length: Math.max(0, PLACEHOLDERS - presenters.length) }, (_, i) => {
-          const n = presenters.length + i;
-          const label = `Platzhalter ${String.fromCharCode(65 + n)}`;
-          return (
-            <Link key={label} href="/einreichen" className="card placeholder">
+          </a>
+
+          {kartenUrl && (
+            <a href={kartenUrl} target="_blank" rel="noopener noreferrer" className="card">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="thumb" src={PREVIEWS[n % 3]} alt="" />
+              <img className="thumb" src="/vorschau/karten.svg" alt="" />
               <div className="body">
                 <div className="who">
-                  <Avatar name={label.replace("Platzhalter ", "")} />
+                  <Avatar name="Karten" />
                   <div>
-                    <h3>{label}</h3>
-                    <div className="meta">Produkt folgt</div>
+                    <h3>BNE meets Making</h3>
+                    <div className="meta">Kartenset zur Selbstdiagnose · App öffnen ↗</div>
                   </div>
                 </div>
               </div>
-            </Link>
-          );
-        })}
-        {kartenUrl && (
-          <a href={kartenUrl} target="_blank" rel="noopener noreferrer" className="card karten">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="thumb" src="/vorschau/karten.svg" alt="" />
-            <div className="body">
-              <div className="who">
-                <Avatar name="Karten" />
-                <div>
-                  <h3>BNE meets Making</h3>
-                  <div className="meta">Kartenset · App öffnen ↗</div>
-                </div>
-              </div>
-            </div>
-          </a>
-        )}
+            </a>
+          )}
+        </div>
       </section>
 
-      <section className="indikatoren">
-        <h2>Indikatoren: Making und BNE</h2>
-        <p>
-          Unsere gemeinsame Indikatorenliste zeigt, welche Punkte im Makingprozess Nachhaltigkeitskompetenzen
-          fördern, wenn man sie bewusst steuert: von der Analyse der Materialeignung und der Produktfunktion
-          über kollaboratives Tüfteln bis zur Beeinflussung des Nutzerverhaltens. Jedes Element lässt sich
-          anklicken.
-        </p>
-        <div className="embed">
-          <iframe
-            src="https://prezi.com/p/embed/gtHzcGHanHKC2xsdWHLf/"
-            title="Making BNE – Indikatoren (Prezi)"
-            loading="lazy"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-          />
-        </div>
+      <section className="projektgruppe">
         <p className="meta">
-          <a href="https://prezi.com/view/gtHzcGHanHKC2xsdWHLf/" target="_blank" rel="noopener noreferrer">
-            In Prezi öffnen ↗
-          </a>
+          Für die Projektgruppe: Material ergänzen oder ein weiteres Produkt einreichen unter{" "}
+          <Link href="/einreichen">Produkt einreichen</Link>.
         </p>
       </section>
     </>
