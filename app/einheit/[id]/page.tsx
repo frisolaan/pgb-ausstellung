@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, presenterSlug } from "@/lib/entries";
+import { produktseite } from "@/lib/produkte";
 
 export const dynamic = "force-dynamic";
 
@@ -8,6 +9,7 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
   const { id } = await params;
   const e = await getEntry(id);
   if (!e) notFound();
+  const seite = produktseite(e.id);
 
   return (
     <article className="detail">
@@ -19,6 +21,16 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
       </div>
       <h1>{e.title}</h1>
       <p className="lead prewrap">{e.summary}</p>
+
+      {seite && (
+        <div className="box produkt">
+          <div>
+            <h2>Aufbereitete Lerneinheit</h2>
+            <p className="meta" style={{ margin: 0 }}>{seite.stand}</p>
+          </div>
+          <a className="btn" href={seite.url}>Lerneinheit öffnen →</a>
+        </div>
+      )}
 
       {e.images.length > 0 && (
         <div className="gallery">

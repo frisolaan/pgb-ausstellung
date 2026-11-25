@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Smart Plants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: ruhige Einzelseite, Kopf mit Problem, dann Ablauf als Lektionskarten; Farben aus dem Kartenset «BNE meets Making» */
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --ink: #2a2b28;
+  --ink-soft: #55574f;
+  --ink-mute: #6c6e66;
+  --line: rgba(40, 44, 30, 0.14);
+  --green: #d8e9d9;      /* Systemdenken / Hauptfarbe Produkt */
+  --green-strong: #3f7a48;
+  --water: #d6e4ef;
+  --water-strong: #2f6690;
+  --peach: #f6e2c4;
+  --peach-strong: #9a6118;
+  --rose: #f2d8dd;
+  --lilac: #e6d9e8;
+  --gap-bg: #fff3d6;
+  --gap-line: #d9a93a;
+  --code-bg: #f1f3ee;
+  --focus: #1f5fbf;
+  --font-hand: 'Caveat Brush', 'Comic Sans MS', cursive;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --r: 14px;
+  --r-s: 8px;
+  --maxw: 1080px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171916; --surface: #20231f; --ink: #ecece6; --ink-soft: #c4c6bd; --ink-mute: #a3a69b;
+    --line: rgba(230, 235, 220, 0.16); --green: #26392a; --green-strong: #8fcf98; --water: #1f3140; --water-strong: #8dbfe6;
+    --peach: #3a2e1d; --peach-strong: #e9b76b; --rose: #3b282c; --lilac: #332a36; --gap-bg: #3a3120; --gap-line: #c99b35;
+    --code-bg: #2a2e28; --focus: #7fb0ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171916; --surface: #20231f; --ink: #ecece6; --ink-soft: #c4c6bd; --ink-mute: #a3a69b;
+  --line: rgba(230, 235, 220, 0.16); --green: #26392a; --green-strong: #8fcf98; --water: #1f3140; --water-strong: #8dbfe6;
+  --peach: #3a2e1d; --peach-strong: #e9b76b; --rose: #3b282c; --lilac: #332a36; --gap-bg: #3a3120; --gap-line: #c99b35;
+  --code-bg: #2a2e28; --focus: #7fb0ff; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--water-strong); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+img { display: block; max-width: 100%; height: auto; border-radius: var(--r-s); }
+body { margin: 0; }
+p { margin: 0 0 0.9em; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.hand { font-family: var(--font-hand); font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.02; }
+.eyebrow { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin: 0 0 0.5em; }
+.muted { color: var(--ink-mute); }
+.small { font-size: 0.88rem; }
+figure { margin: 0; }
+figcaption { font-size: 0.82rem; color: var(--ink-mute); margin-top: 6px; line-height: 1.45; }
+
+/* Entwurfsband */
+.entwurf { background: var(--gap-bg); border-bottom: 1px solid var(--gap-line); font-size: 0.88rem; }
+.entwurf .wrap { padding-block: 10px; display: flex; gap: 8px 16px; flex-wrap: wrap; align-items: center; }
+.entwurf strong { letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.78rem; }
+
+/* Kopf */
+.hero { padding-block: clamp(28px, 6vw, 64px) clamp(24px, 4vw, 40px); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(20px, 4vw, 44px); align-items: center; }
+@media (max-width: 820px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero h1 { font-size: clamp(3rem, 9vw, 5.6rem); }
+.hero h1 span { color: var(--green-strong); }
+.hero .unter { font-family: var(--font-hand); text-transform: uppercase; font-size: clamp(1.15rem, 2.6vw, 1.5rem); color: var(--ink-soft); margin: 10px 0 18px; }
+.hero .lead { font-size: 1.08rem; color: var(--ink-soft); max-width: 60ch; }
+.fakten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 20px; padding: 0; list-style: none; }
+.fakten li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 10px 12px; }
+.fakten b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; }
+.hero-bild { position: relative; }
+.hero-bild img { width: 100%; border-radius: var(--r); }
+.ausgang { margin-top: 14px; background: var(--peach); border-radius: var(--r-s); padding: 14px 16px; font-size: 0.95rem; }
+.ausgang b { font-family: var(--font-hand); text-transform: uppercase; font-weight: 400; font-size: 1.1rem; display: block; margin-bottom: 2px; }
+
+/* Navigation */
+.sprung { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-block: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.sprung .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; }
+.sprung a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 0.93rem; padding: 7px 12px; border-radius: 999px; white-space: nowrap; }
+.sprung a:hover { background: var(--line); }
+
+section.teil { padding-block: clamp(36px, 6vw, 64px) 0; scroll-margin-top: 60px; }
+.teil > .wrap > h2 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); margin-bottom: 8px; }
+.teil-intro { color: var(--ink-soft); max-width: 66ch; margin-bottom: 22px; }
+
+/* Text zweispaltig */
+.zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; }
+@media (max-width: 820px) { .zwei { grid-template-columns: 1fr; } }
+.zwei > * { min-width: 0; }
+.ziele { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.ziele li { position: relative; padding-left: 26px; }
+.ziele li::before { content: ""; position: absolute; left: 4px; top: 0.55em; width: 10px; height: 10px; border-radius: 3px; background: var(--green-strong); }
+.kasten { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(16px, 3vw, 24px); }
+.kasten h3 { font-size: 1.05rem; margin-bottom: 10px; }
+
+/* Material */
+.material { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+.material li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 10px 12px; font-size: 0.93rem; }
+.material li span { display: block; font-size: 0.8rem; color: var(--ink-mute); }
+
+/* Lektionsleiste */
+.leiste { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; margin: 6px 0 26px; padding: 0; list-style: none; }
+.leiste a { display: flex; flex-direction: column; gap: 2px; text-decoration: none; color: var(--ink); background: var(--green); border-radius: 6px; padding: 8px 6px; min-height: 64px; font-size: 0.72rem; line-height: 1.2; }
+.leiste a b { font-family: var(--font-hand); font-size: 1.4rem; font-weight: 400; line-height: 1; }
+.leiste a.fehlt { background: repeating-linear-gradient(135deg, var(--gap-bg) 0 8px, var(--surface) 8px 16px); border: 1px dashed var(--gap-line); }
+.leiste .phase { grid-column: span 1; }
+@media (max-width: 760px) { .leiste { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.phasen { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--ink-mute); margin-bottom: 8px; }
+.phasen span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+
+/* Lektion */
+.lektion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 14px; overflow: hidden; scroll-margin-top: 64px; }
+.lektion > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 16px clamp(14px, 3vw, 22px); }
+.lektion > summary::-webkit-details-marker { display: none; }
+.lektion .nr { font-family: var(--font-hand); font-size: 2.2rem; line-height: 1; width: 52px; height: 52px; display: grid; place-items: center; border-radius: 12px; background: var(--green); color: var(--green-strong); }
+.lektion .kopf h3 { font-size: 1.15rem; }
+.lektion .kopf p { margin: 2px 0 0; font-size: 0.86rem; color: var(--ink-mute); }
+.lektion .pfeil { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: transform 0.2s; }
+.lektion[open] .pfeil { transform: rotate(180deg); }
+.lektion .inhalt { padding: 0 clamp(14px, 3vw, 22px) 20px; display: grid; gap: 16px; }
+.lektion .inhalt > * { min-width: 0; }
+.lernziel { background: var(--green); border-radius: var(--r-s); padding: 12px 14px; font-size: 0.95rem; }
+.lernziel b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-strong); }
+.auftrag { border-left: 4px solid var(--water-strong); padding: 2px 0 2px 14px; }
+.auftrag .atitel { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; }
+.auftrag h4 { margin: 0; font-size: 1rem; }
+.auftrag h4 span { color: var(--water-strong); }
+.zeit { font-size: 0.78rem; font-weight: 600; background: var(--water); color: var(--water-strong); border-radius: 999px; padding: 2px 10px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.auftrag ol, .auftrag ul { margin: 0 0 0.6em; padding-left: 1.3em; }
+.auftrag li { margin-bottom: 0.25em; }
+ol.abc { list-style: none; padding-left: 0; }
+ol.abc li { padding-left: 1.7em; text-indent: -1.7em; }
+ol.abc li b { display: inline-block; width: 1.7em; text-indent: 0; color: var(--water-strong); }
+.hinweis { background: var(--peach); border-radius: var(--r-s); padding: 10px 14px; font-size: 0.92rem; }
+.hinweis b { color: var(--peach-strong); }
+.doz { background: var(--lilac); border-radius: var(--r-s); padding: 10px 14px; font-size: 0.92rem; }
+.doz b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.fazit { background: var(--green); border-radius: var(--r-s); padding: 12px 14px; font-size: 0.94rem; }
+.fazit ol { margin: 6px 0 8px; padding-left: 1.3em; }
+.bilder { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.bilder.eng { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.bilder img { width: 100%; background: #fff; border: 1px solid var(--line); }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+
+.tabelle { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-s); background: var(--surface); }
+.tabelle table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 520px; }
+.tabelle th, .tabelle td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tabelle th { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; background: var(--bg); }
+.tabelle td.leer { background: repeating-linear-gradient(90deg, transparent 0 18px, var(--line) 18px 19px); }
+.tabelle tr:last-child td { border-bottom: 0; }
+
+/* Lücke */
+.luecke { border: 1.5px dashed var(--gap-line); background: var(--gap-bg); border-radius: var(--r); padding: 16px clamp(14px, 3vw, 22px); }
+.luecke .tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gap-line); color: #2a2208; padding: 2px 9px; border-radius: 999px; margin-bottom: 6px; }
+.lektion.fehlt { border-style: dashed; border-color: var(--gap-line); }
+.lektion.fehlt .nr { background: var(--gap-bg); color: var(--peach-strong); }
+
+/* Lösung */
+details.loesung { border: 1px solid var(--line); border-radius: var(--r-s); background: var(--bg); }
+details.loesung > summary { cursor: pointer; padding: 9px 14px; font-weight: 600; font-size: 0.92rem; color: var(--green-strong); }
+details.loesung .l-inhalt { padding: 0 14px 14px; display: grid; gap: 12px; }
+details.loesung img { background: #fff; border: 1px solid var(--line); width: 100%; }
+
+/* BNE */
+.sdgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+.sdgs li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 12px 14px; font-size: 0.9rem; }
+.sdgs b { display: block; font-size: 0.95rem; margin-bottom: 4px; }
+.sdgs b span { font-family: var(--font-hand); font-weight: 400; font-size: 1.3rem; color: var(--water-strong); margin-right: 6px; }
+.rsp { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px 22px; margin: 0; }
+.rsp div { border-top: 1px solid var(--line); padding-top: 8px; }
+.rsp dt { font-weight: 600; }
+.rsp dd { margin: 2px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.lp { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.lp .kasten b.code { font-family: var(--font-mono); font-size: 0.85rem; color: var(--green-strong); }
+
+.karten { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
+.karten a { display: grid; gap: 6px; text-decoration: none; color: var(--ink); background: var(--c); border-radius: var(--r); padding: 14px 16px; min-height: 100%; border: 1px solid var(--line); }
+.karten a:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+.karten .k { font-family: var(--font-hand); font-size: 1rem; color: var(--ink-mute); }
+.karten .t { font-family: var(--font-hand); text-transform: uppercase; font-size: 1.35rem; line-height: 1.05; }
+.karten .w { font-size: 0.88rem; color: var(--ink-soft); }
+.karten .l { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.k-sys { --c: #d8e9d9; } .k-kon { --c: #ececec; } .k-ite { --c: #f6e2c4; } .k-mat { --c: #e2d4e4; } .k-emo { --c: #d6deeb; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .karten a { color: #2a2b28; } :root:not([data-theme="light"]) .karten .w { color: #45473f; } }
+:root[data-theme="dark"] .karten a { color: #2a2b28; }
+:root[data-theme="dark"] .karten .w { color: #45473f; }
+
+.offen { display: grid; gap: 10px; list-style: none; padding: 0; margin: 0; counter-reset: o; }
+.offen li { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--gap-line); border-radius: var(--r-s); padding: 10px 14px; }
+
+footer { margin-top: clamp(44px, 7vw, 72px); border-top: 1px solid var(--line); padding-block: 22px 40px; font-size: 0.85rem; color: var(--ink-mute); }
+footer .wrap { display: flex; gap: 8px 28px; flex-wrap: wrap; justify-content: space-between; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+</style>
+<style>
+.zurueck { background: var(--surface); border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+.zurueck .wrap { padding-block: 10px; }
+.zurueck a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.zurueck a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="zurueck"><div class="wrap"><a href="/">← Zur Ausstellung Making × BNE</a></div></nav>
+
+<div class="entwurf" role="note">
+  <div class="wrap">
+    <strong>Entwurf zur Diskussion</strong>
+    <span>Aufbereitet aus den eingereichten Auszügen des Dossiers (Stand 22.11.2026). Fehlende Teile sind gelb markiert und folgen noch.</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">BNE-Lerneinheit MAT07 · Informatik interdisziplinär</p>
+      <h1 class="hand">Smart <span>Plants</span></h1>
+      <p class="unter">Ein Hochbeet, das nur giesst, wenn es Wasser braucht</p>
+      <p class="lead">Angehende Lehrpersonen planen, bauen und programmieren mit dem Calliope mini ein Bewässerungssystem, das die Bodenfeuchte misst und eine Tauchpumpe nur bei Bedarf einschaltet. Dabei prüfen sie auch, ob die smarte Lösung überhaupt die nachhaltigste ist.</p>
+      <ul class="fakten">
+        <li><b>Zielgruppe</b>Studierende Primar- und Sekundarstufe an einer PH</li>
+        <li><b>Umfang</b>10 Lektionen à 45 Min. plus selbstorganisierte Phasen</li>
+        <li><b>Sozialform</b>Teams zu 2–3 Studierenden</li>
+        <li><b>Einsatz</b>Informatik-, Technikdidaktik oder interdisziplinäres Modul</li>
+      </ul>
+    </div>
+    <div class="hero-bild">
+      <figure>
+        <img src="/produkte/smart-plants/img/abb05-hochbeet.webp" alt="Illustration eines Hochbeets mit Wasserbehälter, Tauchpumpe, Calliope mini und Schlauch mit kleinen Löchern" width="1200" height="800">
+        <figcaption>Mögliche Lösungsidee: Hochbeet mit Wasserbehälter, Tauchpumpe und Calliope mini.</figcaption>
+      </figure>
+      <div class="ausgang">
+        <b>Ausgangssituation</b>
+        In den vergangenen Jahren hat sich die Situation im schuleigenen Pflanzen- und Gemüsegarten zunehmend verschärft. Während der Sommerferien vertrockneten immer mehr Pflanzen. Die Ursachen sind bisher unklar; die Pflanzen wurden jeweils nur sporadisch bewässert.
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="sprung" aria-label="Abschnitte">
+  <div class="wrap">
+    <a href="#ueberblick">Überblick</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#technik">Technik</a>
+    <a href="#bne">BNE-Bezug</a>
+    <a href="#kartenset">Kartenset</a>
+    <a href="#offen">Offene Punkte</a>
+  </div>
+</nav>
+
+<main>
+<section class="teil" id="ueberblick" aria-labelledby="h-ueberblick">
+  <div class="wrap">
+    <h2 id="h-ueberblick" class="hand">Überblick</h2>
+    <div class="zwei">
+      <div>
+        <p class="eyebrow">Motivation</p>
+        <p>Die Auswirkungen des Klimawandels sind zunehmend im Alltag spürbar. Längere Trockenperioden, steigende Temperaturen und ein wachsender Wasserbedarf stellen Landwirtschaft, Gartenbau und Städte vor neue Herausforderungen. Gleichzeitig ist Wasser eine begrenzte Ressource, mit der verantwortungsvoll umgegangen werden muss. Die Aktualität des Themas zeigte sich unter anderem im Sommer 2026, als die Schweiz und zahlreiche weitere europäische Länder von einer ausgeprägten Trockenheit und aussergewöhnlich hohen Temperaturen betroffen waren (MeteoSchweiz, 2026).</p>
+        <p>Die Lerneinheit zeigt exemplarisch, wie sich ein aktuelles Nachhaltigkeitsthema mit den Inhalten des Informatikunterrichts verbinden lässt. Digitale Technologien werden dabei nicht als Selbstzweck verstanden, sondern als Werkzeuge, mit denen ökologische und gesellschaftliche Herausforderungen analysiert und nachhaltige Lösungen entwickelt werden können.</p>
+        <p>Der Lernprozess orientiert sich am Making-Prozess: Ideen werden durch Planen, Entwickeln, Erproben, Reflektieren und kontinuierliches Verbessern schrittweise weiterentwickelt.</p>
+      </div>
+      <div class="kasten">
+        <h3>Übergeordnete Lernziele</h3>
+        <p class="small muted" style="margin-bottom:8px">Die Studierenden können …</p>
+        <ul class="ziele">
+          <li>Ursachen und Folgen von Wasserknappheit sowie Zusammenhänge zwischen Klimawandel, Pflanzenwachstum und Wasserverbrauch analysieren.</li>
+          <li>die Funktionsweise eines intelligenten Bewässerungssystems und das Zusammenspiel seiner Komponenten erklären.</li>
+          <li>ein Bewässerungssystem mit dem Calliope mini planen, programmieren, testen und optimieren.</li>
+          <li>Messdaten (Sensorwerte, Fördermenge) systematisch erheben, auswerten und ihre Aussagekraft beurteilen.</li>
+          <li>Chancen, Grenzen und Zielkonflikte digitaler Technologien aus ökologischer, technischer und gesellschaftlicher Perspektive beurteilen.</li>
+          <li>Perspektiven unterschiedlicher Beteiligter einnehmen, Zielkonflikte abwägen und eine begründete Empfehlung formulieren – auch im Vergleich mit einfachen Low-Tech-Lösungen.</li>
+          <li>eine BNE-Lernaufgabe entwickeln, die Informatik mit nachhaltigem Umgang mit Wasser und Ressourcen verbindet.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:28px">
+      <p class="eyebrow">Material (aus dem Dossier zusammengetragen)</p>
+      <ul class="material">
+        <li>Calliope mini 3<span>Mikrocontroller, programmiert mit MakeCode</span></li>
+        <li>Grove-Feuchtigkeitssensor<span>mit Grove-Kabel, MakeCode-Erweiterung «grove»</span></li>
+        <li>MOSFET-Schalterplatine<span>schaltet die Pumpe über P2</span></li>
+        <li>Tauchpumpe mit Schlauch<span>Kleinspannung</span></li>
+        <li>Batteriehalter 4 × 1.5 V<span>oder Netzteil</span></li>
+        <li>Hochbeet oder Pflanztopf, Wasserbehälter, Auffangwanne</li>
+        <li>Erdproben trocken, leicht feucht, nass<span>für die Kalibrierung</span></li>
+        <li>Messbecher<span>für die Fördermenge</span></li>
+      </ul>
+      <p class="small muted" style="margin-top:8px">Eine vollständige Materialliste mit Stückzahlen und Bezugsquellen folgt noch.</p>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="ablauf" aria-labelledby="h-ablauf">
+  <div class="wrap">
+    <h2 id="h-ablauf" class="hand">Ablauf in 10 Lektionen</h2>
+    <p class="teil-intro">Von der Analyse des Problems über den Bau des Prototyps bis zur Urteilsbildung und zum Transfer in eine eigene Lernaufgabe für den Zyklus 2. Gestrichelte Lektionen fehlen in den eingereichten Auszügen und folgen noch.</p>
+    <div class="phasen" aria-hidden="true">
+      <span style="--c: var(--green)">vorhanden</span>
+      <span style="--c: var(--gap-line)">folgt noch</span>
+    </div>
+    <ol class="leiste">
+      <li><a href="#l1"><b>1</b>Wasser­knappheit verstehen</a></li>
+      <li><a href="#l2"><b>2</b>Anforderungen und Systemidee</a></li>
+      <li><a href="#l3" class="fehlt"><b>3</b>folgt noch</a></li>
+      <li><a href="#l4"><b>4</b>Sensor und Pumpe</a></li>
+      <li><a href="#l5"><b>5</b>Pumpen­steuerung</a></li>
+      <li><a href="#l6" class="fehlt"><b>6</b>Pumpzeit · folgt</a></li>
+      <li><a href="#l7" class="fehlt"><b>7</b>24-h-Takt · folgt</a></li>
+      <li><a href="#l8"><b>8</b>Bedarfs­gesteuert giessen</a></li>
+      <li><a href="#l9"><b>9</b>Smart oder einfach?</a></li>
+      <li><a href="#l10"><b>10</b>Transfer Zyklus 2</a></li>
+    </ol>
+
+    <!-- Lektion 1 -->
+    <details class="lektion" id="l1" open>
+      <summary><span class="nr">1</span><span class="kopf"><h3>Wasserknappheit verstehen</h3><p>Analyse · Austausch · Concept Map · 50 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Du analysierst die Ursachen und Folgen von Wasserknappheit, bewertest unterschiedliche Bewässerungsstrategien und entwickelst erste Ideen für ein nachhaltiges, technisch unterstütztes Bewässerungssystem.</div>
+        <div class="zwei">
+          <p style="margin:0">In den vergangenen Jahren hat sich die Situation im schuleigenen Pflanzen- und Gemüsegarten zunehmend verschärft. Während der Sommerferien vertrockneten immer mehr Gemüse- und Gartenpflanzen. Die Gründe dafür sind bisher unklar; grundsätzlich wurden die Pflanzen sporadisch bewässert. Die Schulleitung beauftragt dich deshalb, die Ursachen zu untersuchen und geeignete nachhaltige Lösungsansätze zu entwickeln.</p>
+          <div class="bilder eng">
+            <img src="/produkte/smart-plants/img/garten.webp" alt="Schulgarten mit Gemüsebeeten und Blumen" width="247" height="305" loading="lazy">
+            <img src="/produkte/smart-plants/img/vertrocknet.webp" alt="Vertrocknete Pflanzen in Nahaufnahme" width="684" height="384" loading="lazy">
+          </div>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 1.1</span> Individuelle Analyse</h4><span class="zeit">15 min</span></div>
+          <ol class="abc">
+            <li><b>a)</b>Welche Faktoren könnten dazu geführt haben, dass die Pflanzen im Schulgarten vertrocknet sind? Nenne mindestens zwei mögliche Gründe.</li>
+            <li><b>b)</b>Schätze ein, ob sich eine solche Situation in den kommenden Jahren wiederholen könnte. Begründe deine Einschätzung.</li>
+            <li><b>c)</b>Welche Auswirkungen könnte dies auf Mensch, Umwelt und Landwirtschaft haben?</li>
+            <li><b>d)</b>Warum ist ein verantwortungsvoller Umgang mit Wasser für eine nachhaltige Entwicklung wichtig?</li>
+          </ol>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 1.2</span> Austausch in 2er- oder 3er-Gruppen</h4><span class="zeit">20 min</span></div>
+          <ol>
+            <li>Sammle und diskutiere zunächst deine Antworten aus Auftrag 1.1.</li>
+            <li>Diskutiere anschliessend die folgenden Fragen mit Einbezug der Grafiken zur Temperatur und zu den Niederschlagsmengen in der Schweiz im Juni 2026.</li>
+          </ol>
+          <ol class="abc">
+            <li><b>a)</b>Welche Entwicklungen und Auffälligkeiten erkennst du in den beiden Grafiken?</li>
+            <li><b>b)</b>Welche Zusammenhänge zwischen Temperatur, Niederschlag und dem Zustand der Pflanzen lassen sich daraus ableiten?</li>
+            <li><b>c)</b>Welche Möglichkeiten gäbe es, Wasser im Garten oder in der Landwirtschaft möglichst effizient und nachhaltig einzusetzen?</li>
+            <li><b>d)</b>Welchen Beitrag könnten technische Lösungen leisten, um Wasser gezielt einzusparen und Pflanzen bedarfsgerecht zu bewässern?</li>
+          </ol>
+        </div>
+        <figure>
+          <img src="/produkte/smart-plants/img/abb02-temperatur.webp" alt="Diagramm: Monatsmitteltemperatur Juni in der Schweiz 1864 bis 2026 als Abweichung vom Mittel" width="810" height="475" loading="lazy" style="background:#fff;border:1px solid var(--line)">
+          <figcaption>Verlauf der Monatsmitteltemperatur für den Juni, dargestellt als Abweichungen vom 30-jährigen geglätteten Mittel (MeteoSchweiz, 2026).</figcaption>
+        </figure>
+        <figure>
+          <div class="bilder">
+            <img src="/produkte/smart-plants/img/abb03-niederschlag-mm.webp" alt="Karte der Schweiz: monatliche Niederschlagssumme Juni 2026 in mm" width="489" height="311" loading="lazy">
+            <img src="/produkte/smart-plants/img/abb03-niederschlag-prozent.webp" alt="Karte der Schweiz: Niederschlag Juni 2026 im Verhältnis zur Referenzperiode 1991–2020 in Prozent" width="490" height="311" loading="lazy">
+          </div>
+          <figcaption>Monatliche Niederschlagssumme in mm (links) und Verhältnis zur Referenzperiode 1991–2020 in % (rechts) für den Juni 2026. Gebiete mit überdurchschnittlichen Niederschlägen sind bläulich, solche mit unterdurchschnittlichen Mengen braun dargestellt (MeteoSchweiz, 2026).</figcaption>
+        </figure>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 1.3</span> Sammeln</h4><span class="zeit">15 min</span></div>
+          <p>Die Gruppen stellen ihre Ideen im Plenum vor. Gemeinsam mit der Dozentin bzw. dem Dozenten werden die Ergebnisse diskutiert und in Form einer Concept Map zum Thema «Wasserknappheit» strukturiert und visualisiert.</p>
+        </div>
+        <figure>
+          <img src="/produkte/smart-plants/img/abb04-conceptmap.webp" alt="Concept Map Wasserknappheit im Garten mit den Ästen Klima, Pflanzen, Wasserverbrauch, Technik und Nachhaltigkeit" width="1104" height="736" loading="lazy" style="background:#fff;border:1px solid var(--line)">
+          <figcaption>Beispiel einer Concept Map zum Thema «Wasserknappheit».</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <!-- Lektion 2 -->
+    <details class="lektion" id="l2">
+      <summary><span class="nr">2</span><span class="kopf"><h3>Anforderungen und Systemidee</h3><p>Konzept · erste Lösungsidee · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziel</b>Du analysierst die Anforderungen an ein nachhaltiges Bewässerungssystem und erkennst, dass dieses aus mehreren technischen Komponenten besteht. Auf dieser Grundlage entwickelst du erste Planungsideen für eine einfache automatische Pflanzenbewässerung eines Hochbeets mit der Plattform Calliope mini.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 2.1</span> Konzept für eine nachhaltige Bewässerung</h4><span class="zeit">20 min</span></div>
+          <p>Entwickle ein Konzept für eine nachhaltige Bewässerung eines Hochbeets. Berücksichtige dabei insbesondere folgende Fragestellungen:</p>
+          <ol class="abc">
+            <li><b>a)</b>Welche Anforderungen sollte ein nachhaltiges Bewässerungssystem erfüllen?</li>
+            <li><b>b)</b>Wie kann Technik helfen?</li>
+            <li><b>c)</b>Welche technischen Komponenten sind für die Realisierung eines solchen Systems notwendig?</li>
+          </ol>
+          <p>Stelle dein Konzept anschliessend mithilfe einer beschrifteten Skizze dar.</p>
+        </div>
+        <div class="doz"><b>Leitfragen für Dozierende</b>
+          <ul style="margin:6px 0 0;padding-left:1.2em">
+            <li>Wie kann erkannt werden, wann eine Pflanze bewässert werden sollte? (z. B. Messung der Feuchtigkeit)</li>
+            <li>Wie kann das Wasser gezielt zu den Pflanzen transportiert werden? (z. B. Tauchpumpe)</li>
+            <li>Wer oder was entscheidet, wann die Bewässerung gestartet oder beendet wird?</li>
+            <li>Welche technischen Komponenten werden benötigt, damit das Bewässerungssystem automatisch funktioniert?</li>
+          </ul>
+        </div>
+        <div class="fazit"><b>Gemeinsames Fazit der Klasse.</b> Ein nachhaltiges Bewässerungssystem sollte folgende Anforderungen erfüllen:
+          <ol>
+            <li>Die Pflanzen werden nur dann bewässert, wenn der Boden tatsächlich trocken ist.</li>
+            <li>Der Energiebedarf des Systems wird durch erneuerbare Energien (z. B. Solarenergie) gedeckt.</li>
+            <li>Für die Bewässerung wird nach Möglichkeit gesammeltes Regenwasser oder eine andere ressourcenschonende Wasserquelle genutzt.</li>
+            <li>Das System setzt Wasser gezielt und sparsam ein, um Verschwendung zu vermeiden.</li>
+          </ol>
+          Durch den gezielten Einsatz von Technologie – beispielsweise eines Bodenfeuchtesensors, einer Tauchpumpe, eines Relais und einer nachhaltigen Energiequelle – kann ein Bewässerungssystem entwickelt werden, das Pflanzen bedarfsgerecht versorgt und gleichzeitig Wasser und Energie spart.
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 2.2</span> Erste Lösungsidee</h4><span class="zeit">15 min + 10 min Vorstellung</span></div>
+          <p>Entwickle in deiner Gruppe eine erste Lösungsidee für ein nachhaltiges Bewässerungssystem. Erstelle eine Skizze und beschrifte die notwendigen Bauteile. Überlege dir dabei, welche Aufgabe die einzelnen Komponenten übernehmen und wie sie zusammenarbeiten.</p>
+          <p class="small muted" style="margin:0">Je nach Umsetzbarkeit arbeiten die Gruppen ihre Lösungsansätze weiter aus. Lassen sich Ideen mit den vorhandenen Materialien nicht realisieren, unterstützt die Dozentin bzw. der Dozent mit gezielten Impulsen oder schlägt alternative Lösungswege vor.</p>
+        </div>
+        <figure style="max-width:620px">
+          <img src="/produkte/smart-plants/img/abb01-schema.webp" alt="Schema einer smarten Bewässerungsanlage mit Wasseranschluss, Smart Hub, Regensensor, Feuchtigkeitssensoren und Steuerungssoftware" width="883" height="417" loading="lazy" style="background:#fff;border:1px solid var(--line)">
+          <figcaption>Schematische Darstellung einer (smarten) Bewässerungsanlage.</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <!-- Lektion 3 -->
+    <details class="lektion fehlt" id="l3">
+      <summary><span class="nr">3</span><span class="kopf"><h3>Lektion 3</h3><p>folgt noch</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="luecke"><span class="tag">folgt noch</span>
+          <p style="margin:0">Diese Lektion ist in den eingereichten Auszügen nicht enthalten (Dossier S. 14). Aus späteren Aufträgen ist bekannt, dass in <b>Auftrag 3.1</b> eine Annahme zur Fördermenge von 2 L/min getroffen wird, die in Lektion 4 überprüft wird.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- Lektion 4 -->
+    <details class="lektion" id="l4">
+      <summary><span class="nr">4</span><span class="kopf"><h3>Sensor und Pumpe</h3><p>Feuchtigkeit messen und kalibrieren · Pumpe anschliessen · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele (4. bis 8. Lektion)</b>Du entwickelst auf der Grundlage deiner Planungsidee bzw. der vorgegebenen Arbeitsschritte ein automatisiertes Bewässerungssystem. Dabei analysierst du die Funktion der einzelnen Hard- und Softwarekomponenten, setzt diese schrittweise um, testest deren Funktionsfähigkeit und optimierst das System anhand der erzielten Ergebnisse.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 4.1</span> Feuchtigkeitsmessung und Kalibrierung</h4><span class="zeit">25 min</span></div>
+          <p><b>Wie misst man die Feuchtigkeit mit Hilfe des Calliope?</b> Nach einer kurzen Einführung in den Anschluss und die Programmierung des Feuchtigkeitssensors programmieren die Studierenden ein Programm zur Messung der Bodenfeuchtigkeit.</p>
+          <ul>
+            <li>Der Grove-Sensor misst Werte der Bodenfeuchte: 0 (trocken) bis 1023 (feucht).</li>
+            <li>Der Calliope mini verarbeitet die Messwerte.</li>
+          </ul>
+        </div>
+        <figure>
+          <div class="bilder eng">
+            <img src="/produkte/smart-plants/img/abb06-calliope.webp" alt="Calliope mini mit angeschlossenem Grove-Kabel" width="342" height="254" loading="lazy">
+            <img src="/produkte/smart-plants/img/abb06-sensor.webp" alt="Calliope mini und Grove-Feuchtigkeitssensor" width="354" height="247" loading="lazy">
+            <img src="/produkte/smart-plants/img/abb06-grove.webp" alt="MakeCode-Erweiterung grove" width="311" height="300" loading="lazy">
+          </div>
+          <figcaption>Anschluss des Grove-Sensors an den Calliope mini und MakeCode-Erweiterung «grove».</figcaption>
+        </figure>
+        <p style="margin:0">Für den Grove-Sensor muss das Erweiterungspaket <code>grove</code> in MakeCode hinzugefügt werden. Mit dem folgenden Programmcode wird die Bodenfeuchtigkeit als absoluter Messwert im Bereich von 0 (trocken) bis 1023 (sehr feucht) ausgelesen und angezeigt:</p>
+        <figure>
+          <img src="/produkte/smart-plants/img/abb08-code-feuchte.webp" alt="MakeCode-Block: dauerhaft zeige Zahl Feuchtigkeit C16 Grove Sensor absolut 0 bis 1023" width="1198" height="204" loading="lazy">
+          <figcaption>Programmcode zum Auslesen der Bodenfeuchtigkeit.</figcaption>
+        </figure>
+        <p style="margin:0">Verwende zwei unterschiedlich feuchte Erdproben und erweitere dein Programm so, dass die Bodenfeuchtigkeit gemessen und mithilfe der RGB-LED des Calliope angezeigt wird: <b>Grün</b> steht für feuchten Boden, <b>Gelb</b> für mässig trockenen Boden und <b>Rot</b> für sehr trockenen Boden.</p>
+        <div class="auftrag">
+          <div class="atitel"><h4>Kalibrierung und Messprotokoll</h4></div>
+          <p>Damit das System später zuverlässig entscheidet, wann bewässert wird, muss der Sensor kalibriert werden.</p>
+          <ol class="abc">
+            <li><b>a)</b>Miss den Sensorwert in trockener, leicht feuchter und nasser Erde (je drei Messungen) und berechne die Mittelwerte.</li>
+            <li><b>b)</b>Lege auf dieser Grundlage einen begründeten Schwellwert fest, ab dem bewässert werden soll. Dieser Wert ersetzt in Auftrag 8.1 den Beispielwert 300 und wird für die Farben der RGB-LED verwendet.</li>
+            <li><b>c)</b>Prüfe, wie sich der Messwert verändert, wenn der Sensor unterschiedlich tief in der Erde steckt. Was bedeutet das für die Platzierung im Hochbeet?</li>
+          </ol>
+        </div>
+        <div class="tabelle">
+          <table>
+            <thead><tr><th>Erdprobe</th><th>Messung 1</th><th>Messung 2</th><th>Messung 3</th><th>Mittelwert</th></tr></thead>
+            <tbody>
+              <tr><td>trocken</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>leicht feucht</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>nass</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="hinweis"><b>Hinweis:</b> Resistive Sensoren wie der Grove-Sensor korrodieren im Dauerbetrieb. Für einen längeren Einsatz sind kapazitive Sensoren besser geeignet – ein Aspekt für die Reflexion in Auftrag 8.2.</div>
+        <details class="loesung">
+          <summary>Lösungsvorschlag 4.1 – Feuchtigkeitsampel mit RGB-LED</summary>
+          <div class="l-inhalt"><img src="/produkte/smart-plants/img/loesung-4-1.webp" alt="MakeCode-Lösung: Feuchtigkeitsampel, je nach Messwert setzt die RGB-LED grün, gelb oder rot" width="1031" height="433" loading="lazy"></div>
+        </details>
+
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 4.2</span> Tauchpumpe anschliessen</h4><span class="zeit">20 min</span></div>
+          <p><b>Material:</b> Tauchpumpe mit Verbindungskabel, MOSFET-Schalter, Netzteil/Batterien, Kabel.</p>
+          <p>Du lernst zunächst die einzelnen Komponenten und deren Funktion kennen. Anschliessend baust du die Schaltung gemäss der Abbildung auf. Verbinde die Tauchpumpe mithilfe der vorhandenen Komponenten mit dem Calliope mini. Diskutiere anschliessend in deiner Gruppe, weshalb die Tauchpumpe nicht direkt an den Calliope angeschlossen wird und welche Funktion die Schalterplatine übernimmt.</p>
+          <p class="small muted" style="margin:0">Die Schalterplatine dient als elektronischer Schalter zwischen Netzteil/Batterie und Tauchpumpe. Sie wird über den Anschluss P2 des Calliope mini angesteuert. Gibt der Calliope den Wert 1023 aus, wird die Pumpe eingeschaltet; bei 0 bleibt sie ausgeschaltet. Zwischenwerte führen dazu, dass die Pumpe mit geringerer Leistung betrieben wird – ähnlich wie bei einem Dimmer.</p>
+        </div>
+        <div class="bilder">
+          <figure><img src="/produkte/smart-plants/img/abb09-aufbau.webp" alt="Foto: Calliope, Batteriehalter, MOSFET-Schalter und Tauchpumpe verkabelt" width="1200" height="900" loading="lazy"><figcaption>Calliope (links), Batterie (unten), MOSFET-Schalter (oben) und Tauchpumpe (rechts).</figcaption></figure>
+          <figure><img src="/produkte/smart-plants/img/abb11-schaltbild-pumpe.webp" alt="Schaltbild: Calliope steuert über P2 das MOSFET-Modul, Batterien 4 × 1.5 V treiben die Pumpe" width="1167" height="508" loading="lazy"><figcaption>Steuerstromkreis (links): Der Calliope liefert das Signal. Laststromkreis (rechts): Die Batterien liefern den Strom für die Pumpe.</figcaption></figure>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4>Fördermenge messen</h4></div>
+          <p style="margin:0">Lass die Pumpe dreimal je 30 Sekunden in einen Messbecher fördern und berechne die mittlere Fördermenge in Litern pro Minute. Vergleiche den Wert mit der Annahme aus Auftrag 3.1 (2 L/min) und bestimme die Pumpdauer, die dein Hochbeet tatsächlich benötigt. Diese Pumpdauer verwendest du in den Aufträgen 6.1–8.1.</p>
+        </div>
+        <div class="hinweis"><b>Sicherheit:</b> Es werden nur Kleinspannungskomponenten verwendet. Netzteil/Batterien, Schalterplatine und Calliope stehen ausserhalb der Auffangwanne und werden räumlich vom Wasser getrennt.</div>
+      </div>
+    </details>
+
+    <!-- Lektion 5 -->
+    <details class="lektion" id="l5">
+      <summary><span class="nr">5</span><span class="kopf"><h3>Pumpensteuerung programmieren</h3><p>Funktionen, Variablen, Bedingungen · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 5.1</span> Programmcode zur Steuerung der Tauchpumpe</h4><span class="zeit">45 min</span></div>
+          <p>Du erstellst zwei Funktionen, mit denen die Tauchpumpe über den Calliope mini beim Drücken der Taste A ein- bzw. ausgeschaltet werden kann. Wird die Taste A gedrückt, soll das Programm abhängig vom aktuellen Pumpenstatus die entsprechende Funktion aufrufen. Überprüfe dazu mithilfe einer Wenn-dann-sonst-Bedingung, ob die Pumpe bereits ein- oder ausgeschaltet ist, und ändere den Zustand entsprechend.</p>
+          <ol>
+            <li>Erstelle eine Variable <code>pumpenstatus</code>, die den Wert 0 oder 1023 annimmt.</li>
+            <li>Erstelle die Funktion <code>pumpeAn</code>, welche die Variable <code>pumpenstatus</code> auf 1023 setzt und diesen Wert als analogen Wert über P2 ausgibt (dadurch wird die Platine über Anschluss 2 angesteuert).</li>
+            <li>Erstelle die Funktion <code>pumpeAus</code> zum Ausschalten mit dem <code>pumpenstatus</code>-Wert 0.</li>
+            <li>Erstelle einen Eingabeblock <code>wenn Knopf A gedrückt</code>, in den du die beiden Funktionen in einem Bedingungsblock <code>wenn pumpenstatus = ? dann …</code> einbaust.</li>
+          </ol>
+        </div>
+        <details class="loesung">
+          <summary>Lösungsvorschlag 5.1 – Pumpe ein/aus mit Taste A</summary>
+          <div class="l-inhalt"><img src="/produkte/smart-plants/img/loesung-5-1.webp" alt="MakeCode-Lösung mit den Funktionen pumpeAn und pumpeAus und dem Block wenn Knopf A geklickt" width="844" height="1122" loading="lazy" style="max-width:420px"></div>
+        </details>
+        <div class="luecke"><span class="tag">folgt noch</span>
+          <p style="margin:0">Ob Lektion 5 weitere Aufträge enthält, ist aus den Auszügen nicht ersichtlich (Dossier S. 19–20 fehlen).</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- Lektion 6 -->
+    <details class="lektion fehlt" id="l6">
+      <summary><span class="nr">6</span><span class="kopf"><h3>Pumpzeit</h3><p>folgt noch · Lösungsvorschlag vorhanden</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="luecke"><span class="tag">folgt noch</span>
+          <p style="margin:0">Der Auftragstext zu <b>Auftrag 6.1 – Pumpzeit</b> fehlt in den Auszügen. Der Lösungsvorschlag zeigt: Mit Taste A wird <code>pumpSekunden</code> auf 120 gesetzt, die Pumpe läuft, bis der Zähler abgelaufen ist.</p>
+        </div>
+        <details class="loesung">
+          <summary>Lösungsvorschlag 6.1 – Pumpzeit</summary>
+          <div class="l-inhalt"><img src="/produkte/smart-plants/img/loesung-6-1.webp" alt="MakeCode-Lösung: Pumpe läuft für eine festgelegte Anzahl Sekunden" width="517" height="646" loading="lazy" style="max-width:360px"></div>
+        </details>
+      </div>
+    </details>
+
+    <!-- Lektion 7 -->
+    <details class="lektion fehlt" id="l7">
+      <summary><span class="nr">7</span><span class="kopf"><h3>Zeitmessung und 24-Stunden-Takt</h3><p>folgt noch · Lösungsvorschläge vorhanden</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="luecke"><span class="tag">folgt noch</span>
+          <p style="margin:0">Der Auftragstext zu <b>Auftrag 7.1</b> (Teil A Zeitmessung, Teil B 24-Stunden-Takt) fehlt in den Auszügen. Die Lösungsvorschläge sind vorhanden.</p>
+        </div>
+        <details class="loesung">
+          <summary>Lösungsvorschlag 7.1 Teil A – Zeitmessung</summary>
+          <div class="l-inhalt">
+            <img src="/produkte/smart-plants/img/loesung-7-1a-1.webp" alt="MakeCode-Lösung Teil A, Hauptschleife" width="1600" height="940" loading="lazy">
+            <img src="/produkte/smart-plants/img/loesung-7-1a-2.webp" alt="MakeCode-Lösung Teil A, Funktionen Zeitmessung, pumpeAn und pumpeAus" width="1600" height="829" loading="lazy">
+          </div>
+        </details>
+        <details class="loesung">
+          <summary>Lösungsvorschlag 7.1 Teil B – 24-Stunden-Takt</summary>
+          <div class="l-inhalt"><img src="/produkte/smart-plants/img/loesung-7-1b.webp" alt="MakeCode-Lösung: Giessen alle 24 Stunden mit der Variable h_seit_giessen" width="1236" height="1600" loading="lazy" style="max-width:520px"></div>
+        </details>
+      </div>
+    </details>
+
+    <!-- Lektion 8 -->
+    <details class="lektion" id="l8">
+      <summary><span class="nr">8</span><span class="kopf"><h3>Bedarfsgesteuerte Bewässerung und Reflexion</h3><p>Sensor einbinden · System beurteilen · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 8.1</span> Feuchtigkeitsmessung einbinden</h4><span class="zeit">20 min</span></div>
+          <p>Der Calliope soll nach 24 h nur giessen, wenn der Boden trocken ist. Erweitere das Programm, sodass alle 24 h vor dem Einschalten der Pumpe die Bodenfeuchte gemessen wird und die Pumpe nur bei Trockenheit eingeschaltet wird.</p>
+          <ol>
+            <li>Füge im Block <code>dauerhaft</code> in der Bedingung, bei der <code>h_seit_giessen &gt;= 24</code> wahr ist, eine weitere <code>wenn-dann</code>-Bedingung ein, die mit dem Grove-Block (siehe Auftrag 4.1) die Feuchtigkeit misst.</li>
+            <li>Falls die Feuchtigkeit kleiner als der in Auftrag 4.1 bestimmte Schwellwert ist (z. B. 300), wird die Variable <code>pumpSekunden</code> auf 120 gesetzt.</li>
+          </ol>
+        </div>
+        <figure>
+          <img src="/produkte/smart-plants/img/abb12-schaltbild-gesamt.webp" alt="Gesamtschaltbild: Grove-Feuchtigkeitssensor an C16, Calliope mini, MOSFET-Modul an P2, Batterien und Pumpe" width="1200" height="436" loading="lazy" style="background:#fff;border:1px solid var(--line)">
+          <figcaption>Der Sensor misst die Bodenfeuchtigkeit, der Calliope liest den Wert an C16 (0 bis 1023). Ist die Erde zu trocken, schaltet der Calliope über P2 das MOSFET-Modul ein, und die Batterien treiben die Pumpe an.</figcaption>
+        </figure>
+        <div class="hinweis"><b>Erweiterung (optional):</b> Statt nur alle 24 Stunden zu prüfen, kann das System die Bodenfeuchte laufend messen und bei Unterschreiten des Schwellwerts giessen. Damit die Pumpe nicht ständig ein- und ausschaltet, wird nach dem Giessen eine Wartezeit eingebaut (Hysterese). Diskutiere in Auftrag 8.2, welche Variante sinnvoller ist – auch mit Blick auf die Verdunstung zur Mittagszeit.</div>
+        <details class="loesung">
+          <summary>Lösungsvorschlag 8.1 – Bedarfsgesteuerte Bewässerung</summary>
+          <div class="l-inhalt"><img src="/produkte/smart-plants/img/loesung-8-1.webp" alt="MakeCode-Lösung: nach 24 Stunden wird nur gegossen, wenn die Feuchtigkeit unter dem Schwellwert liegt" width="1600" height="1094" loading="lazy"></div>
+        </details>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 8.2</span> Abschluss und Reflexion</h4><span class="zeit">25 min</span></div>
+          <p>Du beurteilst die Funktionalität deines Bewässerungssystems und setzt dich kritisch mit dessen Nachhaltigkeit auseinander. Bewerte in deiner Gruppe das Bewässerungssystem und reflektiere den Entwicklungsprozess.</p>
+          <ol class="abc">
+            <li><b>a)</b>Erfüllt das Bewässerungssystem die Anforderungen? Begründe deine Einschätzung.</li>
+            <li><b>b)</b>Welche Verbesserungen würdest du vornehmen, um das System nachhaltiger zu gestalten?</li>
+            <li><b>c)</b>Welchen Beitrag kann ein intelligentes Bewässerungssystem zu einem nachhaltigen Umgang mit Wasser leisten? Diskutiere auch mögliche Grenzen des Technikeinsatzes.</li>
+            <li><b>d)</b>Erstelle eine Tabelle «Unser System kann … / Unser System kann nicht …». Berücksichtige mindestens den Messpunkt des Sensors, den Wasservorrat, die Stromversorgung, Ausfälle während der Ferien und den Wartungsaufwand.</li>
+            <li><b>e)</b>Schätze den ökologischen Fussabdruck deines Systems ab: Welche Materialien und wie viel Graue Energie stecken in Calliope mini, Sensor, Pumpe und Netzteil? Was geschieht am Ende der Nutzungsdauer?</li>
+            <li><b>f)</b>Überprüfe die Anforderungen aus Lektion 2: Inwiefern wurden Solarstrom und Regenwasser berücksichtigt? Skizziere, wie dein System entsprechend erweitert werden könnte.</li>
+          </ol>
+          <p style="margin:0">Präsentiere deine wichtigsten Erkenntnisse anschliessend im Plenum und diskutiere sie mit den anderen Gruppen.</p>
+        </div>
+        <div class="hinweis"><b>Hinweis:</b> Die Teilaufträge d) bis f) können bei Zeitknappheit in der selbstorganisierten Arbeitsphase abgeschlossen werden; sie fliessen in das Dossier ein.</div>
+      </div>
+    </details>
+
+    <!-- Lektion 9 -->
+    <details class="lektion" id="l9">
+      <summary><span class="nr">9</span><span class="kopf"><h3>BNE-Urteilsbildung: Smart oder einfach?</h3><p>Low-Tech-Vergleich · Stakeholder-Hearing · Empfehlung · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Du vergleichst das smarte Bewässerungssystem mit einfachen Alternativen, nimmst die Perspektiven verschiedener Beteiligter ein, wägst Zielkonflikte ab und formulierst eine begründete Empfehlung für die Schulleitung.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 9.1</span> Low-Tech oder High-Tech?</h4><span class="zeit">15 min</span></div>
+          <p>Nicht jedes Nachhaltigkeitsproblem braucht eine digitale Lösung. Vergleiche dein System mit einfachen Massnahmen gegen das Vertrocknen der Pflanzen. Ergänze die Tabelle in deiner Gruppe.</p>
+        </div>
+        <div class="tabelle">
+          <table>
+            <thead><tr><th>Massnahme</th><th>Wirkprinzip</th><th>Wasser sparen</th><th>Energie / Material</th><th>Kosten / Aufwand</th><th>Lerngelegenheit für SuS</th></tr></thead>
+            <tbody>
+              <tr><td>Smartes Bewässerungssystem (Calliope mini)</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Mulchen (Stroh, Rasenschnitt)</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Ollas (unglasierte Tonkegel)</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Regenwassertonne mit Tropfschlauch</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Trockenheitsverträgliche Pflanzen, schattiger Standort</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Giessplan für die Ferien (Familien, Hauswart)</td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ol class="abc" style="margin:0">
+          <li><b>a)</b>Unterscheide Effizienz (gleicher Nutzen mit weniger Wasser) und Suffizienz (weniger Bedarf). Welche Massnahmen gehören zu welcher Strategie?</li>
+          <li><b>b)</b>Welche Massnahmen lassen sich sinnvoll kombinieren? Wann ist die smarte Lösung die nachhaltigste – und wann nicht?</li>
+        </ol>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 9.2</span> Stakeholder-Hearing</h4><span class="zeit">20 min</span></div>
+          <p>Verteilt in eurer Gruppe die folgenden Rollen. Formuliere pro Rolle zwei Interessen, eine Chance und ein Bedenken zum Einsatz des smarten Bewässerungssystems. Trenne dabei belegbare Fakten von Wertungen.</p>
+        </div>
+        <div class="tabelle">
+          <table>
+            <thead><tr><th>Rolle</th><th>Typische Anliegen</th></tr></thead>
+            <tbody>
+              <tr><td>Schulleitung</td><td>Budget, Verantwortung, Aussenwirkung</td></tr>
+              <tr><td>Hauswart</td><td>Wartung, Betreuung in den Ferien, Wasser- und Stromanschluss</td></tr>
+              <tr><td>Gartengruppe der Klasse</td><td>Lernen, Ernte, Mitbestimmung</td></tr>
+              <tr><td>Umweltkommission der Gemeinde</td><td>Wasserknappheit, Vorbildfunktion</td></tr>
+              <tr><td>Eltern bzw. Elternrat</td><td>Mithilfe, Kosten, Sicherheit</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin:0">Führt anschliessend ein kurzes Hearing durch, in dem jede Rolle ihre Position vertritt. Abschliessend reflektiert die Gruppe: Wer ist weltweit besonders von Wasserknappheit betroffen, und was unterscheidet diese Situation von unserem Schulgarten?</p>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 9.3</span> Mehrkriterielle Bewertung und Empfehlung</h4><span class="zeit">10 min</span></div>
+        </div>
+        <div class="tabelle">
+          <table>
+            <thead><tr><th>Kriterium</th><th>Gewichtung 1–3</th><th>Bewertung −2 bis +2</th><th>Begründung / Evidenz</th></tr></thead>
+            <tbody>
+              <tr><td>Wassereinsparung</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Energie und Graue Energie</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Kosten</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Wartung und Zuverlässigkeit</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Lerngewinn für Schülerinnen und Schüler</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+              <tr><td>Übertragbarkeit (Schulgarten, Stadtgrün)</td><td class="leer"></td><td class="leer"></td><td class="leer"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="hinweis"><b>Wichtig:</b> Eine Punktesumme ersetzt kein Urteil. Nutze die Tabelle, um Annahmen und Gewichtungen sichtbar zu machen. Formuliere danach eine Empfehlung an die Schulleitung mit mindestens einer Bedingung, unter der sich deine Empfehlung ändern würde.</div>
+      </div>
+    </details>
+
+    <!-- Lektion 10 -->
+    <details class="lektion" id="l10">
+      <summary><span class="nr">10</span><span class="kopf"><h3>Transfer: BNE-Lernaufgabe für den Zyklus 2</h3><p>Unterrichtsdesign · Peer-Review · Präsentation · 45 Min.</p></span><span class="pfeil" aria-hidden="true">▾</span></summary>
+      <div class="inhalt">
+        <div class="lernziel"><b>Lernziele</b>Du überträgst deine fachlichen und BNE-bezogenen Erkenntnisse in eine kompetenzorientierte Lernaufgabe für den Zyklus 2, gibst anderen Gruppen kriteriengeleitet Rückmeldung und reflektierst die Rolle der Lehrperson.</div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 10.1</span> Unterrichtsdesign</h4><span class="zeit">25 min</span></div>
+          <p>Entwickle eine 45-minütige BNE-Lernaufgabe für eine 5. oder 6. Klasse. Orientiere dich an MI.2.2, MI.2.3 und NMG.2.6 (Lehrplan 21). Die Aufgabe soll folgende Elemente enthalten:</p>
+          <ul>
+            <li>einen Einstieg mit einer echten Problemfrage statt einer Definition,</li>
+            <li>eine Mess-, Making- oder Programmierphase (z. B. eine Feuchtigkeitsampel mit der RGB-LED aus Auftrag 4.1),</li>
+            <li>mindestens zwei Nachhaltigkeitsperspektiven (z. B. ökologisch und sozial),</li>
+            <li>sprachliche Unterstützung für Begründungen (z. B. Satzanfänge «Ich empfehle …, weil …»),</li>
+            <li>eine Sicherung, die Fakten und Bewertungen unterscheidet,</li>
+            <li>ein Lernprodukt, das ein begründetes Urteil sichtbar macht, sowie</li>
+            <li>Hinweise zur Differenzierung.</li>
+          </ul>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 10.2</span> Peer-Review</h4><span class="zeit">10 min</span></div>
+          <p style="margin:0">Tausche deine Lernaufgabe mit einer anderen Gruppe. Prüfe fachliche Richtigkeit, BNE-Qualität, Offenheit für eigene Urteile (Überwältigungsverbot), Realisierbarkeit (Zeit, Material) und Differenzierung. Gib zwei konkrete Stärken und einen priorisierten Verbesserungsvorschlag zurück.</p>
+        </div>
+        <div class="auftrag">
+          <div class="atitel"><h4><span>Auftrag 10.3</span> Abschlusspräsentation und Reflexion</h4><span class="zeit">10 min</span></div>
+          <p>Präsentiere dein Entwicklungsdossier in maximal drei Minuten und beantworte dabei:</p>
+          <ol class="abc" style="margin:0">
+            <li><b>a)</b>Welchen Beitrag kann ein intelligentes Bewässerungssystem leisten, und wo liegen seine Grenzen?</li>
+            <li><b>b)</b>Welche Unsicherheiten bleiben?</li>
+            <li><b>c)</b>Welche BNE-Kompetenz wurde bei dir selbst besonders herausgefordert?</li>
+          </ol>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="teil" id="technik" aria-labelledby="h-technik">
+  <div class="wrap">
+    <h2 id="h-technik" class="hand">Technik auf einen Blick</h2>
+    <p class="teil-intro">Der Sensor misst, der Calliope entscheidet, das MOSFET-Modul schaltet, die Batterien treiben die Pumpe. Steuer- und Laststromkreis haben einen gemeinsamen Minuspol.</p>
+    <div class="zwei">
+      <figure><img src="/produkte/smart-plants/img/abb07-schaltbild-sensor.webp" alt="Schaltbild Feuchtigkeitssensor: SIG an C16 gelb, NC frei, VCC an 3V rot, GND an GND schwarz" width="1000" height="533" loading="lazy" style="background:#fff;border:1px solid var(--line)"><figcaption>Anschluss des Feuchtigkeitssensors: Der Calliope liest den Wert an C16 (0 bis 1023).</figcaption></figure>
+      <div class="tabelle" style="align-self:start">
+        <table style="min-width:0">
+          <thead><tr><th>Bauteil</th><th>Anschluss am Calliope mini 3</th></tr></thead>
+          <tbody>
+            <tr><td>Grove-Feuchtigkeitssensor</td><td>Grove A1: SIG → C16 (gelb), VCC → 3V (rot), GND → GND (schwarz)</td></tr>
+            <tr><td>MOSFET-Modul, Steuerseite</td><td>Signal → P2 (grün), + → 3V (rot), − → GND (schwarz)</td></tr>
+            <tr><td>MOSFET-Modul, Lastseite</td><td>Batterie an VIN (rot) und GND (schwarz), Pumpe an VOUT (rot) und GND (schwarz)</td></tr>
+            <tr><td>Batterien</td><td>4 × 1.5 V = 6 V</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="bilder eng" style="margin-top:16px">
+      <figure><img src="/produkte/smart-plants/img/abb10-calliope.webp" alt="Foto: Anschlüsse am Calliope VCC, GND und P2" width="1200" height="900" loading="lazy"><figcaption>Anschlüsse Calliope: VCC (rot), GND (schwarz) und P2 (grün).</figcaption></figure>
+      <figure><img src="/produkte/smart-plants/img/abb10-mosfet.webp" alt="Foto: Anschlüsse am MOSFET-Schalter mit Batterie und Pumpe" width="1200" height="900" loading="lazy"><figcaption>Anschlüsse am MOSFET-Schalter: Batterie an VIN und GND, Pumpe an VOUT und GND.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="bne" aria-labelledby="h-bne">
+  <div class="wrap">
+    <h2 id="h-bne" class="hand">BNE-Bezug</h2>
+    <p class="teil-intro">Die Studierenden analysieren ökologische Fragestellungen wie Klimawandel, Bodenfeuchtigkeit und Ressourcenschutz sowie gesellschaftliche Themen wie Ernährungssicherheit, gerechte Wasserverteilung und die Verantwortung gegenüber Menschen, Natur und zukünftigen Generationen. Sie reflektieren Chancen und Grenzen technischer Innovationen und vergleichen sie mit einfachen Low-Tech-Lösungen.</p>
+
+    <p class="eyebrow">Sustainable Development Goals</p>
+    <ul class="sdgs">
+      <li><b><span>6</span>Sauberes Wasser</b>Ein Bewässerungssystem, das Wasser bedarfsgerecht einsetzt und einen verantwortungsvollen Umgang mit der Ressource fördert.</li>
+      <li><b><span>9</span>Industrie, Innovation, Infrastruktur</b>Planung, Bau und Programmierung zeigen, wie technische Innovationen zur Lösung gesellschaftlicher und ökologischer Herausforderungen beitragen können.</li>
+      <li><b><span>11</span>Nachhaltige Städte und Gemeinden</b>Übertragbar auf Schulgärten, urbane Grünflächen oder Gemeinschaftsgärten.</li>
+      <li><b><span>12</span>Nachhaltiger Konsum und Produktion</b>Gezielte Steuerung spart Wasser; der Einsatz technischer Systeme wird selbst reflektiert.</li>
+      <li><b><span>13</span>Massnahmen zum Klimaschutz</b>Auseinandersetzung mit den Folgen des Klimawandels und Anpassung an Trockenperioden.</li>
+      <li><b><span>15</span>Leben an Land</b>Gesundes Pflanzenwachstum und nachhaltiger Umgang mit Boden, Vegetation und Ökosystemen.</li>
+    </ul>
+
+    <p class="eyebrow" style="margin-top:28px">Kompetenzen nach dem RSP-Modell (A Rounder Sense of Purpose)</p>
+    <dl class="rsp">
+      <div><dt>Systeme</dt><dd>Zusammenhänge zwischen Klimawandel, Wasserknappheit, Bodenfeuchtigkeit, Pflanzenwachstum, Wasserverbrauch und technischen Lösungen erkennen.</dd></div>
+      <div><dt>Aufmerksamkeit</dt><dd>Eigene Messungen und Tests schaffen Bewusstsein für den Umgang mit Wasser und die Folgen zunehmender Trockenheit.</dd></div>
+      <div><dt>Transdisziplinarität</dt><dd>Informatik, Technik, Biologie, Geografie und BNE werden verbunden.</dd></div>
+      <div><dt>Kritisches Denken</dt><dd>Kritisch beurteilen, ob digitale Technologien tatsächlich zu nachhaltigerer Bewässerung beitragen; Zielkonflikte reflektieren.</dd></div>
+      <div><dt>Zukünfte</dt><dd>Zukunftsszenarien für nachhaltige Bewässerungssysteme entwickeln.</dd></div>
+      <div><dt>Empathie</dt><dd>Auswirkungen von Wasserknappheit auf Pflanzen, Landwirtschaft, Ökosysteme und Menschen weltweit.</dd></div>
+      <div><dt>Kreativität</dt><dd>Eigene Lösungsansätze, Skizzen, Programme; Erweiterungen wie Solarenergie, Regenwassernutzung oder Fernsteuerung.</dd></div>
+      <div><dt>Verantwortung</dt><dd>Ressourcenschonender Einsatz von Wasser, sorgfältiger Umgang mit Materialien, Zusammenarbeit in der Gruppe.</dd></div>
+      <div><dt>Partizipation</dt><dd>Kooperativ Lösungen entwickeln, präsentieren, diskutieren und gemeinsam entscheiden.</dd></div>
+      <div><dt>Werte</dt><dd>Wasser als lebenswichtige Ressource; ökologische, technische und gesellschaftliche Interessen abwägen.</dd></div>
+      <div><dt>Handeln</dt><dd>Ein funktionierendes System entwickeln, testen, Messergebnisse analysieren und optimieren.</dd></div>
+      <div><dt>Entscheidungsfreudigkeit</dt><dd>Komponenten, Programmierung und Schwellwerte festlegen und anhand der Ergebnisse begründen.</dd></div>
+    </dl>
+
+    <p class="eyebrow" style="margin-top:28px">Lehrplan 21</p>
+    <div class="lp">
+      <div class="kasten"><b class="code">MI.2.2 Algorithmen</b><p class="small" style="margin:4px 0 0">Bedingungen, Schleifen und zeitgesteuerte Abläufe programmieren und testen. Besonders MI.2.2 f–h (Zyklus 2, 5./6. Klasse).</p></div>
+      <div class="kasten"><b class="code">MI.2.3 Informatiksysteme</b><p class="small" style="margin:4px 0 0">Eingabe, Verarbeitung, Ausgabe: das Zusammenspiel von Sensor, Calliope mini und Pumpe. Insbesondere MI.2.3 l.</p></div>
+      <div class="kasten"><b class="code">NMG.2.2 Natürliche Grundlagen</b><p class="small" style="margin:4px 0 0">Bedeutung von Wasser für das Pflanzenwachstum, untersucht über Feuchtigkeitsmessung und Erdproben.</p></div>
+      <div class="kasten"><b class="code">NMG.2.6 Mensch und Natur</b><p class="small" style="margin:4px 0 0">Menschliche Einflüsse beurteilen; reflektieren, wo intelligente Bewässerung Wasser spart und wo technische Lösungen an Grenzen stossen.</p></div>
+    </div>
+    <div class="luecke" style="margin-top:16px"><span class="tag">folgt noch</span>
+      <p style="margin:0">Die im Dossier angekündigte Verknüpfung der einzelnen Aufträge mit SDGs und Kompetenzen (Anhang) ist in den Auszügen nicht enthalten.</p>
+    </div>
+  </div>
+</section>
+
+<section class="teil" id="kartenset" aria-labelledby="h-kartenset">
+  <div class="wrap">
+    <h2 id="h-kartenset" class="hand">Verortung im Kartenset</h2>
+    <p class="teil-intro">Vorschlag zur Diskussion: An diesen Stellen nimmt die Lerneinheit Felder aus dem Kartenset «BNE meets Making» auf. Die Zuordnung stammt nicht aus dem Dossier.</p>
+    <ul class="karten">
+      <li><a class="k-sys" href="https://bne-meets-making.vercel.app/karten/k01/" target="_blank" rel="noopener"><span class="k">K01 · Systemdenken × Systemwissen</span><span class="t">Systeme modellieren</span><span class="w">Concept Map «Wasserknappheit» in Lektion 1.</span><span class="l">Lektion 1</span></a></li>
+      <li><a class="k-sys" href="https://bne-meets-making.vercel.app/karten/k02/" target="_blank" rel="noopener"><span class="k">K02 · Systemdenken × Zielwissen</span><span class="t">Zielräume als System denken</span><span class="w">Anforderungen an ein nachhaltiges System: Wasser, Energie, Regenwasser.</span><span class="l">Lektion 2</span></a></li>
+      <li><a class="k-ite" href="https://bne-meets-making.vercel.app/karten/k07/" target="_blank" rel="noopener"><span class="k">K07 · Iteratives Handeln × Systemwissen</span><span class="t">Systeme erforschen</span><span class="w">Kalibrierung und Messprotokoll, Fördermenge prüfen.</span><span class="l">Lektion 4</span></a></li>
+      <li><a class="k-ite" href="https://bne-meets-making.vercel.app/karten/k09/" target="_blank" rel="noopener"><span class="k">K09 · Iteratives Handeln × Transformationswissen</span><span class="t">Wandel im Kleinen testen</span><span class="w">Prototyp schrittweise bauen, testen und verbessern.</span><span class="l">Lektionen 4–8</span></a></li>
+      <li><a class="k-kon" href="https://bne-meets-making.vercel.app/karten/k05/" target="_blank" rel="noopener"><span class="k">K05 · Kontroversität × Zielwissen</span><span class="t">Zielkonflikte aushandeln</span><span class="w">Low-Tech oder High-Tech, Stakeholder-Hearing, Empfehlung mit Bedingung.</span><span class="l">Lektion 9</span></a></li>
+      <li><a class="k-mat" href="https://bne-meets-making.vercel.app/karten/k13/" target="_blank" rel="noopener"><span class="k">K13 · Querschnitt</span><span class="t">Materielle Praxis</span><span class="w">Graue Energie und Ende der Nutzungsdauer von Calliope, Sensor und Pumpe.</span><span class="l">Auftrag 8.2 e</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="teil" id="offen" aria-labelledby="h-offen">
+  <div class="wrap">
+    <h2 id="h-offen" class="hand">Offene Punkte</h2>
+    <p class="teil-intro">Was für eine vollständige Fassung noch fehlt. Laut Projektgruppe kann sich das Material noch ändern.</p>
+    <ol class="offen">
+      <li><b>Lektion 3</b> mit Auftrag 3.1 (Annahme zur Fördermenge, Dossier S. 14).</li>
+      <li><b>Lektionen 5 bis 7</b>: restliche Aufträge, insbesondere die Auftragstexte zu 6.1 (Pumpzeit) und 7.1 (Zeitmessung, 24-Stunden-Takt), Dossier S. 19–20.</li>
+      <li><b>Anhang</b>: Verknüpfung der Aufträge mit SDGs und Kompetenzen.</li>
+      <li><b>Materialliste</b> mit Stückzahlen und Bezugsquellen pro Gruppe.</li>
+      <li><b>Literaturverzeichnis</b> (MeteoSchweiz 2026, RSP-Kompetenzmodell).</li>
+      <li><b>Downloads</b>: Arbeitsblätter und Dossier als PDF, MakeCode-Projekte als Datei oder Link.</li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Smart Plants – BNE-Lerneinheit MAT07 · U. Hauser · Team PgB 1B, PH Graubünden</span>
+    <span>Ausstellung Making × BNE, Teilprojekt PgB 1b</span>
+  </div>
+</footer>
+
+</body>
+</html>
